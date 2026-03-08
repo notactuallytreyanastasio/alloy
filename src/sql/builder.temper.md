@@ -13,128 +13,102 @@ that be recognized and cached instead of rebuilt each time?
     export class SqlBuilder {
       private let buffer: ListBuilder<SqlPart> = new ListBuilder();
 
-### appendSafe
-
+      // appendSafe
       public appendSafe(sqlSource: String): Void {
         buffer.add(new SqlSource(sqlSource));
       }
 
-### appendSqlFragment
-
-Add the contents of another SQL fragment to this one.
-
+      // appendSqlFragment: add contents of another SQL fragment
       @overload("append")
       public appendFragment(fragment: SqlFragment): Void {
         buffer.addAll(fragment.parts);
       }
 
-### appendSqlPart
-
-Add a single already qualified SQL part to this builder.
-
+      // appendSqlPart: add a single already qualified SQL part
       @overload("append")
       public appendPart(part: SqlPart): Void {
         buffer.add(part);
       }
 
-### appendSqlPartList
-
+      // appendSqlPartList
       @overload("append")
       public appendPartList(values: List<SqlPart>): Void {
         appendList(values) { (x: SqlPart) => appendPart(x) };
       }
 
-### appendBoolean
-
+      // appendBoolean
       @overload("append")
       public appendBoolean(value: Boolean): Void {
         buffer.add(new SqlBoolean(value));
       }
 
-### appendBooleanList
-
+      // appendBooleanList
       @overload("append")
       public appendBooleanList(values: Listed<Boolean>): Void {
         appendList(values) { (x: Boolean) => appendBoolean(x) };
       }
 
-### appendDate
-
-The Temper date type naturally formats to YYYY-MM-DD, which is the standard SQL
-date format.
-
+      // appendDate
       @overload("append")
       public appendDate(value: Date): Void {
         buffer.add(new SqlDate(value));
       }
 
-### appendDateList
-
+      // appendDateList
       @overload("append")
       public appendDateList(values: Listed<Date>): Void {
         appendList(values) { (x: Date) => appendDate(x) };
       }
 
-### appendFloat64
-
+      // appendFloat64
       @overload("append")
       public appendFloat64(value: Float64): Void {
         buffer.add(new SqlFloat64(value));
       }
 
-### appendFloat64List
-
+      // appendFloat64List
       @overload("append")
       public appendFloat64List(values: Listed<Float64>): Void {
         appendList(values) { (x: Float64) => appendFloat64(x) };
       }
 
-### appendInt32
-
+      // appendInt32
       @overload("append")
       public appendInt32(value: Int32): Void {
         buffer.add(new SqlInt32(value));
       }
 
-### appendInt32List
-
+      // appendInt32List
       @overload("append")
       public appendInt32List(values: Listed<Int32>): Void {
         appendList(values) { (x: Int32) => appendInt32(x) };
       }
 
-### appendInt64
-
+      // appendInt64
       @overload("append")
       public appendInt64(value: Int64): Void {
         buffer.add(new SqlInt64(value));
       }
 
-### appendInt64List
-
+      // appendInt64List
       @overload("append")
       public appendInt64List(values: Listed<Int64>): Void {
         appendList(values) { (x: Int64) => appendInt64(x) };
       }
 
-### appendString
-
+      // appendString
       @overload("append")
       public appendString(value: String): Void {
         buffer.add(new SqlString(value));
       }
 
-### appendStringList
-
+      // appendStringList
       @overload("append")
       public appendStringList(values: Listed<String>): Void {
         appendList(values) { (x: String) => appendString(x) };
       }
 
-### appendList
-
-This is a helper to make other list append methods easier.
-
+      // appendList: helper for list append methods
       private appendList<T>(values: Listed<T>, appendValue: Appender<T>): Void {
         for (var i = 0; i < values.length; i++) {
           if (i > 0) {
@@ -144,10 +118,7 @@ This is a helper to make other list append methods easier.
         }
       }
 
-### accumulated
-
-TODO Instead make some kind of Statement type.
-
+      // accumulated
       public get accumulated(): SqlFragment {
         new SqlFragment(buffer.toList())
       }

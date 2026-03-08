@@ -12,20 +12,12 @@ then can be escaped differently for different dbs. And while called a
       public parts: List<SqlPart>,
     ) {
 
-### toSource
-
-Freeze this to string source content marked as safe SQL.
-
-TODO Make different forms for different dialects.
-
+      // toSource: freeze to string source content marked as safe SQL
       public toSource(): SqlSource {
         new SqlSource(toString())
       }
 
-### toString
-
-TODO Make different forms for different dialects.
-
+      // toString
       public toString(): String {
         let builder = new StringBuilder();
         for (var i = 0; i < parts.length; ++i) {
@@ -41,55 +33,42 @@ TODO Make different forms for different dialects.
 Each part of a SQL fragment is either raw known-safe SQL source or else a value
 needing escaped and/or represented properly for a particular DB dialect.
 
-TODO If we represent SQL syntax in a structured way, we could perhaps do more.
-
     export sealed interface SqlPart {
 
-### formatTo
-
-Enables using a single StringBuilder across multiple parts for efficiency.
-
-TODO Different dialects.
-
+      // formatTo: enables using a single StringBuilder across multiple parts
       public formatTo(builder: StringBuilder): Void;
 
     }
 
-### SqlSource
+## SqlSource
 
-`SqlSource` represents known-safe SQL source code that doesn't need escaped. This
-often originates from the raw string content in `sql`-tagged strings. For
-example, in `sql"select p.name from person p where p.id = ${id}"`, all except
-the `${id}` interpolation becomes a `SqlSource` instance.
+`SqlSource` represents known-safe SQL source code that doesn't need escaped.
 
     export class SqlSource(public source: String) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append(source);
       }
 
     }
 
-### SqlBoolean
+## SqlBoolean
 
     export class SqlBoolean(public value: Boolean) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append(if (value) { "TRUE" } else { "FALSE" });
       }
 
     }
 
-### SqlDate
+## SqlDate
 
     export class SqlDate(public value: Date) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append("'");
         builder.append(value.toString());
@@ -98,50 +77,46 @@ the `${id}` interpolation becomes a `SqlSource` instance.
 
     }
 
-### SqlFloat64
+## SqlFloat64
 
     export class SqlFloat64(public value: Float64) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append(value.toString());
       }
 
     }
 
-### SqlInt32
+## SqlInt32
 
     export class SqlInt32(public value: Int32) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append(value.toString());
       }
 
     }
 
-### SqlInt64
+## SqlInt64
 
     export class SqlInt64(public value: Int64) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append(value.toString());
       }
 
     }
 
-### SqlString
+## SqlString
 
 `SqlString` represents text data that needs escaped.
 
     export class SqlString(public value: String) extends SqlPart {
 
-### formatTo
-
+      // formatTo
       public formatTo(builder: StringBuilder): Void {
         builder.append("'");
         for (let c of value) {

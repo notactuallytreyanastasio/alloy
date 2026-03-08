@@ -73,16 +73,8 @@ Not exported — the only path to an instance is through `changeset()`.
       public get errors(): List<ChangesetError> { _errors }
       public get isValid(): Boolean { _isValid }
 
-### cast
-
-Whitelists fields by `SafeIdentifier` — column names must have already
-passed the `[a-zA-Z_][a-zA-Z0-9_]*` validator before they are accepted.
-Any key not in `allowedFields` is silently dropped.
-
+      // cast: whitelists fields by SafeIdentifier
       public cast(allowedFields: List<SafeIdentifier>): Changeset {
-        // Start from an empty map — each cast() call defines a fresh whitelist,
-        // not an additive one. Prevents a second cast() from silently re-admitting
-        // fields that the developer intended to exclude.
         let mb = new MapBuilder<String, String>();
         for (let f of allowedFields) {
           let val = _params.getOr(f.sqlValue, "");
@@ -93,8 +85,7 @@ Any key not in `allowedFields` is silently dropped.
         new ChangesetImpl(_tableDef, _params, mb.toMap(), _errors, _isValid)
       }
 
-### validateRequired
-
+      // validateRequired
       public validateRequired(fields: List<SafeIdentifier>): Changeset {
         if (!_isValid) { return this; }
         let eb = _errors.toListBuilder();
@@ -108,8 +99,7 @@ Any key not in `allowedFields` is silently dropped.
         new ChangesetImpl(_tableDef, _params, _changes, eb.toList(), valid)
       }
 
-### validateLength
-
+      // validateLength
       public validateLength(field: SafeIdentifier, min: Int, max: Int): Changeset {
         if (!_isValid) { return this; }
         let val = _changes.getOr(field.sqlValue, "");
@@ -123,16 +113,12 @@ Any key not in `allowedFields` is silently dropped.
         this
       }
 
-### validateInt
-
+      // validateInt
       public validateInt(field: SafeIdentifier): Changeset {
         if (!_isValid) { return this; }
         let val = _changes.getOr(field.sqlValue, "");
         if (val.isEmpty) { return this; }
-        let parseOk = do {
-          val.toInt32();
-          true
-        } orelse false;
+        let parseOk = do { val.toInt32(); true } orelse false;
         if (!parseOk) {
           let eb = _errors.toListBuilder();
           eb.add(new ChangesetError(field.sqlValue, "must be an integer"));
@@ -141,16 +127,12 @@ Any key not in `allowedFields` is silently dropped.
         this
       }
 
-### validateInt64
-
+      // validateInt64
       public validateInt64(field: SafeIdentifier): Changeset {
         if (!_isValid) { return this; }
         let val = _changes.getOr(field.sqlValue, "");
         if (val.isEmpty) { return this; }
-        let parseOk = do {
-          val.toInt64();
-          true
-        } orelse false;
+        let parseOk = do { val.toInt64(); true } orelse false;
         if (!parseOk) {
           let eb = _errors.toListBuilder();
           eb.add(new ChangesetError(field.sqlValue, "must be a 64-bit integer"));
@@ -159,16 +141,12 @@ Any key not in `allowedFields` is silently dropped.
         this
       }
 
-### validateFloat
-
+      // validateFloat
       public validateFloat(field: SafeIdentifier): Changeset {
         if (!_isValid) { return this; }
         let val = _changes.getOr(field.sqlValue, "");
         if (val.isEmpty) { return this; }
-        let parseOk = do {
-          val.toFloat64();
-          true
-        } orelse false;
+        let parseOk = do { val.toFloat64(); true } orelse false;
         if (!parseOk) {
           let eb = _errors.toListBuilder();
           eb.add(new ChangesetError(field.sqlValue, "must be a number"));
@@ -177,11 +155,7 @@ Any key not in `allowedFields` is silently dropped.
         this
       }
 
-### validateBool
-
-Accepts canonical truthy/falsy strings. Bubbles (marks invalid) on anything
-else rather than silently coercing — prevents "1" silently becoming false.
-
+      // validateBool: accepts true/1/yes/on and false/0/no/off, bubbles on anything else
       public validateBool(field: SafeIdentifier): Changeset {
         if (!_isValid) { return this; }
         let val = _changes.getOr(field.sqlValue, "");
@@ -196,11 +170,7 @@ else rather than silently coercing — prevents "1" silently becoming false.
         this
       }
 
-### parseBoolSqlPart
-
-Converts a validated boolean string to `SqlBoolean`. Bubbles on
-unrecognised values rather than silently coercing.
-
+      // parseBoolSqlPart: converts validated bool string to SqlBoolean
       private parseBoolSqlPart(val: String): SqlBoolean throws Bubble {
         if (val == "true" || val == "1" || val == "yes" || val == "on") {
           return new SqlBoolean(true);
@@ -211,12 +181,7 @@ unrecognised values rather than silently coercing.
         bubble()
       }
 
-### valueToSqlPart
-
-Type-dispatched conversion from validated string to escaped `SqlPart`.
-`FieldType` is sealed so this `when` is exhaustive — the compiler rejects
-any gap. `BoolField` now bubbles on unrecognised values.
-
+      // valueToSqlPart: type-dispatched conversion from validated string to SqlPart
       private valueToSqlPart(fieldDef: FieldDef, val: String): SqlPart throws Bubble {
         when (fieldDef.fieldType) {
           is StringField -> new SqlString(val);
@@ -228,39 +193,25 @@ any gap. `BoolField` now bubbles on unrecognised values.
         }
       }
 
-### toInsertSql
-
-Generates `INSERT INTO … (cols) VALUES (vals)`. Independently enforces:
-1. `isValid` must be true.
-2. All non-nullable schema fields must be present in `changes` (regardless
-   of `isValid`, so a manually-constructed object cannot bypass this).
-3. Values are converted through typed `SqlPart` constructors — no raw
-   string ever reaches SQL.
-
+      // toInsertSql: generates INSERT INTO … (cols) VALUES (vals)
       public toInsertSql(): SqlFragment throws Bubble {
         if (!_isValid) { bubble() }
-
-        // Independent nullable enforcement — does not rely solely on isValid.
         for (var i = 0; i < _tableDef.fields.length; ++i) {
           let f = _tableDef.fields[i];
           if (!f.nullable && !_changes.has(f.name.sqlValue)) {
             bubble()
           }
         }
-
         let pairs = _changes.toList();
         if (pairs.length == 0) { bubble() }
-
         let colNames = new ListBuilder<String>();
         let valParts = new ListBuilder<SqlPart>();
         for (var i = 0; i < pairs.length; ++i) {
           let pair = pairs[i];
           let fd = _tableDef.field(pair.key);
-          // pair.key is safe: it was stored by cast() using SafeIdentifier.sqlValue
           colNames.add(pair.key);
           valParts.add(valueToSqlPart(fd, pair.value));
         }
-
         let b = new SqlBuilder();
         b.appendSafe("INSERT INTO ");
         b.appendSafe(_tableDef.tableName.sqlValue);
@@ -276,16 +227,11 @@ Generates `INSERT INTO … (cols) VALUES (vals)`. Independently enforces:
         b.accumulated
       }
 
-### toUpdateSql
-
-Generates `UPDATE … SET col = val, … WHERE id = ?`. Nullable enforcement
-is not applied here — partial updates (changing one column) are valid.
-
+      // toUpdateSql: generates UPDATE … SET col = val, … WHERE id = ?
       public toUpdateSql(id: Int): SqlFragment throws Bubble {
         if (!_isValid) { bubble() }
         let pairs = _changes.toList();
         if (pairs.length == 0) { bubble() }
-
         let b = new SqlBuilder();
         b.appendSafe("UPDATE ");
         b.appendSafe(_tableDef.tableName.sqlValue);
@@ -294,7 +240,6 @@ is not applied here — partial updates (changing one column) are valid.
           if (i > 0) { b.appendSafe(", "); }
           let pair = pairs[i];
           let fd = _tableDef.field(pair.key);
-          // pair.key is safe: stored by cast() using SafeIdentifier.sqlValue
           b.appendSafe(pair.key);
           b.appendSafe(" = ");
           b.appendPart(valueToSqlPart(fd, pair.value));

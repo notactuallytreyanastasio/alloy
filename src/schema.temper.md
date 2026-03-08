@@ -90,12 +90,7 @@ Describes a full table: its SQL name and ordered list of columns.
       public fields: List<FieldDef>,
     ) {
 
-### field
-
-Look up a `FieldDef` by the string value of its name. Used internally
-by the changeset for type dispatch — the name is not re-injected into SQL
-from this path. Bubbles if the field is not declared.
-
+      // field: look up a FieldDef by name, used for type dispatch. Bubbles if not found.
       public field(name: String): FieldDef throws Bubble {
         for (let f of fields) {
           if (f.name.sqlValue == name) { return f; }

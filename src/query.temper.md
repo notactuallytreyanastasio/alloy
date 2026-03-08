@@ -40,59 +40,38 @@ Composable, immutable SELECT query builder.
       public offsetVal: Int?,
     ) {
 
-### where
-
-The `condition` must be a `SqlFragment` built via the `sql` tag — raw
-strings cannot be passed here.
-
+      // where: condition must be a SqlFragment built via the sql tag
       public where(condition: SqlFragment): Query {
         let nb = conditions.toListBuilder();
         nb.add(condition);
         new Query(tableName, nb.toList(), selectedFields, orderClauses, limitVal, offsetVal)
       }
 
-### select
-
-Field names must be `SafeIdentifier` values — validated before they reach
-`appendSafe`.
-
+      // select: field names must be SafeIdentifier values
       public select(fields: List<SafeIdentifier>): Query {
         new Query(tableName, conditions, fields, orderClauses, limitVal, offsetVal)
       }
 
-### orderBy
-
+      // orderBy
       public orderBy(field: SafeIdentifier, ascending: Boolean): Query {
         let nb = orderClauses.toListBuilder();
         nb.add(new OrderClause(field, ascending));
         new Query(tableName, conditions, selectedFields, nb.toList(), limitVal, offsetVal)
       }
 
-### limit
-
-Bubbles on negative values — a negative limit is a programming error and
-produces invalid SQL in every dialect.
-
+      // limit: bubbles on negative values
       public limit(n: Int): Query throws Bubble {
         if (n < 0) { bubble() }
         new Query(tableName, conditions, selectedFields, orderClauses, n, offsetVal)
       }
 
-### offset
-
-Bubbles on negative values.
-
+      // offset: bubbles on negative values
       public offset(n: Int): Query throws Bubble {
         if (n < 0) { bubble() }
         new Query(tableName, conditions, selectedFields, orderClauses, limitVal, n)
       }
 
-### toSql
-
-Assembles the final `SqlFragment`. Every `appendSafe` call uses either a
-hardcoded string literal or a `SafeIdentifier.sqlValue`. User values only
-appear through `SqlFragment` conditions.
-
+      // toSql: assembles the final SqlFragment
       public toSql(): SqlFragment {
         let b = new SqlBuilder();
 
@@ -138,12 +117,7 @@ appear through `SqlFragment` conditions.
         b.accumulated
       }
 
-### safeToSql
-
-Production-safe variant (CWE-400). Applies `defaultLimit` if no explicit
-`limit()` was set, preventing unbounded result sets. Use this in any
-context where the result count is not otherwise bounded.
-
+      // safeToSql: production-safe variant, applies defaultLimit if none set (CWE-400)
       public safeToSql(defaultLimit: Int): SqlFragment throws Bubble {
         if (defaultLimit < 0) { bubble() }
         if (limitVal != null) { toSql() } else { this.limit(defaultLimit).toSql() }
