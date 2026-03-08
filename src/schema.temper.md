@@ -2,10 +2,6 @@
 
 Defines the structure of a database table: its name and typed columns.
 
-## Imports
-
-    let { Date } = import("std/temporal");
-
 ## SafeIdentifier
 
 An SQL identifier (table or column name) that has been validated against

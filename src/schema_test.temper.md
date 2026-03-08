@@ -1,7 +1,5 @@
 # Schema Tests
 
-    let { TableDef, FieldDef, StringField, IntField, safeIdentifier } = import("../src/schema");
-
     test("safeIdentifier accepts valid names") {
       let id = safeIdentifier("user_name") orelse panic();
       assert(id.sqlValue == "user_name") { "value should round-trip" };

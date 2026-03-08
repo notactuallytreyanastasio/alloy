@@ -4,8 +4,8 @@ Top-level helpers.
 
 ## Imports
 
-    let { SqlFragment, SqlBuilder } = import("./sql/builder");
-    let { TableDef } = import("./schema");
+All types (SqlFragment, SqlBuilder, TableDef) are available from other
+files in the same module without explicit imports.
 
 ## deleteSql
 

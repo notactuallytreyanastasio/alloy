@@ -19,8 +19,8 @@ Composable, immutable SELECT query builder.
 
 ## Imports
 
-    let { SqlFragment, SqlBuilder, sql } = import("./sql/builder");
-    let { SafeIdentifier } = import("./schema");
+All types (SqlFragment, SqlBuilder, sql, SafeIdentifier) are available
+from other files in the same module without explicit imports.
 
 ## OrderClause
 
@@ -105,13 +105,15 @@ Composable, immutable SELECT query builder.
           }
         }
 
-        if (limitVal != null) {
+        let lv = limitVal;
+        if (lv != null) {
           b.appendSafe(" LIMIT ");
-          b.appendInt32(limitVal);
+          b.appendInt32(lv);
         }
-        if (offsetVal != null) {
+        let ov = offsetVal;
+        if (ov != null) {
           b.appendSafe(" OFFSET ");
-          b.appendInt32(offsetVal);
+          b.appendInt32(ov);
         }
 
         b.accumulated

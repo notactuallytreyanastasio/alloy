@@ -20,10 +20,8 @@ Ecto-style cast → validate → generate-SQL pipeline.
 
 ## Imports
 
-    let { SqlFragment, SqlBuilder } = import("./sql/builder");
-    let { SqlPart, SqlString, SqlInt32, SqlInt64, SqlFloat64, SqlBoolean, SqlDate } = import("./sql/model");
-    let { TableDef, FieldDef, SafeIdentifier, StringField, IntField, Int64Field, FloatField, BoolField, DateField } = import("./schema");
-    let { Date } = import("std/temporal");
+All types (SqlFragment, SqlBuilder, SqlPart, TableDef, etc.) are available
+from other files in the same module without explicit imports.
 
 ## ChangesetError
 
@@ -183,14 +181,14 @@ Not exported — the only path to an instance is through `changeset()`.
 
       // valueToSqlPart: type-dispatched conversion from validated string to SqlPart
       private valueToSqlPart(fieldDef: FieldDef, val: String): SqlPart throws Bubble {
-        when (fieldDef.fieldType) {
-          is StringField -> new SqlString(val);
-          is IntField -> new SqlInt32(val.toInt32());
-          is Int64Field -> new SqlInt64(val.toInt64());
-          is FloatField -> new SqlFloat64(val.toFloat64());
-          is BoolField -> parseBoolSqlPart(val);
-          is DateField -> new SqlDate(Date.fromIsoString(val));
-        }
+        let ft = fieldDef.fieldType;
+        if (ft is StringField) { return new SqlString(val); }
+        if (ft is IntField) { return new SqlInt32(val.toInt32()); }
+        if (ft is Int64Field) { return new SqlInt64(val.toInt64()); }
+        if (ft is FloatField) { return new SqlFloat64(val.toFloat64()); }
+        if (ft is BoolField) { return parseBoolSqlPart(val); }
+        if (ft is DateField) { return new SqlDate(Date.fromIsoString(val)); }
+        bubble()
       }
 
       // toInsertSql: generates INSERT INTO … (cols) VALUES (vals)
