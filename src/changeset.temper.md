@@ -196,6 +196,21 @@ else rather than silently coercing — prevents "1" silently becoming false.
         this
       }
 
+### parseBoolSqlPart
+
+Converts a validated boolean string to `SqlBoolean`. Bubbles on
+unrecognised values rather than silently coercing.
+
+      private parseBoolSqlPart(val: String): SqlBoolean throws Bubble {
+        if (val == "true" || val == "1" || val == "yes" || val == "on") {
+          return new SqlBoolean(true);
+        }
+        if (val == "false" || val == "0" || val == "no" || val == "off") {
+          return new SqlBoolean(false);
+        }
+        bubble()
+      }
+
 ### valueToSqlPart
 
 Type-dispatched conversion from validated string to escaped `SqlPart`.
@@ -208,15 +223,7 @@ any gap. `BoolField` now bubbles on unrecognised values.
           is IntField -> new SqlInt32(val.toInt32());
           is Int64Field -> new SqlInt64(val.toInt64());
           is FloatField -> new SqlFloat64(val.toFloat64());
-          is BoolField -> {
-            if (val == "true" || val == "1" || val == "yes" || val == "on") {
-              new SqlBoolean(true)
-            } else if (val == "false" || val == "0" || val == "no" || val == "off") {
-              new SqlBoolean(false)
-            } else {
-              bubble()
-            }
-          };
+          is BoolField -> parseBoolSqlPart(val);
           is DateField -> new SqlDate(Date.fromIsoString(val));
         }
       }
