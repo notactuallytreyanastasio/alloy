@@ -20,8 +20,8 @@ Ecto-style cast → validate → generate-SQL pipeline.
 
 ## Imports
 
-    let { SqlFragment, SqlBuilder } = import("../secure-composition/src/sql/builder");
-    let { SqlPart, SqlString, SqlInt32, SqlInt64, SqlFloat64, SqlBoolean, SqlDate } = import("../secure-composition/src/sql/model");
+    let { SqlFragment, SqlBuilder } = import("./sql/builder");
+    let { SqlPart, SqlString, SqlInt32, SqlInt64, SqlFloat64, SqlBoolean, SqlDate } = import("./sql/model");
     let { TableDef, FieldDef, SafeIdentifier, StringField, IntField, Int64Field, FloatField, BoolField, DateField } = import("./schema");
     let { Date } = import("std/temporal");
 

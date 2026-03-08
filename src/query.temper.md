@@ -19,7 +19,7 @@ Composable, immutable SELECT query builder.
 
 ## Imports
 
-    let { SqlFragment, SqlBuilder, sql } = import("../secure-composition/src/sql/builder");
+    let { SqlFragment, SqlBuilder, sql } = import("./sql/builder");
     let { SafeIdentifier } = import("./schema");
 
 ## OrderClause

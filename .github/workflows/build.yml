@@ -56,10 +56,6 @@ jobs:
           which temper
           temper --version || true
 
-      - name: Build secure-composition
-        working-directory: secure-composition
-        run: temper build -b js
-
       - name: Build ORM
         run: temper build -b js
 

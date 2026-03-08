@@ -2,7 +2,7 @@
 
     let { safeIdentifier } = import("../src/schema");
     let { from } = import("../src/query");
-    let { sql } = import("../secure-composition/src/sql/builder");
+    let { sql } = import("../src/sql/builder");
 
     let sid(name: String): import("../src/schema").SafeIdentifier {
       safeIdentifier(name) orelse panic()

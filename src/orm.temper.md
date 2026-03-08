@@ -4,7 +4,7 @@ Top-level helpers.
 
 ## Imports
 
-    let { SqlFragment, SqlBuilder } = import("../secure-composition/src/sql/builder");
+    let { SqlFragment, SqlBuilder } = import("./sql/builder");
     let { TableDef } = import("./schema");
 
 ## deleteSql
