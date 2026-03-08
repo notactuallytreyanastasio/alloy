@@ -24,13 +24,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/temper-toolchain
-          key: temper-v0.6.0-linux-x64
+          key: temper-dev-0.6.1-linux-x64-20260307
 
-      - name: Download Temper v0.6.0
+      - name: Download Temper (nightly)
         if: steps.cache-temper.outputs.cache-hit != 'true'
         run: |
           mkdir -p ~/temper-toolchain
-          curl -fSL https://github.com/temperlang/temper/releases/download/v0.6.0/temper-v0.6.0-linux-x64.tgz \
+          curl -fSL "https://github.com/temperlang/temper/releases/download/dev/temper-0.6.1-dev%2B137-g6cbfc29-linux-x64.tgz" \
             -o /tmp/temper.tgz
           tar -xzf /tmp/temper.tgz -C ~/temper-toolchain
 
