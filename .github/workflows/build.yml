@@ -40,19 +40,16 @@ jobs:
             -o /tmp/temper.tgz
           tar -xzf /tmp/temper.tgz -C ~/temper-toolchain
 
-      - name: Add Temper to PATH and inspect layout
+      - name: Create temper wrapper using system JDK
         run: |
-          echo "=== Temper toolchain contents ==="
-          find ~/temper-toolchain -maxdepth 3 -type f | sort
-          echo "=== Finding temper binary ==="
-          TEMPER_BIN=$(find ~/temper-toolchain -name "temper" -type f | head -1)
-          echo "Binary: $TEMPER_BIN"
-          TEMPER_DIR=$(dirname "$TEMPER_BIN")
+          TEMPER_DIR=$(find ~/temper-toolchain -name "temper.jar" -type f | head -1 | xargs dirname)
+          cat > "$TEMPER_DIR/temper" << 'WRAPPER'
+          #!/usr/bin/env sh
+          TEMPER_HOME="$(dirname "$0")"
+          java -jar "$TEMPER_HOME"/temper.jar "$@"
+          WRAPPER
+          chmod +x "$TEMPER_DIR/temper"
           echo "$TEMPER_DIR" >> $GITHUB_PATH
-          echo "=== Binary type ==="
-          file "$TEMPER_BIN"
-          echo "=== Script contents (if shell script) ==="
-          head -20 "$TEMPER_BIN" || true
 
       - name: Verify Temper
         run: |
