@@ -502,41 +502,20 @@ All 184 tests pass across the full suite.
 | ORM-5 | INFO | NEW | `SqlSource` and `appendSafe` are exported escape hatches that could be misused by application code |
 | ORM-6 | LOW | NEW | No upper-bound enforcement on `limit()`/`offset()` values in `toSql()` |
 
-### MITRE CWE Top 25 (2024) Mapping
+### MITRE CWE Top 25 (2024) — SQL-Relevant Mapping
 
-Systematic assessment of the ORM against every CWE in the [2024 Top 25](https://cwe.mitre.org/top25/archive/2024/2024_cwe_top25.html).
+Assessment of the ORM against SQL-relevant CWEs from the [2024 Top 25](https://cwe.mitre.org/top25/archive/2024/2024_cwe_top25.html). Non-SQL CWEs (memory safety, XSS, CSRF, authentication, etc.) are omitted — the ORM is a SQL generation library and those concerns belong to the application layer.
 
-| Rank | CWE | Name | Status | Notes |
-|------|-----|------|--------|-------|
-| 1 | CWE-787 | Out-of-bounds Write | N/A | No manual memory management. All 6 targets are managed runtimes (or Rust with borrow checker). |
-| 2 | CWE-79 | XSS | N/A | The ORM generates SQL, not HTML. XSS is the application layer's responsibility. |
-| 3 | CWE-89 | SQL Injection | **Mitigated** | 5 defense layers: SafeIdentifier, SqlPart hierarchy, SqlBuilder separation, Changeset pipeline, Query builder. JOIN support follows identical patterns. |
-| 4 | CWE-416 | Use After Free | N/A | All target runtimes are garbage-collected or borrow-checked. |
-| 5 | CWE-78 | OS Command Injection | N/A | The ORM produces SQL fragments only — no process spawning. |
-| 6 | CWE-20 | Improper Input Validation | **Mitigated** | `safeIdentifier()` rejects non-`[a-zA-Z_][a-zA-Z0-9_]*]`. Float NaN/Infinity → NULL. Negative limit/offset → bubble. |
-| 7 | CWE-125 | Out-of-bounds Read | N/A | Bounds-checked on all backends. |
-| 8 | CWE-22 | Path Traversal | N/A | No filesystem operations. |
-| 9 | CWE-352 | CSRF | N/A | Library, not a web framework. |
-| 10 | CWE-434 | File Upload | N/A | No file handling. |
-| 11 | CWE-862 | Missing Authorization | N/A | No user/role model — application concern. |
-| 12 | CWE-476 | NULL Pointer Deref | **Partial** | Nullable fields use local-variable narrowing pattern. Test `orelse panic()` is intentional. |
-| 13 | CWE-287 | Improper Authentication | N/A | No auth mechanisms. |
-| 14 | CWE-190 | Integer Overflow | **Partial** | Negative limit/offset rejected. No upper bound on LIMIT (see ORM-6). |
-| 15 | CWE-502 | Deserialization | N/A | Accepts `Map<String, String>` — flat key-value, not serialized objects. |
-| 16 | CWE-77 | Command Injection | N/A | No command execution. |
-| 17 | CWE-119 | Buffer Overflow | N/A | No manual buffer management. |
-| 18 | CWE-798 | Hardcoded Credentials | N/A | No credentials in ORM source. |
-| 19 | CWE-918 | SSRF | N/A | Pure computation library — no network operations. |
-| 20 | CWE-306 | Missing Auth for Critical Func | N/A | No critical functions requiring auth. |
-| 21 | CWE-362 | Race Condition | N/A | Immutable data structures throughout. No shared mutable state. |
-| 22 | CWE-269 | Privilege Management | N/A | No privilege model. |
-| 23 | CWE-94 | Code Injection | N/A | Produces inert SQL strings — no code evaluation. |
-| 24 | CWE-863 | Incorrect Authorization | N/A | No authorization model. |
-| 25 | CWE-276 | Default Permissions | N/A | No file/resource creation. |
-| — | CWE-400 | Resource Consumption | **Mitigated** | `safeToSql(defaultLimit)` enforces result set bounds. |
-| — | CWE-915 | Mass Assignment | **Mitigated** | `cast(allowedFields)` with `SafeIdentifier` whitelist. Sealed `Changeset` interface. |
+| CWE | Name | Status | Notes |
+|-----|------|--------|-------|
+| CWE-89 | SQL Injection | **Mitigated** | 5 defense layers: SafeIdentifier, SqlPart hierarchy, SqlBuilder separation, Changeset pipeline, Query builder. JOIN support follows identical patterns. |
+| CWE-20 | Improper Input Validation | **Mitigated** | `safeIdentifier()` rejects non-`[a-zA-Z_][a-zA-Z0-9_]*]`. Float NaN/Infinity → NULL. Negative limit/offset → bubble. |
+| CWE-190 | Integer Overflow | **Partial** | Negative limit/offset rejected. No upper bound on LIMIT (see ORM-6). |
+| CWE-400 | Resource Consumption | **Mitigated** | `safeToSql(defaultLimit)` enforces result set bounds. Set operations unbounded. |
+| CWE-915 | Mass Assignment | **Mitigated** | `cast(allowedFields)` with `SafeIdentifier` whitelist. Sealed `Changeset` interface. |
+| CWE-284 | Access Control | **Mitigated** | `UpdateQuery`/`DeleteQuery` bubble on empty WHERE — prevents accidental full-table mutations. |
 
-**Summary:** 4 Mitigated, 2 Partial, 19 N/A. No Vulnerable ratings at the ORM level.
+**Summary:** 5 Mitigated, 1 Partial. All SQL-relevant CWEs are mitigated or partially mitigated at the ORM level.
 
 ### JOIN Feature Security Analysis
 

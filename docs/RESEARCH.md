@@ -262,40 +262,18 @@ Systematic security assessment of the Temper ORM against the [MITRE CWE Top 25 (
 
 ## Cumulative CWE Mapping
 
-Updated assessment across all phases (Phases 1-7):
+SQL-relevant assessment across all phases (Phases 1-7). Non-SQL CWEs (memory safety, XSS, CSRF, authentication, OS command injection, etc.) are omitted — the ORM is a SQL generation library and those concerns belong to the application layer.
 
-| Rank | CWE | Name | Status | Phase Impact |
-|------|-----|------|--------|-------------|
-| 1 | CWE-787 | Out-of-bounds Write | N/A | No change |
-| 2 | CWE-79 | XSS | N/A | No change |
-| 3 | CWE-89 | SQL Injection | **Mitigated** | Phases 1-5 add sealed interfaces with hardcoded keywords. Phase 6 adds no SQL paths. Phase 7 adds SqlDefault (hardcoded), PK via SafeIdentifier. |
-| 4 | CWE-416 | Use After Free | N/A | No change |
-| 5 | CWE-78 | OS Command Injection | N/A | No change |
-| 6 | CWE-20 | Improper Input Validation | **Mitigated** | Phase 6 adds numeric range validation. All phases require SafeIdentifier. |
-| 7 | CWE-125 | Out-of-bounds Read | N/A | No change |
-| 8 | CWE-22 | Path Traversal | N/A | No change |
-| 9 | CWE-352 | CSRF | N/A | No change |
-| 10 | CWE-434 | File Upload | N/A | No change |
-| 11 | CWE-862 | Missing Authorization | N/A | No change |
-| 12 | CWE-476 | NULL Pointer Deref | **Partial** | Phase 5 adds 3 new nullable fields. Phase 7 adds 2 more (primaryKey, defaultValue). All use correct narrowing. |
-| 13 | CWE-287 | Improper Authentication | N/A | No change |
-| 14 | CWE-190 | Integer Overflow | **Partial** | Phase 4 rejects negative limit. No upper bound (ORM-6). |
-| 15 | CWE-502 | Deserialization | N/A | No change |
-| 16 | CWE-77 | Command Injection | N/A | No change |
-| 17 | CWE-119 | Buffer Overflow | N/A | No change |
-| 18 | CWE-798 | Hardcoded Credentials | N/A | No change |
-| 19 | CWE-918 | SSRF | N/A | No change |
-| 20 | CWE-306 | Missing Auth for Critical Func | N/A | No change |
-| 21 | CWE-362 | Race Condition | N/A | All data structures remain immutable across all phases. |
-| 22 | CWE-269 | Privilege Management | N/A | No change |
-| 23 | CWE-94 | Code Injection | N/A | No change |
-| 24 | CWE-863 | Incorrect Authorization | N/A | No change |
-| 25 | CWE-276 | Default Permissions | N/A | No change |
-| -- | CWE-400 | Resource Consumption | **Mitigated** | `safeToSql(defaultLimit)` enforces bounds. Set operations unbounded (P3-2). |
-| -- | CWE-915 | Mass Assignment | **Mitigated** | Sealed Changeset preserved through Phase 6. |
-| -- | CWE-284 | Access Control | **Mitigated** | Phase 4 adds no-WHERE guards for UPDATE/DELETE. |
+| CWE | Name | Status | Phase Impact |
+|-----|------|--------|-------------|
+| CWE-89 | SQL Injection | **Mitigated** | Phases 1-5 add sealed interfaces with hardcoded keywords. Phase 6 adds no SQL paths. Phase 7 adds SqlDefault (hardcoded), PK via SafeIdentifier. |
+| CWE-20 | Improper Input Validation | **Mitigated** | SafeIdentifier validates all identifiers. Phase 6 adds numeric range validation. Phase 7 validates PK names. |
+| CWE-190 | Integer Overflow | **Partial** | Phase 4 rejects negative limit. No upper bound on LIMIT values (ORM-6). |
+| CWE-400 | Resource Consumption | **Mitigated** | `safeToSql(defaultLimit)` enforces result set bounds. Set operations unbounded (P3-2). |
+| CWE-915 | Mass Assignment | **Mitigated** | Sealed Changeset + `cast(allowedFields)` whitelist preserved through Phase 6. |
+| CWE-284 | Access Control | **Mitigated** | Phase 4 adds no-WHERE guards for batch UPDATE/DELETE. |
 
-**Summary:** 5 Mitigated, 2 Partial, 19 N/A. No Vulnerable ratings at the ORM level. Phase 7 introduces no new vulnerabilities.
+**Summary:** 5 Mitigated, 1 Partial. All SQL-relevant CWEs are mitigated or partially mitigated. No Vulnerable ratings at the ORM level.
 
 ## Test Coverage
 
