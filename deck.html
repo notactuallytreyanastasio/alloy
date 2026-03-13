@@ -5,56 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Temper: Write Once, Secure Everywhere</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/black.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/white.css">
 <style>
   :root {
-    --r-background-color: #000;
+    --r-background-color: #fff;
     --r-main-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --r-heading-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --r-main-color: #ccc;
-    --r-heading-color: #fff;
-    --r-link-color: #999;
-    --r-link-color-hover: #fff;
+    --r-main-color: #444;
+    --r-heading-color: #111;
+    --r-link-color: #666;
+    --r-link-color-hover: #000;
     --r-heading-text-transform: none;
     --r-heading-font-weight: 600;
   }
   .reveal { font-size: 32px; }
-  .reveal h1 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.02em; }
-  .reveal h2 { font-size: 1.6em; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.6em; }
-  .reveal h3 { font-size: 0.7em; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: #666; margin-bottom: 0.4em; }
-  .reveal p { font-size: 0.75em; line-height: 1.6; color: #999; }
-  .reveal li { font-size: 0.7em; line-height: 1.6; color: #999; margin-bottom: 0.3em; }
+  .reveal h1 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.02em; color: #000; }
+  .reveal h2 { font-size: 1.6em; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.6em; color: #111; }
+  .reveal h3 { font-size: 0.7em; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: #999; margin-bottom: 0.4em; }
+  .reveal p { font-size: 0.75em; line-height: 1.6; color: #555; }
+  .reveal li { font-size: 0.7em; line-height: 1.6; color: #555; margin-bottom: 0.3em; }
   .reveal ul { list-style: none; padding-left: 0; }
-  .reveal ul li::before { content: "\2014"; margin-right: 0.6em; color: #444; }
-  .reveal strong { color: #fff; font-weight: 600; }
-  .reveal em { color: #bbb; }
-  .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85em; color: #aaa; }
+  .reveal ul li::before { content: "\2014"; margin-right: 0.6em; color: #bbb; }
+  .reveal strong { color: #000; font-weight: 600; }
+  .reveal em { color: #444; }
+  .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85em; color: #555; }
   .reveal table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.65em; }
-  .reveal th { text-align: left; padding: 8px 12px; color: #666; border-bottom: 1px solid #333; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
-  .reveal td { padding: 8px 12px; border-bottom: 1px solid #181818; color: #999; }
-  .reveal .big-num { font-size: 3.5em; font-weight: 800; line-height: 1; color: #fff; }
+  .reveal th { text-align: left; padding: 8px 12px; color: #999; border-bottom: 1px solid #ddd; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
+  .reveal td { padding: 8px 12px; border-bottom: 1px solid #eee; color: #555; }
+  .reveal .big-num { font-size: 3.5em; font-weight: 800; line-height: 1; color: #000; }
   .reveal .stat-row { display: flex; gap: 60px; justify-content: center; margin: 0.8em 0; }
   .reveal .stat { text-align: center; }
-  .reveal .stat .label { font-size: 0.55em; color: #666; margin-top: 4px; }
+  .reveal .stat .label { font-size: 0.55em; color: #999; margin-top: 4px; }
   .reveal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 0.8em 0; text-align: left; }
-  .reveal .card { border: 1px solid #222; padding: 24px; }
-  .reveal .card h4 { font-size: 0.75em; font-weight: 600; color: #fff; margin-bottom: 12px; text-transform: none; }
+  .reveal .card { border: 1px solid #ddd; padding: 24px; }
+  .reveal .card h4 { font-size: 0.75em; font-weight: 600; color: #111; margin-bottom: 12px; text-transform: none; }
   .reveal .card p, .reveal .card li { font-size: 0.6em; }
   .reveal .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 0.8em 0; }
-  .reveal .flow-box { border: 1px solid #333; padding: 8px 16px; font-size: 0.6em; color: #999; }
-  .reveal .flow-arrow { color: #555; font-size: 0.9em; }
-  .reveal .code-block { background: #0a0a0a; border: 1px solid #222; padding: 16px 20px; margin: 0.6em 0; font-family: 'SF Mono', monospace; font-size: 0.55em; line-height: 1.8; text-align: left; color: #888; }
-  .reveal .diff-add { color: #fff; }
-  .reveal .diff-rm { color: #555; text-decoration: line-through; }
-  .reveal .dim { color: #555; }
+  .reveal .flow-box { border: 1px solid #ccc; padding: 8px 16px; font-size: 0.6em; color: #555; }
+  .reveal .flow-arrow { color: #aaa; font-size: 0.9em; }
+  .reveal .code-block { background: #f7f7f7; border: 1px solid #ddd; padding: 16px 20px; margin: 0.6em 0; font-family: 'SF Mono', monospace; font-size: 0.55em; line-height: 1.8; text-align: left; color: #444; }
+  .reveal .diff-add { color: #000; font-weight: 600; }
+  .reveal .diff-rm { color: #aaa; text-decoration: line-through; }
+  .reveal .dim { color: #aaa; }
   .reveal .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
   .reveal .vs { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 0.6em 0; }
   .reveal .vs-side { flex: 1; text-align: center; }
-  .reveal .vs-divider { font-size: 1.2em; font-weight: 300; color: #333; }
-  .reveal .footnote { font-size: 0.45em; color: #444; margin-top: 1.5em; }
+  .reveal .vs-divider { font-size: 1.2em; font-weight: 300; color: #ccc; }
+  .reveal .footnote { font-size: 0.45em; color: #bbb; margin-top: 1.5em; }
   .reveal .lang-row { display: flex; gap: 16px; justify-content: center; margin-top: 1.5em; flex-wrap: wrap; }
-  .reveal .lang-pill { border: 1px solid #333; padding: 6px 16px; font-size: 0.55em; color: #666; letter-spacing: 0.05em; }
-  .reveal blockquote { border-left: 2px solid #333; padding-left: 20px; margin: 0.8em 0; font-style: italic; }
+  .reveal .lang-pill { border: 1px solid #ccc; padding: 6px 16px; font-size: 0.55em; color: #888; letter-spacing: 0.05em; }
+  .reveal blockquote { border-left: 2px solid #ccc; padding-left: 20px; margin: 0.8em 0; font-style: italic; }
   .reveal blockquote p { color: #777; font-size: 0.7em; }
 </style>
 </head>
@@ -66,8 +66,8 @@
 <!-- SLIDE 1: Title -->
 <section>
   <h1>Temper</h1>
-  <p style="font-size: 1em; color: #666; margin-top: 0.2em;">Write Once, Secure Everywhere</p>
-  <p style="font-size: 0.6em; color: #444; margin-top: 1.5em;">A cross-compiled language for security-critical infrastructure at scale</p>
+  <p style="font-size: 1em; color: #888; margin-top: 0.2em;">Write Once, Secure Everywhere</p>
+  <p style="font-size: 0.6em; color: #aaa; margin-top: 1.5em;">A cross-compiled language for security-critical infrastructure at scale</p>
   <div class="lang-row">
     <span class="lang-pill">JavaScript</span>
     <span class="lang-pill">Python</span>
@@ -75,6 +75,7 @@
     <span class="lang-pill">Java</span>
     <span class="lang-pill">Lua</span>
     <span class="lang-pill">C#</span>
+    <span class="lang-pill" style="border-style: dashed;">and more to come...</span>
   </div>
 </section>
 
@@ -107,7 +108,7 @@
   <h2>One source. Six backends. Zero drift.</h2>
   <p>Temper compiles a single source tree to idiomatic output in 6 languages. Not transpilation &mdash; native, typed, importable libraries.</p>
   <div class="flow">
-    <div class="flow-box" style="border-color: #666;">Temper Source</div>
+    <div class="flow-box" style="border-color: #999;">Temper Source</div>
     <span class="flow-arrow">&rarr;</span>
     <div class="flow-box"><code>temper build</code></div>
     <span class="flow-arrow">&rarr;</span>
@@ -202,13 +203,13 @@
   <div class="vs">
     <div class="vs-side">
       <div class="big-num" style="font-size: 2.5em;">F</div>
-      <p style="font-size: 0.8em; font-weight: 600; color: #fff; margin: 8px 0;">SomeORM <span style="color:#555">(Ruby)</span></p>
+      <p style="font-size: 0.8em; font-weight: 600; color: #000; margin: 8px 0;">SomeORM <span style="color:#999">(Ruby)</span></p>
       <p style="font-size: 0.55em;">CVSS 9.8</p>
     </div>
     <div class="vs-divider">vs</div>
     <div class="vs-side">
       <div class="big-num" style="font-size: 2.5em;">A</div>
-      <p style="font-size: 0.8em; font-weight: 600; color: #fff; margin: 8px 0;">Generic ORM <span style="color:#555">(Temper)</span></p>
+      <p style="font-size: 0.8em; font-weight: 600; color: #000; margin: 8px 0;">Generic ORM <span style="color:#999">(Temper)</span></p>
       <p style="font-size: 0.55em;">0 injection vulnerabilities</p>
     </div>
   </div>
@@ -283,7 +284,7 @@
       <div class="big-num" style="font-size: 2.8em;">3,600</div>
       <div class="label">libraries to patch today</div>
     </div>
-    <div class="stat" style="align-self: center; color: #333; font-size: 1.2em;">&rarr;</div>
+    <div class="stat" style="align-self: center; color: #ccc; font-size: 1.2em;">&rarr;</div>
     <div class="stat">
       <div class="big-num" style="font-size: 2.8em;">300</div>
       <div class="label">Temper sources to maintain</div>
@@ -353,9 +354,9 @@
       <div class="label">compile-time<br>defense layers</div>
     </div>
   </div>
-  <p style="margin-top: 1.2em; font-size: 0.85em; color: #666;">Temper does not just reduce development surface area.</p>
-  <p style="font-size: 0.95em; color: #fff; font-weight: 600; margin-top: 0.2em;">It makes security a compile-time guarantee, not a runtime hope.</p>
-  <p style="margin-top: 1.5em; font-size: 0.5em; color: #444;">
+  <p style="margin-top: 1.2em; font-size: 0.85em; color: #888;">Temper does not just reduce development surface area.</p>
+  <p style="font-size: 0.95em; color: #000; font-weight: 600; margin-top: 0.2em;">It makes security a compile-time guarantee, not a runtime hope.</p>
+  <p style="margin-top: 1.5em; font-size: 0.5em; color: #aaa;">
     github.com/temperlang/temper &nbsp;&bull;&nbsp; github.com/notactuallytreyanastasio/generic_orm
   </p>
 </section>
