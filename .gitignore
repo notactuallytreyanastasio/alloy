@@ -3,3 +3,16 @@ node_modules/
 .DS_Store
 *~
 *.swp
+apps/
+
+# Build artifacts
+__pycache__/
+*.pyc
+target/
+*.db
+*.db-shm
+*.db-wal
+.gradle/
+build/
+bin/
+obj/
