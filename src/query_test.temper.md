@@ -544,3 +544,123 @@
       let s = q.toSql().toString();
       assert(s == "SELECT * FROM users WHERE EXISTS (SELECT * FROM orders WHERE orders.user_id = users.id)") { "exists in where: ${s}" };
     }
+
+    // --- Phase 4: Batch UPDATE and DELETE Tests ---
+
+    test("UpdateQuery basic") {
+      let q = do {
+        update(sid("users"))
+          .set(sid("name"), new SqlString("Alice"))
+          .where(sql"id = ${1}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "UPDATE users SET name = 'Alice' WHERE id = 1") { "update basic" };
+    }
+
+    test("UpdateQuery multiple SET") {
+      let q = do {
+        update(sid("users"))
+          .set(sid("name"), new SqlString("Bob"))
+          .set(sid("age"), new SqlInt32(30))
+          .where(sql"id = ${2}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "UPDATE users SET name = 'Bob', age = 30 WHERE id = 2") { "update multi set" };
+    }
+
+    test("UpdateQuery multiple WHERE") {
+      let q = do {
+        update(sid("users"))
+          .set(sid("active"), new SqlBoolean(false))
+          .where(sql"age < ${18}")
+          .where(sql"role = ${"guest"}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "UPDATE users SET active = FALSE WHERE age < 18 AND role = 'guest'") { "update multi where" };
+    }
+
+    test("UpdateQuery orWhere") {
+      let q = do {
+        update(sid("users"))
+          .set(sid("status"), new SqlString("banned"))
+          .where(sql"spam_count > ${10}")
+          .orWhere(sql"reported = ${true}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "UPDATE users SET status = 'banned' WHERE spam_count > 10 OR reported = TRUE") { "update orWhere" };
+    }
+
+    test("UpdateQuery bubbles without WHERE") {
+      let didBubble = do { update(sid("users")).set(sid("x"), new SqlInt32(1)).toSql(); false } orelse true;
+      assert(didBubble) { "update without WHERE should bubble" };
+    }
+
+    test("UpdateQuery bubbles without SET") {
+      let didBubble = do { update(sid("users")).where(sql"id = ${1}").toSql(); false } orelse true;
+      assert(didBubble) { "update without SET should bubble" };
+    }
+
+    test("UpdateQuery with limit") {
+      let q = do {
+        update(sid("users"))
+          .set(sid("active"), new SqlBoolean(false))
+          .where(sql"last_login < ${"2024-01-01"}")
+          .limit(100)
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "UPDATE users SET active = FALSE WHERE last_login < '2024-01-01' LIMIT 100") { "update limit" };
+    }
+
+    test("UpdateQuery escaping") {
+      let q = do {
+        update(sid("users"))
+          .set(sid("bio"), new SqlString("It's a test"))
+          .where(sql"id = ${1}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "UPDATE users SET bio = 'It''s a test' WHERE id = 1") { "update escaping" };
+    }
+
+    test("DeleteQuery basic") {
+      let q = do {
+        deleteFrom(sid("users"))
+          .where(sql"id = ${1}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "DELETE FROM users WHERE id = 1") { "delete basic" };
+    }
+
+    test("DeleteQuery multiple WHERE") {
+      let q = do {
+        deleteFrom(sid("logs"))
+          .where(sql"created_at < ${"2024-01-01"}")
+          .where(sql"level = ${"debug"}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "DELETE FROM logs WHERE created_at < '2024-01-01' AND level = 'debug'") { "delete multi where" };
+    }
+
+    test("DeleteQuery bubbles without WHERE") {
+      let didBubble = do { deleteFrom(sid("users")).toSql(); false } orelse true;
+      assert(didBubble) { "delete without WHERE should bubble" };
+    }
+
+    test("DeleteQuery orWhere") {
+      let q = do {
+        deleteFrom(sid("sessions"))
+          .where(sql"expired = ${true}")
+          .orWhere(sql"created_at < ${"2023-01-01"}")
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "DELETE FROM sessions WHERE expired = TRUE OR created_at < '2023-01-01'") { "delete orWhere" };
+    }
+
+    test("DeleteQuery with limit") {
+      let q = do {
+        deleteFrom(sid("logs"))
+          .where(sql"level = ${"debug"}")
+          .limit(1000)
+          .toSql()
+      } orelse panic();
+      assert(q.toString() == "DELETE FROM logs WHERE level = 'debug' LIMIT 1000") { "delete limit" };
+    }

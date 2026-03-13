@@ -589,3 +589,154 @@ with an alias for use in FROM clauses. `existsSql` wraps a query in EXISTS().
       b.appendSafe(")");
       b.accumulated
     }
+
+## SetClause
+
+A single SET assignment for UPDATE queries. Both the field name and value
+are type-safe: field is a `SafeIdentifier`, value is an `SqlPart`.
+
+    export class SetClause(
+      public field: SafeIdentifier,
+      public value: SqlPart,
+    ) {}
+
+## UpdateQuery
+
+Immutable batch UPDATE builder. Safety: `toSql()` bubbles if no WHERE
+conditions are present, preventing accidental full-table updates.
+
+    export class UpdateQuery(
+      public tableName: SafeIdentifier,
+      public setClauses: List<SetClause>,
+      public conditions: List<WhereClause>,
+      public limitVal: Int?,
+    ) {
+
+      // set: adds a SET assignment
+      public set(field: SafeIdentifier, value: SqlPart): UpdateQuery {
+        let nb = setClauses.toListBuilder();
+        nb.add(new SetClause(field, value));
+        new UpdateQuery(tableName, nb.toList(), conditions, limitVal)
+      }
+
+      // where: AND condition
+      public where(condition: SqlFragment): UpdateQuery {
+        let nb = conditions.toListBuilder();
+        nb.add(new AndCondition(condition));
+        new UpdateQuery(tableName, setClauses, nb.toList(), limitVal)
+      }
+
+      // orWhere: OR condition
+      public orWhere(condition: SqlFragment): UpdateQuery {
+        let nb = conditions.toListBuilder();
+        nb.add(new OrCondition(condition));
+        new UpdateQuery(tableName, setClauses, nb.toList(), limitVal)
+      }
+
+      // limit
+      public limit(n: Int): UpdateQuery throws Bubble {
+        if (n < 0) { bubble() }
+        new UpdateQuery(tableName, setClauses, conditions, n)
+      }
+
+      // toSql: bubbles if no WHERE (prevents accidental full-table update)
+      public toSql(): SqlFragment throws Bubble {
+        if (conditions.isEmpty) { bubble() }
+        if (setClauses.isEmpty) { bubble() }
+        let b = new SqlBuilder();
+        b.appendSafe("UPDATE ");
+        b.appendSafe(tableName.sqlValue);
+        b.appendSafe(" SET ");
+        b.appendSafe(setClauses[0].field.sqlValue);
+        b.appendSafe(" = ");
+        b.appendPart(setClauses[0].value);
+        for (var i = 1; i < setClauses.length; ++i) {
+          b.appendSafe(", ");
+          b.appendSafe(setClauses[i].field.sqlValue);
+          b.appendSafe(" = ");
+          b.appendPart(setClauses[i].value);
+        }
+        b.appendSafe(" WHERE ");
+        b.appendFragment(conditions[0].condition);
+        for (var i = 1; i < conditions.length; ++i) {
+          b.appendSafe(" ");
+          b.appendSafe(conditions[i].keyword());
+          b.appendSafe(" ");
+          b.appendFragment(conditions[i].condition);
+        }
+        let lv = limitVal;
+        if (lv != null) {
+          b.appendSafe(" LIMIT ");
+          b.appendInt32(lv);
+        }
+        b.accumulated
+      }
+
+    }
+
+## DeleteQuery
+
+Immutable batch DELETE builder. Safety: `toSql()` bubbles if no WHERE
+conditions are present, preventing accidental full-table deletes.
+
+    export class DeleteQuery(
+      public tableName: SafeIdentifier,
+      public conditions: List<WhereClause>,
+      public limitVal: Int?,
+    ) {
+
+      // where: AND condition
+      public where(condition: SqlFragment): DeleteQuery {
+        let nb = conditions.toListBuilder();
+        nb.add(new AndCondition(condition));
+        new DeleteQuery(tableName, nb.toList(), limitVal)
+      }
+
+      // orWhere: OR condition
+      public orWhere(condition: SqlFragment): DeleteQuery {
+        let nb = conditions.toListBuilder();
+        nb.add(new OrCondition(condition));
+        new DeleteQuery(tableName, nb.toList(), limitVal)
+      }
+
+      // limit
+      public limit(n: Int): DeleteQuery throws Bubble {
+        if (n < 0) { bubble() }
+        new DeleteQuery(tableName, conditions, n)
+      }
+
+      // toSql: bubbles if no WHERE (prevents accidental full-table delete)
+      public toSql(): SqlFragment throws Bubble {
+        if (conditions.isEmpty) { bubble() }
+        let b = new SqlBuilder();
+        b.appendSafe("DELETE FROM ");
+        b.appendSafe(tableName.sqlValue);
+        b.appendSafe(" WHERE ");
+        b.appendFragment(conditions[0].condition);
+        for (var i = 1; i < conditions.length; ++i) {
+          b.appendSafe(" ");
+          b.appendSafe(conditions[i].keyword());
+          b.appendSafe(" ");
+          b.appendFragment(conditions[i].condition);
+        }
+        let lv = limitVal;
+        if (lv != null) {
+          b.appendSafe(" LIMIT ");
+          b.appendInt32(lv);
+        }
+        b.accumulated
+      }
+
+    }
+
+## update / deleteFrom
+
+Factory functions for UpdateQuery and DeleteQuery.
+
+    export let update(tableName: SafeIdentifier): UpdateQuery {
+      new UpdateQuery(tableName, [], [], null)
+    }
+
+    export let deleteFrom(tableName: SafeIdentifier): DeleteQuery {
+      new DeleteQuery(tableName, [], null)
+    }
