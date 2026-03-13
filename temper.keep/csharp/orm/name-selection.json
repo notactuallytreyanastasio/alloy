@@ -17,6 +17,30 @@
             "selected-name": "Message"
         },
         {
+            "qualified-name": "orm/src.type NumberValidationOpts",
+            "selected-name": "NumberValidationOpts"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.greaterThan",
+            "selected-name": "GreaterThan"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.lessThan",
+            "selected-name": "LessThan"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.greaterThanOrEqual",
+            "selected-name": "GreaterThanOrEqual"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.lessThanOrEqual",
+            "selected-name": "LessThanOrEqual"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.equalTo",
+            "selected-name": "EqualTo"
+        },
+        {
             "qualified-name": "orm/src.type Changeset",
             "selected-name": "Changeset"
         },
@@ -65,6 +89,50 @@
             "selected-name": "ValidateBool"
         },
         {
+            "qualified-name": "orm/src.type Changeset.putChange()",
+            "selected-name": "PutChange"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.getChange()",
+            "selected-name": "GetChange"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.deleteChange()",
+            "selected-name": "DeleteChange"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateInclusion()",
+            "selected-name": "ValidateInclusion"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateExclusion()",
+            "selected-name": "ValidateExclusion"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateNumber()",
+            "selected-name": "ValidateNumber"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateAcceptance()",
+            "selected-name": "ValidateAcceptance"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateConfirmation()",
+            "selected-name": "ValidateConfirmation"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateContains()",
+            "selected-name": "ValidateContains"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateStartsWith()",
+            "selected-name": "ValidateStartsWith"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateEndsWith()",
+            "selected-name": "ValidateEndsWith"
+        },
+        {
             "qualified-name": "orm/src.type Changeset.toInsertSql()",
             "selected-name": "ToInsertSql"
         },
@@ -91,6 +159,10 @@
         {
             "qualified-name": "orm/src.type ChangesetImpl.get isValid()",
             "selected-name": "IsValid"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.addError()",
+            "selected-name": "AddError"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.cast()",
@@ -121,6 +193,50 @@
             "selected-name": "ValidateBool"
         },
         {
+            "qualified-name": "orm/src.type ChangesetImpl.putChange()",
+            "selected-name": "PutChange"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.getChange()",
+            "selected-name": "GetChange"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.deleteChange()",
+            "selected-name": "DeleteChange"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInclusion()",
+            "selected-name": "ValidateInclusion"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateExclusion()",
+            "selected-name": "ValidateExclusion"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber()",
+            "selected-name": "ValidateNumber"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateAcceptance()",
+            "selected-name": "ValidateAcceptance"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateConfirmation()",
+            "selected-name": "ValidateConfirmation"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateContains()",
+            "selected-name": "ValidateContains"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateStartsWith()",
+            "selected-name": "ValidateStartsWith"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith()",
+            "selected-name": "ValidateEndsWith"
+        },
+        {
             "qualified-name": "orm/src.type ChangesetImpl.parseBoolSqlPart()",
             "selected-name": "ParseBoolSqlPart"
         },
@@ -137,6 +253,94 @@
             "selected-name": "ToUpdateSql"
         },
         {
+            "qualified-name": "orm/src.type JoinType",
+            "selected-name": "JoinType"
+        },
+        {
+            "qualified-name": "orm/src.type JoinType.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type InnerJoin",
+            "selected-name": "InnerJoin"
+        },
+        {
+            "qualified-name": "orm/src.type InnerJoin.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type LeftJoin",
+            "selected-name": "LeftJoin"
+        },
+        {
+            "qualified-name": "orm/src.type LeftJoin.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type RightJoin",
+            "selected-name": "RightJoin"
+        },
+        {
+            "qualified-name": "orm/src.type RightJoin.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type FullJoin",
+            "selected-name": "FullJoin"
+        },
+        {
+            "qualified-name": "orm/src.type FullJoin.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type CrossJoin",
+            "selected-name": "CrossJoin"
+        },
+        {
+            "qualified-name": "orm/src.type CrossJoin.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause",
+            "selected-name": "JoinClause"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.joinType",
+            "selected-name": "JoinType"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.table",
+            "selected-name": "Table"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.onCondition",
+            "selected-name": "OnCondition"
+        },
+        {
+            "qualified-name": "orm/src.type NullsPosition",
+            "selected-name": "NullsPosition"
+        },
+        {
+            "qualified-name": "orm/src.type NullsPosition.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type NullsFirst",
+            "selected-name": "NullsFirst"
+        },
+        {
+            "qualified-name": "orm/src.type NullsFirst.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type NullsLast",
+            "selected-name": "NullsLast"
+        },
+        {
+            "qualified-name": "orm/src.type NullsLast.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
             "qualified-name": "orm/src.type OrderClause",
             "selected-name": "OrderClause"
         },
@@ -149,6 +353,70 @@
             "selected-name": "Ascending"
         },
         {
+            "qualified-name": "orm/src.type OrderClause.nullsPos",
+            "selected-name": "NullsPos"
+        },
+        {
+            "qualified-name": "orm/src.type LockMode",
+            "selected-name": "LockMode"
+        },
+        {
+            "qualified-name": "orm/src.type LockMode.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type ForUpdate",
+            "selected-name": "ForUpdate"
+        },
+        {
+            "qualified-name": "orm/src.type ForUpdate.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type ForShare",
+            "selected-name": "ForShare"
+        },
+        {
+            "qualified-name": "orm/src.type ForShare.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause",
+            "selected-name": "WhereClause"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause.get condition()",
+            "selected-name": "Condition"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition",
+            "selected-name": "AndCondition"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition.get condition()",
+            "selected-name": "Condition"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition",
+            "selected-name": "OrCondition"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition.get condition()",
+            "selected-name": "Condition"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition.keyword()",
+            "selected-name": "Keyword"
+        },
+        {
             "qualified-name": "orm/src.type Query",
             "selected-name": "Query"
         },
@@ -157,12 +425,56 @@
             "selected-name": "Where"
         },
         {
+            "qualified-name": "orm/src.type Query.orWhere()",
+            "selected-name": "OrWhere"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNull()",
+            "selected-name": "WhereNull"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNotNull()",
+            "selected-name": "WhereNotNull"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereIn()",
+            "selected-name": "WhereIn"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereInSubquery()",
+            "selected-name": "WhereInSubquery"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNot()",
+            "selected-name": "WhereNot"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereBetween()",
+            "selected-name": "WhereBetween"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereLike()",
+            "selected-name": "WhereLike"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereILike()",
+            "selected-name": "WhereILike"
+        },
+        {
             "qualified-name": "orm/src.type Query.select()",
             "selected-name": "Select"
         },
         {
+            "qualified-name": "orm/src.type Query.selectExpr()",
+            "selected-name": "SelectExpr"
+        },
+        {
             "qualified-name": "orm/src.type Query.orderBy()",
             "selected-name": "OrderBy"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderByNulls()",
+            "selected-name": "OrderByNulls"
         },
         {
             "qualified-name": "orm/src.type Query.limit()",
@@ -173,8 +485,56 @@
             "selected-name": "Offset"
         },
         {
+            "qualified-name": "orm/src.type Query.join()",
+            "selected-name": "Join"
+        },
+        {
+            "qualified-name": "orm/src.type Query.innerJoin()",
+            "selected-name": "InnerJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.leftJoin()",
+            "selected-name": "LeftJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.rightJoin()",
+            "selected-name": "RightJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.fullJoin()",
+            "selected-name": "FullJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.crossJoin()",
+            "selected-name": "CrossJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.groupBy()",
+            "selected-name": "GroupBy"
+        },
+        {
+            "qualified-name": "orm/src.type Query.having()",
+            "selected-name": "Having"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orHaving()",
+            "selected-name": "OrHaving"
+        },
+        {
+            "qualified-name": "orm/src.type Query.distinct()",
+            "selected-name": "Distinct"
+        },
+        {
+            "qualified-name": "orm/src.type Query.lock()",
+            "selected-name": "Lock"
+        },
+        {
             "qualified-name": "orm/src.type Query.toSql()",
             "selected-name": "ToSql"
+        },
+        {
+            "qualified-name": "orm/src.type Query.countSql()",
+            "selected-name": "CountSql"
         },
         {
             "qualified-name": "orm/src.type Query.safeToSql()",
@@ -203,6 +563,114 @@
         {
             "qualified-name": "orm/src.type Query.offsetVal",
             "selected-name": "OffsetVal"
+        },
+        {
+            "qualified-name": "orm/src.type Query.joinClauses",
+            "selected-name": "JoinClauses"
+        },
+        {
+            "qualified-name": "orm/src.type Query.groupByFields",
+            "selected-name": "GroupByFields"
+        },
+        {
+            "qualified-name": "orm/src.type Query.havingConditions",
+            "selected-name": "HavingConditions"
+        },
+        {
+            "qualified-name": "orm/src.type Query.isDistinct",
+            "selected-name": "IsDistinct"
+        },
+        {
+            "qualified-name": "orm/src.type Query.selectExprs",
+            "selected-name": "SelectExprs"
+        },
+        {
+            "qualified-name": "orm/src.type Query.lockMode",
+            "selected-name": "LockMode"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause",
+            "selected-name": "SetClause"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause.field",
+            "selected-name": "Field"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery",
+            "selected-name": "UpdateQuery"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.set()",
+            "selected-name": "Set"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.where()",
+            "selected-name": "Where"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.orWhere()",
+            "selected-name": "OrWhere"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.limit()",
+            "selected-name": "Limit"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.toSql()",
+            "selected-name": "ToSql"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.tableName",
+            "selected-name": "TableName"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.setClauses",
+            "selected-name": "SetClauses"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.conditions",
+            "selected-name": "Conditions"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.limitVal",
+            "selected-name": "LimitVal"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery",
+            "selected-name": "DeleteQuery"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.where()",
+            "selected-name": "Where"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.orWhere()",
+            "selected-name": "OrWhere"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.limit()",
+            "selected-name": "Limit"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.toSql()",
+            "selected-name": "ToSql"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.tableName",
+            "selected-name": "TableName"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.conditions",
+            "selected-name": "Conditions"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.limitVal",
+            "selected-name": "LimitVal"
         },
         {
             "qualified-name": "orm/src.type SafeIdentifier",
@@ -265,6 +733,14 @@
             "selected-name": "Nullable"
         },
         {
+            "qualified-name": "orm/src.type FieldDef.defaultValue",
+            "selected-name": "DefaultValue"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.virtual",
+            "selected-name": "Virtual"
+        },
+        {
             "qualified-name": "orm/src.type TableDef",
             "selected-name": "TableDef"
         },
@@ -273,12 +749,20 @@
             "selected-name": "Field"
         },
         {
+            "qualified-name": "orm/src.type TableDef.pkName()",
+            "selected-name": "PkName"
+        },
+        {
             "qualified-name": "orm/src.type TableDef.tableName",
             "selected-name": "TableName"
         },
         {
             "qualified-name": "orm/src.type TableDef.fields",
             "selected-name": "Fields"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.primaryKey",
+            "selected-name": "PrimaryKey"
         },
         {
             "qualified-name": "orm/src.type SqlBuilder",
@@ -453,6 +937,14 @@
             "selected-name": "Value"
         },
         {
+            "qualified-name": "orm/src.type SqlDefault",
+            "selected-name": "SqlDefault"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDefault.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
             "qualified-name": "orm/src.type SqlString",
             "selected-name": "SqlString"
         },
@@ -473,12 +965,76 @@
             "selected-name": "SafeIdentifier"
         },
         {
+            "qualified-name": "orm/src.timestamps()",
+            "selected-name": "Timestamps"
+        },
+        {
             "qualified-name": "orm/src.deleteSql()",
             "selected-name": "DeleteSql"
         },
         {
             "qualified-name": "orm/src.from()",
             "selected-name": "From"
+        },
+        {
+            "qualified-name": "orm/src.col()",
+            "selected-name": "Col"
+        },
+        {
+            "qualified-name": "orm/src.countAll()",
+            "selected-name": "CountAll"
+        },
+        {
+            "qualified-name": "orm/src.countCol()",
+            "selected-name": "CountCol"
+        },
+        {
+            "qualified-name": "orm/src.sumCol()",
+            "selected-name": "SumCol"
+        },
+        {
+            "qualified-name": "orm/src.avgCol()",
+            "selected-name": "AvgCol"
+        },
+        {
+            "qualified-name": "orm/src.minCol()",
+            "selected-name": "MinCol"
+        },
+        {
+            "qualified-name": "orm/src.maxCol()",
+            "selected-name": "MaxCol"
+        },
+        {
+            "qualified-name": "orm/src.unionSql()",
+            "selected-name": "UnionSql"
+        },
+        {
+            "qualified-name": "orm/src.unionAllSql()",
+            "selected-name": "UnionAllSql"
+        },
+        {
+            "qualified-name": "orm/src.intersectSql()",
+            "selected-name": "IntersectSql"
+        },
+        {
+            "qualified-name": "orm/src.exceptSql()",
+            "selected-name": "ExceptSql"
+        },
+        {
+            "qualified-name": "orm/src.subquery()",
+            "selected-name": "Subquery"
+        },
+        {
+            "qualified-name": "orm/src.existsSql()",
+            "selected-name": "ExistsSql"
+        },
+        {
+            "qualified-name": "orm/src.update()",
+            "selected-name": "Update"
+        },
+        {
+            "qualified-name": "orm/src.deleteFrom()",
+            "selected-name": "DeleteFrom"
         }
     ]
 }

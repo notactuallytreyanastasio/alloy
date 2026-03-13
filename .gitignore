@@ -3,8 +3,6 @@ node_modules/
 .DS_Store
 *~
 *.swp
-apps/
-
 # Build artifacts
 __pycache__/
 *.pyc

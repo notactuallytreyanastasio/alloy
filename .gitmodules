@@ -1,0 +1,21 @@
+[submodule "apps/alloy-js-app"]
+	path = apps/alloy-js-app
+	url = git@github.com:notactuallytreyanastasio/alloy-js-app.git
+[submodule "apps/alloy-py-app"]
+	path = apps/alloy-py-app
+	url = git@github.com:notactuallytreyanastasio/alloy-py-app.git
+[submodule "apps/alloy-rust-app"]
+	path = apps/alloy-rust-app
+	url = git@github.com:notactuallytreyanastasio/alloy-rust-app.git
+[submodule "apps/alloy-java-app"]
+	path = apps/alloy-java-app
+	url = git@github.com:notactuallytreyanastasio/alloy-java-app.git
+[submodule "apps/alloy-lua-app"]
+	path = apps/alloy-lua-app
+	url = git@github.com:notactuallytreyanastasio/alloy-lua-app.git
+[submodule "apps/alloy-csharp-app"]
+	path = apps/alloy-csharp-app
+	url = git@github.com:notactuallytreyanastasio/alloy-csharp-app.git
+[submodule "apps/juice-shop"]
+	path = apps/juice-shop
+	url = git@github.com:juice-shop/juice-shop.git

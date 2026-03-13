@@ -21,6 +21,34 @@
             "selected-name": "constructor"
         },
         {
+            "qualified-name": "orm/src.type NumberValidationOpts",
+            "selected-name": "NumberValidationOpts"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.greaterThan",
+            "selected-name": "greaterThan"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.lessThan",
+            "selected-name": "lessThan"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.greaterThanOrEqual",
+            "selected-name": "greaterThanOrEqual"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.lessThanOrEqual",
+            "selected-name": "lessThanOrEqual"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.equalTo",
+            "selected-name": "equalTo"
+        },
+        {
+            "qualified-name": "orm/src.type NumberValidationOpts.constructor()",
+            "selected-name": "constructor"
+        },
+        {
             "qualified-name": "orm/src.type Changeset",
             "selected-name": "Changeset"
         },
@@ -93,6 +121,50 @@
             "selected-name": "validateBool"
         },
         {
+            "qualified-name": "orm/src.type Changeset.putChange()",
+            "selected-name": "putChange"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.getChange()",
+            "selected-name": "getChange"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.deleteChange()",
+            "selected-name": "deleteChange"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateInclusion()",
+            "selected-name": "validateInclusion"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateExclusion()",
+            "selected-name": "validateExclusion"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateNumber()",
+            "selected-name": "validateNumber"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateAcceptance()",
+            "selected-name": "validateAcceptance"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateConfirmation()",
+            "selected-name": "validateConfirmation"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateContains()",
+            "selected-name": "validateContains"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateStartsWith()",
+            "selected-name": "validateStartsWith"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateEndsWith()",
+            "selected-name": "validateEndsWith"
+        },
+        {
             "qualified-name": "orm/src.type Changeset.toInsertSql()",
             "selected-name": "toInsertSql"
         },
@@ -161,6 +233,14 @@
             "selected-name": "get$2eisValid"
         },
         {
+            "qualified-name": "orm/src.type ChangesetImpl.addError()",
+            "selected-name": "addError"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.addError().eb=",
+            "selected-name": "eb"
+        },
+        {
             "qualified-name": "orm/src.type ChangesetImpl.cast()",
             "selected-name": "cast"
         },
@@ -205,14 +285,6 @@
             "selected-name": "len"
         },
         {
-            "qualified-name": "orm/src.type ChangesetImpl.validateLength().msg=",
-            "selected-name": "msg"
-        },
-        {
-            "qualified-name": "orm/src.type ChangesetImpl.validateLength().eb=",
-            "selected-name": "eb"
-        },
-        {
             "qualified-name": "orm/src.type ChangesetImpl.validateInt()",
             "selected-name": "validateInt"
         },
@@ -227,10 +299,6 @@
         {
             "qualified-name": "orm/src.type ChangesetImpl.validateInt().parseOk=",
             "selected-name": "parseOk"
-        },
-        {
-            "qualified-name": "orm/src.type ChangesetImpl.validateInt().eb=",
-            "selected-name": "eb"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.validateInt64()",
@@ -249,10 +317,6 @@
             "selected-name": "parseOk"
         },
         {
-            "qualified-name": "orm/src.type ChangesetImpl.validateInt64().eb=",
-            "selected-name": "eb"
-        },
-        {
             "qualified-name": "orm/src.type ChangesetImpl.validateFloat()",
             "selected-name": "validateFloat"
         },
@@ -267,10 +331,6 @@
         {
             "qualified-name": "orm/src.type ChangesetImpl.validateFloat().parseOk=",
             "selected-name": "parseOk"
-        },
-        {
-            "qualified-name": "orm/src.type ChangesetImpl.validateFloat().eb=",
-            "selected-name": "eb"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.validateBool()",
@@ -293,8 +353,216 @@
             "selected-name": "isFalse"
         },
         {
-            "qualified-name": "orm/src.type ChangesetImpl.validateBool().eb=",
-            "selected-name": "eb"
+            "qualified-name": "orm/src.type ChangesetImpl.putChange()",
+            "selected-name": "putChange"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.putChange().mb=",
+            "selected-name": "mb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.putChange().pairs=",
+            "selected-name": "pairs"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.putChange().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.getChange()",
+            "selected-name": "getChange"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.deleteChange()",
+            "selected-name": "deleteChange"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.deleteChange().mb=",
+            "selected-name": "mb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.deleteChange().pairs=",
+            "selected-name": "pairs"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.deleteChange().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInclusion()",
+            "selected-name": "validateInclusion"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInclusion().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInclusion().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInclusion().found=",
+            "selected-name": "found"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateExclusion()",
+            "selected-name": "validateExclusion"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateExclusion().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateExclusion().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateExclusion().found=",
+            "selected-name": "found"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber()",
+            "selected-name": "validateNumber"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().parseOk=",
+            "selected-name": "parseOk"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().num=",
+            "selected-name": "num"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().gt=",
+            "selected-name": "gt"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().lt=",
+            "selected-name": "lt"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().gte=",
+            "selected-name": "gte"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().lte=",
+            "selected-name": "lte"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateNumber().eq=",
+            "selected-name": "eq"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateAcceptance()",
+            "selected-name": "validateAcceptance"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateAcceptance().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateAcceptance().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateAcceptance().accepted=",
+            "selected-name": "accepted"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateConfirmation()",
+            "selected-name": "validateConfirmation"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateConfirmation().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateConfirmation().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateConfirmation().conf=",
+            "selected-name": "conf"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateContains()",
+            "selected-name": "validateContains"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateContains().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateContains().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateStartsWith()",
+            "selected-name": "validateStartsWith"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateStartsWith().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateStartsWith().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateStartsWith().idx=",
+            "selected-name": "idx"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateStartsWith().starts=",
+            "selected-name": "starts"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith()",
+            "selected-name": "validateEndsWith"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().valLen=",
+            "selected-name": "valLen"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().suffixLen=",
+            "selected-name": "suffixLen"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().skipCount=",
+            "selected-name": "skipCount"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().strIdx=",
+            "selected-name": "strIdx"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().sufIdx=",
+            "selected-name": "sufIdx"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateEndsWith().matches=",
+            "selected-name": "matches"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.parseBoolSqlPart()",
@@ -385,12 +653,12 @@
             "selected-name": "i"
         },
         {
-            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().f=",
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().f=#0",
             "selected-name": "f"
         },
         {
-            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().pairs=",
-            "selected-name": "pairs"
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().dv=#0",
+            "selected-name": "dv"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().colNames=",
@@ -399,6 +667,10 @@
         {
             "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().valParts=",
             "selected-name": "valParts"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().pairs=",
+            "selected-name": "pairs"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().i=#1",
@@ -411,6 +683,18 @@
         {
             "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().fd=",
             "selected-name": "fd"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().i=#2",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().f=#1",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().dv=#1",
+            "selected-name": "dv"
         },
         {
             "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().b=",
@@ -437,6 +721,10 @@
             "selected-name": "b"
         },
         {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().setCount=",
+            "selected-name": "setCount"
+        },
+        {
             "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().i=",
             "selected-name": "i"
         },
@@ -453,6 +741,126 @@
             "selected-name": "constructor"
         },
         {
+            "qualified-name": "orm/src.type JoinType",
+            "selected-name": "JoinType"
+        },
+        {
+            "qualified-name": "orm/src.type JoinType.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type InnerJoin",
+            "selected-name": "InnerJoin"
+        },
+        {
+            "qualified-name": "orm/src.type InnerJoin.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type InnerJoin.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type LeftJoin",
+            "selected-name": "LeftJoin"
+        },
+        {
+            "qualified-name": "orm/src.type LeftJoin.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type LeftJoin.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type RightJoin",
+            "selected-name": "RightJoin"
+        },
+        {
+            "qualified-name": "orm/src.type RightJoin.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type RightJoin.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type FullJoin",
+            "selected-name": "FullJoin"
+        },
+        {
+            "qualified-name": "orm/src.type FullJoin.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type FullJoin.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type CrossJoin",
+            "selected-name": "CrossJoin"
+        },
+        {
+            "qualified-name": "orm/src.type CrossJoin.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type CrossJoin.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause",
+            "selected-name": "JoinClause"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.joinType",
+            "selected-name": "joinType"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.table",
+            "selected-name": "table"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.onCondition",
+            "selected-name": "onCondition"
+        },
+        {
+            "qualified-name": "orm/src.type JoinClause.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type NullsPosition",
+            "selected-name": "NullsPosition"
+        },
+        {
+            "qualified-name": "orm/src.type NullsPosition.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type NullsFirst",
+            "selected-name": "NullsFirst"
+        },
+        {
+            "qualified-name": "orm/src.type NullsFirst.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type NullsFirst.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type NullsLast",
+            "selected-name": "NullsLast"
+        },
+        {
+            "qualified-name": "orm/src.type NullsLast.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type NullsLast.constructor()",
+            "selected-name": "constructor"
+        },
+        {
             "qualified-name": "orm/src.type OrderClause",
             "selected-name": "OrderClause"
         },
@@ -465,7 +873,107 @@
             "selected-name": "ascending"
         },
         {
+            "qualified-name": "orm/src.type OrderClause.nullsPos",
+            "selected-name": "nullsPos"
+        },
+        {
             "qualified-name": "orm/src.type OrderClause.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type LockMode",
+            "selected-name": "LockMode"
+        },
+        {
+            "qualified-name": "orm/src.type LockMode.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type ForUpdate",
+            "selected-name": "ForUpdate"
+        },
+        {
+            "qualified-name": "orm/src.type ForUpdate.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type ForUpdate.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type ForShare",
+            "selected-name": "ForShare"
+        },
+        {
+            "qualified-name": "orm/src.type ForShare.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type ForShare.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause",
+            "selected-name": "WhereClause"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause.condition",
+            "selected-name": "condition"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause.get condition()",
+            "selected-name": "get$2econdition"
+        },
+        {
+            "qualified-name": "orm/src.type WhereClause.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition",
+            "selected-name": "AndCondition"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition._condition",
+            "selected-name": "_condition"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition.condition",
+            "selected-name": "condition"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition.get condition()",
+            "selected-name": "get$2econdition"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type AndCondition.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition",
+            "selected-name": "OrCondition"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition._condition",
+            "selected-name": "_condition"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition.condition",
+            "selected-name": "condition"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition.get condition()",
+            "selected-name": "get$2econdition"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition.keyword()",
+            "selected-name": "keyword"
+        },
+        {
+            "qualified-name": "orm/src.type OrCondition.constructor()",
             "selected-name": "constructor"
         },
         {
@@ -497,6 +1005,30 @@
             "selected-name": "offsetVal"
         },
         {
+            "qualified-name": "orm/src.type Query.joinClauses",
+            "selected-name": "joinClauses"
+        },
+        {
+            "qualified-name": "orm/src.type Query.groupByFields",
+            "selected-name": "groupByFields"
+        },
+        {
+            "qualified-name": "orm/src.type Query.havingConditions",
+            "selected-name": "havingConditions"
+        },
+        {
+            "qualified-name": "orm/src.type Query.isDistinct",
+            "selected-name": "isDistinct"
+        },
+        {
+            "qualified-name": "orm/src.type Query.selectExprs",
+            "selected-name": "selectExprs"
+        },
+        {
+            "qualified-name": "orm/src.type Query.lockMode",
+            "selected-name": "lockMode"
+        },
+        {
             "qualified-name": "orm/src.type Query.where()",
             "selected-name": "where"
         },
@@ -505,8 +1037,96 @@
             "selected-name": "nb"
         },
         {
+            "qualified-name": "orm/src.type Query.orWhere()",
+            "selected-name": "orWhere"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orWhere().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNull()",
+            "selected-name": "whereNull"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNull().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNotNull()",
+            "selected-name": "whereNotNull"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNotNull().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereIn()",
+            "selected-name": "whereIn"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereIn().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereIn().b=#0",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereIn().b=#1",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereIn().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereInSubquery()",
+            "selected-name": "whereInSubquery"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereInSubquery().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNot()",
+            "selected-name": "whereNot"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereNot().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereBetween()",
+            "selected-name": "whereBetween"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereBetween().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereLike()",
+            "selected-name": "whereLike"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereLike().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereILike()",
+            "selected-name": "whereILike"
+        },
+        {
+            "qualified-name": "orm/src.type Query.whereILike().b=",
+            "selected-name": "b"
+        },
+        {
             "qualified-name": "orm/src.type Query.select()",
             "selected-name": "select"
+        },
+        {
+            "qualified-name": "orm/src.type Query.selectExpr()",
+            "selected-name": "selectExpr"
         },
         {
             "qualified-name": "orm/src.type Query.orderBy()",
@@ -517,12 +1137,84 @@
             "selected-name": "nb"
         },
         {
+            "qualified-name": "orm/src.type Query.orderByNulls()",
+            "selected-name": "orderByNulls"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderByNulls().nb=",
+            "selected-name": "nb"
+        },
+        {
             "qualified-name": "orm/src.type Query.limit()",
             "selected-name": "limit"
         },
         {
             "qualified-name": "orm/src.type Query.offset()",
             "selected-name": "offset"
+        },
+        {
+            "qualified-name": "orm/src.type Query.join()",
+            "selected-name": "join"
+        },
+        {
+            "qualified-name": "orm/src.type Query.join().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.innerJoin()",
+            "selected-name": "innerJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.leftJoin()",
+            "selected-name": "leftJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.rightJoin()",
+            "selected-name": "rightJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.fullJoin()",
+            "selected-name": "fullJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.crossJoin()",
+            "selected-name": "crossJoin"
+        },
+        {
+            "qualified-name": "orm/src.type Query.crossJoin().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.groupBy()",
+            "selected-name": "groupBy"
+        },
+        {
+            "qualified-name": "orm/src.type Query.groupBy().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.having()",
+            "selected-name": "having"
+        },
+        {
+            "qualified-name": "orm/src.type Query.having().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orHaving()",
+            "selected-name": "orHaving"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orHaving().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.distinct()",
+            "selected-name": "distinct"
+        },
+        {
+            "qualified-name": "orm/src.type Query.lock()",
+            "selected-name": "lock"
         },
         {
             "qualified-name": "orm/src.type Query.toSql()",
@@ -537,8 +1229,28 @@
             "selected-name": "i"
         },
         {
+            "qualified-name": "orm/src.renderJoins()",
+            "selected-name": "renderJoins"
+        },
+        {
+            "qualified-name": "orm/src.renderWhere()",
+            "selected-name": "renderWhere"
+        },
+        {
+            "qualified-name": "orm/src.renderGroupBy()",
+            "selected-name": "renderGroupBy"
+        },
+        {
+            "qualified-name": "orm/src.renderHaving()",
+            "selected-name": "renderHaving"
+        },
+        {
             "qualified-name": "orm/src.type Query.toSql().first=",
             "selected-name": "first"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().np=",
+            "selected-name": "np"
         },
         {
             "qualified-name": "orm/src.type Query.toSql().lv=",
@@ -547,6 +1259,18 @@
         {
             "qualified-name": "orm/src.type Query.toSql().ov=",
             "selected-name": "ov"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().lm=",
+            "selected-name": "lm"
+        },
+        {
+            "qualified-name": "orm/src.type Query.countSql()",
+            "selected-name": "countSql"
+        },
+        {
+            "qualified-name": "orm/src.type Query.countSql().b=",
+            "selected-name": "b"
         },
         {
             "qualified-name": "orm/src.type Query.safeToSql()",
@@ -558,6 +1282,142 @@
         },
         {
             "qualified-name": "orm/src.type Query.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause",
+            "selected-name": "SetClause"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause.field",
+            "selected-name": "field"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SetClause.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery",
+            "selected-name": "UpdateQuery"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.tableName",
+            "selected-name": "tableName"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.setClauses",
+            "selected-name": "setClauses"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.conditions",
+            "selected-name": "conditions"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.limitVal",
+            "selected-name": "limitVal"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.set()",
+            "selected-name": "set"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.set().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.where()",
+            "selected-name": "where"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.where().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.orWhere()",
+            "selected-name": "orWhere"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.orWhere().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.limit()",
+            "selected-name": "limit"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.toSql()",
+            "selected-name": "toSql"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.toSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.toSql().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.toSql().lv=",
+            "selected-name": "lv"
+        },
+        {
+            "qualified-name": "orm/src.type UpdateQuery.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery",
+            "selected-name": "DeleteQuery"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.tableName",
+            "selected-name": "tableName"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.conditions",
+            "selected-name": "conditions"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.limitVal",
+            "selected-name": "limitVal"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.where()",
+            "selected-name": "where"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.where().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.orWhere()",
+            "selected-name": "orWhere"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.orWhere().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.limit()",
+            "selected-name": "limit"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.toSql()",
+            "selected-name": "toSql"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.toSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.toSql().lv=",
+            "selected-name": "lv"
+        },
+        {
+            "qualified-name": "orm/src.type DeleteQuery.constructor()",
             "selected-name": "constructor"
         },
         {
@@ -625,6 +1485,14 @@
             "selected-name": "nullable"
         },
         {
+            "qualified-name": "orm/src.type FieldDef.defaultValue",
+            "selected-name": "defaultValue"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.virtual",
+            "selected-name": "virtual"
+        },
+        {
             "qualified-name": "orm/src.type FieldDef.constructor()",
             "selected-name": "constructor"
         },
@@ -635,6 +1503,10 @@
         {
             "qualified-name": "orm/src.type TableDef.fields",
             "selected-name": "fields"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.primaryKey",
+            "selected-name": "primaryKey"
         },
         {
             "qualified-name": "orm/src.type TableDef.field()",
@@ -659,6 +1531,18 @@
         {
             "qualified-name": "orm/src.type TableDef.field().(f)",
             "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.pkName()",
+            "selected-name": "pkName"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.pkName().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.pkName().pk=",
+            "selected-name": "pk"
         },
         {
             "qualified-name": "orm/src.type TableDef.constructor()",
@@ -858,6 +1742,18 @@
         },
         {
             "qualified-name": "orm/src.type SqlInt64.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDefault",
+            "selected-name": "SqlDefault"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDefault.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDefault.constructor()",
             "selected-name": "constructor"
         },
         {
@@ -1141,6 +2037,426 @@
             "selected-name": "didBubble"
         },
         {
+            "qualified-name": "orm/src.params=#23",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#23",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#24",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#24",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#25",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#25",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#4",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.params=#26",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#26",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.params=#27",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#27",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#3",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.params=#28",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#28",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#29",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#29",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#30",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#30",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#31",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#31",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#32",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#32",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#33",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#33",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#34",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#34",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#35",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#35",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#36",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#36",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#37",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#37",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#38",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#38",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#39",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#39",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#40",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#40",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#41",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#41",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#42",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#42",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#43",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#43",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#44",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#44",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#45",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#45",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#0",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#46",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#46",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#1",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#47",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#47",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#2",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#48",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#48",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#49",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#49",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#50",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#50",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#51",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#51",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#52",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#52",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#53",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#53",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#54",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#54",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#55",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#55",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#56",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#56",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#3",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#57",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#57",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#5",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#4",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#58",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#58",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#6",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.timestamps()",
+            "selected-name": "timestamps"
+        },
+        {
+            "qualified-name": "orm/src.ts=#0",
+            "selected-name": "ts"
+        },
+        {
+            "qualified-name": "orm/src.fields=",
+            "selected-name": "fields"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#5",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#59",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#59",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#7",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#6",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#60",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#60",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#8",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#7",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#61",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#61",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#9",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#8",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#62",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#62",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#10",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#9",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#63",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#63",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#11",
+            "selected-name": "s"
+        },
+        {
             "qualified-name": "orm/src.deleteSql()",
             "selected-name": "deleteSql"
         },
@@ -1149,8 +2465,364 @@
             "selected-name": "b"
         },
         {
+            "qualified-name": "orm/src.tbl=#10",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.s=#12",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#11",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.s=#13",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.params=#64",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#64",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#65",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#65",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#66",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#66",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#67",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#67",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#68",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#68",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#69",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#69",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#70",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#70",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#71",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#71",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#12",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#72",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#72",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#14",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#13",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#73",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#73",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#4",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.params=#74",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#74",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#75",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#75",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#76",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#76",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#77",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#77",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#14",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#78",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#78",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.s=#15",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#15",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.params=#79",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#79",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#5",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.params=#80",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#80",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#81",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#81",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#82",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#82",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#83",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#83",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#84",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#84",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#85",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.base=#0",
+            "selected-name": "base"
+        },
+        {
+            "qualified-name": "orm/src.failed=",
+            "selected-name": "failed"
+        },
+        {
+            "qualified-name": "orm/src.passed=",
+            "selected-name": "passed"
+        },
+        {
+            "qualified-name": "orm/src.renderWhere().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.renderJoins().oc=",
+            "selected-name": "oc"
+        },
+        {
+            "qualified-name": "orm/src.renderHaving().i=",
+            "selected-name": "i"
+        },
+        {
             "qualified-name": "orm/src.from()",
             "selected-name": "from"
+        },
+        {
+            "qualified-name": "orm/src.col()",
+            "selected-name": "col"
+        },
+        {
+            "qualified-name": "orm/src.col().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.countAll()",
+            "selected-name": "countAll"
+        },
+        {
+            "qualified-name": "orm/src.countAll().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.countCol()",
+            "selected-name": "countCol"
+        },
+        {
+            "qualified-name": "orm/src.countCol().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.sumCol()",
+            "selected-name": "sumCol"
+        },
+        {
+            "qualified-name": "orm/src.sumCol().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.avgCol()",
+            "selected-name": "avgCol"
+        },
+        {
+            "qualified-name": "orm/src.avgCol().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.minCol()",
+            "selected-name": "minCol"
+        },
+        {
+            "qualified-name": "orm/src.minCol().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.maxCol()",
+            "selected-name": "maxCol"
+        },
+        {
+            "qualified-name": "orm/src.maxCol().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.unionSql()",
+            "selected-name": "unionSql"
+        },
+        {
+            "qualified-name": "orm/src.unionSql().sb=",
+            "selected-name": "sb"
+        },
+        {
+            "qualified-name": "orm/src.unionAllSql()",
+            "selected-name": "unionAllSql"
+        },
+        {
+            "qualified-name": "orm/src.unionAllSql().sb=",
+            "selected-name": "sb"
+        },
+        {
+            "qualified-name": "orm/src.intersectSql()",
+            "selected-name": "intersectSql"
+        },
+        {
+            "qualified-name": "orm/src.intersectSql().sb=",
+            "selected-name": "sb"
+        },
+        {
+            "qualified-name": "orm/src.exceptSql()",
+            "selected-name": "exceptSql"
+        },
+        {
+            "qualified-name": "orm/src.exceptSql().sb=",
+            "selected-name": "sb"
+        },
+        {
+            "qualified-name": "orm/src.subquery()",
+            "selected-name": "subquery"
+        },
+        {
+            "qualified-name": "orm/src.subquery().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.existsSql()",
+            "selected-name": "existsSql"
+        },
+        {
+            "qualified-name": "orm/src.existsSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.update()",
+            "selected-name": "update"
+        },
+        {
+            "qualified-name": "orm/src.deleteFrom()",
+            "selected-name": "deleteFrom"
         },
         {
             "qualified-name": "orm/src.sid()",
@@ -1189,11 +2861,11 @@
             "selected-name": "q"
         },
         {
-            "qualified-name": "orm/src.didBubble=#3",
+            "qualified-name": "orm/src.didBubble=#6",
             "selected-name": "didBubble"
         },
         {
-            "qualified-name": "orm/src.didBubble=#4",
+            "qualified-name": "orm/src.didBubble=#7",
             "selected-name": "didBubble"
         },
         {
@@ -1209,7 +2881,7 @@
             "selected-name": "q"
         },
         {
-            "qualified-name": "orm/src.s=#4",
+            "qualified-name": "orm/src.s=#16",
             "selected-name": "s"
         },
         {
@@ -1217,11 +2889,11 @@
             "selected-name": "q"
         },
         {
-            "qualified-name": "orm/src.s=#5",
+            "qualified-name": "orm/src.s=#17",
             "selected-name": "s"
         },
         {
-            "qualified-name": "orm/src.didBubble=#5",
+            "qualified-name": "orm/src.didBubble=#8",
             "selected-name": "didBubble"
         },
         {
@@ -1233,7 +2905,7 @@
             "selected-name": "q"
         },
         {
-            "qualified-name": "orm/src.s=#6",
+            "qualified-name": "orm/src.s=#18",
             "selected-name": "s"
         },
         {
@@ -1241,19 +2913,507 @@
             "selected-name": "attack"
         },
         {
-            "qualified-name": "orm/src.didBubble=#6",
+            "qualified-name": "orm/src.didBubble=#9",
             "selected-name": "didBubble"
         },
         {
-            "qualified-name": "orm/src.id=",
+            "qualified-name": "orm/src.q=#12",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#13",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#14",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#15",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#16",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#17",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.c=",
+            "selected-name": "c"
+        },
+        {
+            "qualified-name": "orm/src.onCond=",
+            "selected-name": "onCond"
+        },
+        {
+            "qualified-name": "orm/src.b=#0",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.q=#18",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#19",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#20",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#21",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#22",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#23",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#24",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#25",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#26",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#27",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#28",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#29",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#30",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#31",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#32",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#33",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#34",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#35",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#36",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#37",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#38",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#19",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.q=#39",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.f=#0",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.f=#1",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.f=#2",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.f=#3",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.f=#4",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.f=#5",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.q=#40",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.nameFrag=",
+            "selected-name": "nameFrag"
+        },
+        {
+            "qualified-name": "orm/src.q=#41",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#42",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#43",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#44",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#45",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#46",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#47",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#48",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#49",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#50",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#51",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#52",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#20",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.q=#53",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.expected=",
+            "selected-name": "expected"
+        },
+        {
+            "qualified-name": "orm/src.a=#0",
+            "selected-name": "a"
+        },
+        {
+            "qualified-name": "orm/src.b=#1",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.s=#21",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.a=#1",
+            "selected-name": "a"
+        },
+        {
+            "qualified-name": "orm/src.b=#2",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.s=#22",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.a=#2",
+            "selected-name": "a"
+        },
+        {
+            "qualified-name": "orm/src.b=#3",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.s=#23",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.a=#3",
+            "selected-name": "a"
+        },
+        {
+            "qualified-name": "orm/src.b=#4",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.s=#24",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.inner=#0",
+            "selected-name": "inner"
+        },
+        {
+            "qualified-name": "orm/src.s=#25",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.inner=#1",
+            "selected-name": "inner"
+        },
+        {
+            "qualified-name": "orm/src.s=#26",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.sub=#0",
+            "selected-name": "sub"
+        },
+        {
+            "qualified-name": "orm/src.q=#54",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#27",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.a=#4",
+            "selected-name": "a"
+        },
+        {
+            "qualified-name": "orm/src.b=#5",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.s=#28",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.sub=#1",
+            "selected-name": "sub"
+        },
+        {
+            "qualified-name": "orm/src.q=#55",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#29",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.sub=#2",
+            "selected-name": "sub"
+        },
+        {
+            "qualified-name": "orm/src.q=#56",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#30",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.q=#57",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#58",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#59",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#60",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#10",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#11",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.q=#61",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#62",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#63",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#64",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#12",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.q=#65",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#66",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#67",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#68",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#69",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#70",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#71",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#72",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#73",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#74",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.base=#1",
+            "selected-name": "base"
+        },
+        {
+            "qualified-name": "orm/src.q1=#0",
+            "selected-name": "q1"
+        },
+        {
+            "qualified-name": "orm/src.q2=#0",
+            "selected-name": "q2"
+        },
+        {
+            "qualified-name": "orm/src.q=#75",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#76",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#31",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#13",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#14",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.base=#2",
+            "selected-name": "base"
+        },
+        {
+            "qualified-name": "orm/src.q1=#1",
+            "selected-name": "q1"
+        },
+        {
+            "qualified-name": "orm/src.q2=#1",
+            "selected-name": "q2"
+        },
+        {
+            "qualified-name": "orm/src.s1=#0",
+            "selected-name": "s1"
+        },
+        {
+            "qualified-name": "orm/src.s2=#0",
+            "selected-name": "s2"
+        },
+        {
+            "qualified-name": "orm/src.base=#3",
+            "selected-name": "base"
+        },
+        {
+            "qualified-name": "orm/src.q1=#2",
+            "selected-name": "q1"
+        },
+        {
+            "qualified-name": "orm/src.q2=#2",
+            "selected-name": "q2"
+        },
+        {
+            "qualified-name": "orm/src.s1=#1",
+            "selected-name": "s1"
+        },
+        {
+            "qualified-name": "orm/src.s2=#1",
+            "selected-name": "s2"
+        },
+        {
+            "qualified-name": "orm/src.id=#0",
             "selected-name": "id"
         },
         {
-            "qualified-name": "orm/src.didBubble=#7",
+            "qualified-name": "orm/src.didBubble=#15",
             "selected-name": "didBubble"
         },
         {
-            "qualified-name": "orm/src.didBubble=#8",
+            "qualified-name": "orm/src.didBubble=#16",
             "selected-name": "didBubble"
         },
         {
@@ -1261,7 +3421,7 @@
             "selected-name": "cases"
         },
         {
-            "qualified-name": "orm/src.didBubble=#9",
+            "qualified-name": "orm/src.didBubble=#17",
             "selected-name": "didBubble"
         },
         {
@@ -1269,7 +3429,7 @@
             "selected-name": "td"
         },
         {
-            "qualified-name": "orm/src.f=",
+            "qualified-name": "orm/src.f=#6",
             "selected-name": "f"
         },
         {
@@ -1277,7 +3437,7 @@
             "selected-name": "td"
         },
         {
-            "qualified-name": "orm/src.didBubble=#10",
+            "qualified-name": "orm/src.didBubble=#18",
             "selected-name": "didBubble"
         },
         {
@@ -1287,6 +3447,54 @@
         {
             "qualified-name": "orm/src.optional=",
             "selected-name": "optional"
+        },
+        {
+            "qualified-name": "orm/src.td=#2",
+            "selected-name": "td"
+        },
+        {
+            "qualified-name": "orm/src.td=#3",
+            "selected-name": "td"
+        },
+        {
+            "qualified-name": "orm/src.ts=#1",
+            "selected-name": "ts"
+        },
+        {
+            "qualified-name": "orm/src.withDefault=",
+            "selected-name": "withDefault"
+        },
+        {
+            "qualified-name": "orm/src.withoutDefault=",
+            "selected-name": "withoutDefault"
+        },
+        {
+            "qualified-name": "orm/src.normal=",
+            "selected-name": "normal"
+        },
+        {
+            "qualified-name": "orm/src.virt=",
+            "selected-name": "virt"
+        },
+        {
+            "qualified-name": "orm/src.a=#5",
+            "selected-name": "a"
+        },
+        {
+            "qualified-name": "orm/src.u=",
+            "selected-name": "u"
+        },
+        {
+            "qualified-name": "orm/src.id=#1",
+            "selected-name": "id"
+        },
+        {
+            "qualified-name": "orm/src.tbl=#16",
+            "selected-name": "tbl"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#19",
+            "selected-name": "didBubble"
         },
         {
             "qualified-name": "orm/src.build()",
@@ -1335,6 +3543,10 @@
         {
             "qualified-name": "orm/src.parts=",
             "selected-name": "parts"
+        },
+        {
+            "qualified-name": "orm/src.b=#6",
+            "selected-name": "b"
         }
     ]
 }
