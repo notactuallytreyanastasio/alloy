@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temper: Enterprise Security at Compile Time</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/white.css">
+<style>
+  :root {
+    --r-background-color: #fff;
+    --r-main-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --r-heading-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --r-main-color: #444;
+    --r-heading-color: #111;
+    --r-link-color: #666;
+    --r-link-color-hover: #000;
+    --r-heading-text-transform: none;
+    --r-heading-font-weight: 600;
+  }
+  .reveal { font-size: 32px; }
+  .reveal h1 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.02em; color: #000; }
+  .reveal h2 { font-size: 1.6em; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.6em; color: #111; }
+  .reveal h3 { font-size: 0.7em; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: #999; margin-bottom: 0.4em; }
+  .reveal p { font-size: 0.75em; line-height: 1.6; color: #555; }
+  .reveal li { font-size: 0.7em; line-height: 1.6; color: #555; margin-bottom: 0.3em; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li::before { content: "\2014"; margin-right: 0.6em; color: #bbb; }
+  .reveal strong { color: #000; font-weight: 600; }
+  .reveal em { color: #444; }
+  .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85em; color: #555; }
+  .reveal table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.65em; }
+  .reveal th { text-align: left; padding: 8px 12px; color: #999; border-bottom: 1px solid #ddd; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
+  .reveal td { padding: 8px 12px; border-bottom: 1px solid #eee; color: #555; }
+  .reveal .big-num { font-size: 3.5em; font-weight: 800; line-height: 1; color: #000; }
+  .reveal .stat-row { display: flex; gap: 60px; justify-content: center; margin: 0.8em 0; }
+  .reveal .stat { text-align: center; }
+  .reveal .stat .label { font-size: 0.55em; color: #999; margin-top: 4px; }
+  .reveal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 0.8em 0; text-align: left; }
+  .reveal .card { border: 1px solid #ddd; padding: 24px; }
+  .reveal .card h4 { font-size: 0.75em; font-weight: 600; color: #111; margin-bottom: 12px; text-transform: none; }
+  .reveal .card p, .reveal .card li { font-size: 0.6em; }
+  .reveal .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 0.8em 0; }
+  .reveal .flow-box { border: 1px solid #ccc; padding: 8px 16px; font-size: 0.6em; color: #555; }
+  .reveal .flow-arrow { color: #aaa; font-size: 0.9em; }
+  .reveal .code-block { background: #f7f7f7; border: 1px solid #ddd; padding: 16px 20px; margin: 0.6em 0; font-family: 'SF Mono', monospace; font-size: 0.55em; line-height: 1.8; text-align: left; color: #444; }
+  .reveal .diff-add { color: #000; font-weight: 600; }
+  .reveal .diff-rm { color: #aaa; text-decoration: line-through; }
+  .reveal .dim { color: #aaa; }
+  .reveal .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+  .reveal .vs { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 0.6em 0; }
+  .reveal .vs-side { flex: 1; text-align: center; }
+  .reveal .vs-divider { font-size: 1.2em; font-weight: 300; color: #ccc; }
+  .reveal .footnote { font-size: 0.45em; color: #bbb; margin-top: 1.5em; }
+  .reveal .lang-row { display: flex; gap: 16px; justify-content: center; margin-top: 1.5em; flex-wrap: wrap; }
+  .reveal .lang-pill { border: 1px solid #ccc; padding: 6px 16px; font-size: 0.55em; color: #888; letter-spacing: 0.05em; }
+  .reveal blockquote { border-left: 2px solid #ccc; padding-left: 20px; margin: 0.8em 0; font-style: italic; }
+  .reveal blockquote p { color: #777; font-size: 0.7em; }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- SLIDE 1: Title -->
+<section>
+  <h1>Temper</h1>
+  <p style="font-size: 1em; color: #888; margin-top: 0.2em;">Compile-Time Security for Enterprise Infrastructure</p>
+  <p style="font-size: 0.6em; color: #aaa; margin-top: 1.5em;">One source of truth. Every language your organization ships. Zero security drift.</p>
+  <div class="lang-row">
+    <span class="lang-pill">JavaScript</span>
+    <span class="lang-pill">Python</span>
+    <span class="lang-pill">Rust</span>
+    <span class="lang-pill">Java</span>
+    <span class="lang-pill">Lua</span>
+    <span class="lang-pill">C#</span>
+    <span class="lang-pill" style="border-style: dashed;">and more to come...</span>
+  </div>
+</section>
+
+<!-- SLIDE 2: The Enterprise Problem -->
+<section>
+  <h3>The Problem</h3>
+  <h2>Multi-language SDKs are an expanding attack surface</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h4>What enterprises face today</h4>
+      <ul>
+        <li>Security-critical logic duplicated across <strong>5&ndash;12 language SDKs</strong></li>
+        <li>Each SDK is an independent codebase with independent vulnerabilities</li>
+        <li>A single CVE requires coordinated patches across every language</li>
+        <li>Vendor SDK teams release on different cadences &mdash; drift is inevitable</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>The cost of drift</h4>
+      <ul>
+        <li>Serialization bug in one SDK goes unpatched for <strong>months</strong> in another</li>
+        <li>Auth token validation differs subtly between languages</li>
+        <li>Compliance teams must audit <strong>N codebases</strong> instead of one</li>
+        <li>Major version migrations span <strong>years</strong>, leaving old versions unpatched</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 0.6em;">Every language-specific implementation is a new place for a vulnerability to hide. The industry treats this as unavoidable. <strong>It is not.</strong></p>
+</section>
+
+<!-- SLIDE 3: The Supply Chain Angle -->
+<section>
+  <h3>Supply Chain Risk</h3>
+  <h2>Your dependencies are only as secure as their weakest SDK</h2>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="big-num">84%</div>
+      <div class="label">of codebases contain at least<br>one known vulnerability</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">N&times;</div>
+      <div class="label">multiplier for every<br>language you ship</div>
+    </div>
+  </div>
+  <p>When a vendor ships SDKs in 10 languages, a vulnerability in their serialization layer exists in 10 independent implementations. Patching one does not patch the others. Your supply chain risk <strong>multiplies with every language target</strong>.</p>
+  <p style="margin-top: 0.4em;">Temper collapses that multiplier to <strong>1</strong>.</p>
+  <p class="footnote">Source: Synopsys OSSRA 2024</p>
+</section>
+
+<!-- SLIDE 4: The Temper Answer -->
+<section>
+  <h3>The Answer</h3>
+  <h2>One source. Six backends. Zero drift.</h2>
+  <p>Temper compiles a single source tree to idiomatic, typed, importable libraries in 6 languages. Not transpilation &mdash; native output.</p>
+  <div class="flow">
+    <div class="flow-box" style="border-color: #999;">Temper Source</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box"><code>temper build</code></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box">ES Modules</div>
+    <div class="flow-box">Python 3</div>
+    <div class="flow-box">Cargo Crate</div>
+    <div class="flow-box">Java</div>
+    <div class="flow-box">Lua</div>
+    <div class="flow-box">.NET</div>
+  </div>
+  <div class="grid-2" style="margin-top: 0.6em;">
+    <div class="card">
+      <h4>Traditional multi-SDK</h4>
+      <ul>
+        <li>N codebases &times; N security reviews</li>
+        <li>Per-language runtime teams</li>
+        <li>Coordination overhead per CVE</li>
+        <li>Semantic drift between implementations</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Temper</h4>
+      <ul>
+        <li><strong>1 codebase = 1 security surface</strong></li>
+        <li>One team, one review, one audit</li>
+        <li>Fix once, rebuild, ship everywhere</li>
+        <li>Behavioral equivalence by construction</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: Proof - The ORM -->
+<section>
+  <h3>Proof</h3>
+  <h2>A type-safe SQL ORM, compiled to 6 backends</h2>
+  <p>We built a security-focused ORM with 5 defense layers, compiled it to 6 languages, and deployed 6 identical applications. Each underwent independent MITRE ATT&CK / CWE analysis.</p>
+  <table>
+    <tr><th>Language</th><th>Framework</th><th>SQL Injection Vulns</th><th>CWE Findings</th></tr>
+    <tr><td>JavaScript</td><td>Express + EJS</td><td><strong>0</strong></td><td><strong>0 critical</strong></td></tr>
+    <tr><td>Python</td><td>Flask + Jinja2</td><td><strong>0</strong></td><td><strong>0 critical</strong></td></tr>
+    <tr><td>Rust</td><td>Axum + askama</td><td><strong>0</strong></td><td><strong>0 critical</strong></td></tr>
+    <tr><td>Java</td><td>Spring Boot</td><td><strong>0</strong></td><td><strong>0 critical</strong></td></tr>
+    <tr><td>Lua</td><td>Raw socket HTTP</td><td><strong>0</strong></td><td><strong>0 critical</strong></td></tr>
+    <tr><td>C#</td><td>ASP.NET Razor</td><td><strong>0</strong></td><td><strong>0 critical</strong></td></tr>
+  </table>
+  <p style="margin-top: 0.4em;">Same security properties. Same behavior. <strong>Six independent audits confirm zero drift.</strong></p>
+</section>
+
+<!-- SLIDE 6: Defense Layers -->
+<section>
+  <h3>Security Architecture</h3>
+  <h2>5 compile-time defense layers</h2>
+  <table>
+    <tr><th></th><th>Layer</th><th>CWE</th><th>What It Prevents</th></tr>
+    <tr><td><strong>1</strong></td><td><strong>SafeIdentifier</strong></td><td class="mono dim">CWE-89</td><td>Identifier injection. Regex-validated sealed type &mdash; never raw strings.</td></tr>
+    <tr><td><strong>2</strong></td><td><strong>Typed SqlPart</strong></td><td class="mono dim">CWE-89</td><td>Value injection. Sealed interface with exhaustive type dispatch.</td></tr>
+    <tr><td><strong>3</strong></td><td><strong>SqlBuilder</strong></td><td class="mono dim">CWE-89</td><td>Structural injection. No raw append. Structure and data strictly separated.</td></tr>
+    <tr><td><strong>4</strong></td><td><strong>Changeset</strong></td><td class="mono dim">CWE-915</td><td>Mass assignment. Whitelist-only field access via typed identifiers.</td></tr>
+    <tr><td><strong>5</strong></td><td><strong>Query Builder</strong></td><td class="mono dim">CWE-400</td><td>Unbounded queries. WHERE clause accepts only typed fragments.</td></tr>
+  </table>
+  <p style="margin-top: 0.6em;">These defenses are <strong>structural, not advisory</strong>. The type system makes unsafe construction impossible &mdash; in every compiled backend, simultaneously.</p>
+</section>
+
+<!-- SLIDE 7: Fix Once -->
+<section>
+  <h3>Incident Response</h3>
+  <h2>1 vulnerability. 1 commit. 6 backends patched.</h2>
+  <p>MITRE analysis found 3 ORM-level concerns. All 3 were fixed in a single Temper commit and rebuilt across all backends.</p>
+  <div class="vs">
+    <div class="vs-side">
+      <div class="big-num" style="font-size: 2.2em;">6</div>
+      <p style="font-size: 0.7em; font-weight: 600; color: #000; margin: 8px 0;">PRs, reviews, releases</p>
+      <p style="font-size: 0.55em;">Traditional multi-SDK</p>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-side">
+      <div class="big-num" style="font-size: 2.2em;">1</div>
+      <p style="font-size: 0.7em; font-weight: 600; color: #000; margin: 8px 0;">commit, build, done</p>
+      <p style="font-size: 0.55em;">Temper</p>
+    </div>
+  </div>
+  <div class="code-block">
+<span class="dim">// One change in Temper source</span>
+<span class="diff-rm">colNames.add(pair.key);           // raw String &mdash; unvalidated</span>
+<span class="diff-add">colNames.add(fd.name.sqlValue);   // SafeIdentifier &rarr; validated</span>
+
+<span class="dim">// Propagated to JS, Python, Rust, Java, Lua, C# in a single build</span>
+  </div>
+  <p>Mean time to remediation drops from <strong>weeks of coordination</strong> to <strong>minutes of compilation</strong>.</p>
+</section>
+
+<!-- SLIDE 8: AI Code Generation -->
+<section>
+  <h3>AI-Generated Code</h3>
+  <h2>AI writes code. Temper makes it safe.</h2>
+  <p style="margin-bottom: 0.6em;">AI-generated code follows the path of least resistance. In most languages, that path leads directly to injection vulnerabilities.</p>
+  <div class="vs">
+    <div class="vs-side">
+      <div class="big-num" style="font-size: 2.5em;">9</div>
+      <p style="font-size: 0.7em; font-weight: 600; color: #000; margin: 8px 0;">Critical/High vulns</p>
+      <p style="font-size: 0.55em;">AI-generated ORM (Ruby, 3&ndash;4 prompts)</p>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-side">
+      <div class="big-num" style="font-size: 2.5em;">0</div>
+      <p style="font-size: 0.7em; font-weight: 600; color: #000; margin: 8px 0;">Injection vulns</p>
+      <p style="font-size: 0.55em;">AI-generated ORM (Temper, comparable effort)</p>
+    </div>
+  </div>
+  <p style="margin-top: 0.6em;">Same AI. Same goals. Same effort. The difference is that Temper's type system <strong>makes the unsafe path inexpressible</strong>. AI cannot accidentally skip validation when the compiler enforces it.</p>
+  <blockquote style="margin-top: 0.4em;">
+    <p>Enterprise security cannot depend on every developer &mdash; or every AI &mdash; remembering to do the right thing.</p>
+  </blockquote>
+</section>
+
+<!-- SLIDE 9: Compliance -->
+<section>
+  <h3>Compliance &amp; Governance</h3>
+  <h2>One audit surface. Every language.</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Traditional audit burden</h4>
+      <ul>
+        <li>Separate SAST/DAST per language SDK</li>
+        <li>Independent pen tests for each implementation</li>
+        <li>Per-language dependency scanning (npm, PyPI, Maven, NuGet...)</li>
+        <li>Compliance evidence multiplied by target count</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Temper audit surface</h4>
+      <ul>
+        <li><strong>One source</strong> to review, scan, and certify</li>
+        <li>Compiler is the single point of trust</li>
+        <li>Behavioral equivalence proven by construction</li>
+        <li>SOC 2, FedRAMP, PCI evidence generated once</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 0.6em;">When regulators ask &ldquo;how do you ensure consistent security across platforms?&rdquo; the answer is not process. <strong>The answer is the compiler.</strong></p>
+</section>
+
+<!-- SLIDE 10: Enterprise Use Cases -->
+<section>
+  <h3>Enterprise Applications</h3>
+  <h2>Where Temper eliminates risk</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h4>SDK &amp; API Libraries</h4>
+      <p>Auth flows, serialization, retry logic, rate limiting &mdash; write once, ship to every language your customers use. One CVE response, not twelve.</p>
+    </div>
+    <div class="card">
+      <h4>Security Primitives</h4>
+      <p>Token validation, input sanitization, crypto wrappers &mdash; the code that <em>must</em> be correct everywhere gets one implementation and one audit.</p>
+    </div>
+    <div class="card">
+      <h4>Data Validation &amp; Policy</h4>
+      <p>Schema validators, format parsers, business rule engines &mdash; consistent enforcement across frontend, backend, mobile, and embedded.</p>
+    </div>
+    <div class="card">
+      <h4>Regulated Infrastructure</h4>
+      <p>Financial transaction logic, healthcare data handling, identity verification &mdash; compile-time guarantees for code that regulators scrutinize.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 11: ROI -->
+<section>
+  <h3>Return on Investment</h3>
+  <h2>Security engineering that scales down, not up</h2>
+  <table>
+    <tr><th>Metric</th><th>Traditional (N SDKs)</th><th>Temper (1 Source)</th></tr>
+    <tr><td>Security reviews per release</td><td>N</td><td><strong>1</strong></td></tr>
+    <tr><td>CVE response time</td><td>Weeks (coordinated)</td><td><strong>Minutes (rebuild)</strong></td></tr>
+    <tr><td>Compliance audit scope</td><td>N codebases</td><td><strong>1 codebase + compiler</strong></td></tr>
+    <tr><td>Behavioral drift between languages</td><td>Inevitable</td><td><strong>Impossible by construction</strong></td></tr>
+    <tr><td>Engineers needed per language</td><td>Dedicated team</td><td><strong>0 &mdash; compiler handles it</strong></td></tr>
+    <tr><td>Major version migration</td><td>Years</td><td><strong>One build cycle</strong></td></tr>
+  </table>
+  <p style="margin-top: 0.6em;">The cost of multi-language security scales linearly with traditional tooling. With Temper, <strong>it is constant</strong>.</p>
+</section>
+
+<!-- SLIDE 12: Summary -->
+<section>
+  <h2 style="margin-bottom: 0.8em;">The numbers</h2>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="big-num">0</div>
+      <div class="label">injection vulnerabilities<br>across 6 backends</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">1</div>
+      <div class="label">commit to fix all findings<br>in every language</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">5</div>
+      <div class="label">compile-time<br>defense layers</div>
+    </div>
+  </div>
+  <div class="stat-row" style="margin-top: 0.4em;">
+    <div class="stat">
+      <div class="big-num">9</div>
+      <div class="label">critical vulns in conventional<br>AI-generated code</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">6</div>
+      <div class="label">language targets<br>from single source</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">1</div>
+      <div class="label">audit surface<br>for compliance</div>
+    </div>
+  </div>
+  <p style="margin-top: 1.2em; font-size: 0.85em; color: #888;">Enterprise security is not a process problem. It is an architecture problem.</p>
+  <p style="font-size: 0.95em; color: #000; font-weight: 600; margin-top: 0.2em;">Temper makes security a compile-time guarantee, not a runtime hope.</p>
+  <p style="margin-top: 1.5em; font-size: 0.5em; color: #aaa;">
+    github.com/temperlang/temper
+  </p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'fade',
+  center: true,
+  controls: true,
+  controlsTutorial: false,
+  progress: true,
+  slideNumber: true,
+  width: 1280,
+  height: 720,
+  margin: 0.08,
+});
+</script>
+</body>
+</html>

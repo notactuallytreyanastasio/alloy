@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temper: The Future of Banking Infrastructure</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/white.css">
+<style>
+  :root {
+    --r-background-color: #fff;
+    --r-main-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --r-heading-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --r-main-color: #444;
+    --r-heading-color: #111;
+    --r-link-color: #666;
+    --r-link-color-hover: #000;
+    --r-heading-text-transform: none;
+    --r-heading-font-weight: 600;
+  }
+  .reveal { font-size: 32px; }
+  .reveal h1 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.02em; color: #000; }
+  .reveal h2 { font-size: 1.6em; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.6em; color: #111; }
+  .reveal h3 { font-size: 0.7em; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: #999; margin-bottom: 0.4em; }
+  .reveal p { font-size: 0.75em; line-height: 1.6; color: #555; }
+  .reveal li { font-size: 0.7em; line-height: 1.6; color: #555; margin-bottom: 0.3em; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li::before { content: "\2014"; margin-right: 0.6em; color: #bbb; }
+  .reveal strong { color: #000; font-weight: 600; }
+  .reveal em { color: #444; }
+  .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85em; color: #555; }
+  .reveal table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.65em; }
+  .reveal th { text-align: left; padding: 8px 12px; color: #999; border-bottom: 1px solid #ddd; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
+  .reveal td { padding: 8px 12px; border-bottom: 1px solid #eee; color: #555; }
+  .reveal .big-num { font-size: 3.5em; font-weight: 800; line-height: 1; color: #000; }
+  .reveal .stat-row { display: flex; gap: 60px; justify-content: center; margin: 0.8em 0; }
+  .reveal .stat { text-align: center; }
+  .reveal .stat .label { font-size: 0.55em; color: #999; margin-top: 4px; }
+  .reveal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 0.8em 0; text-align: left; }
+  .reveal .card { border: 1px solid #ddd; padding: 24px; }
+  .reveal .card h4 { font-size: 0.75em; font-weight: 600; color: #111; margin-bottom: 12px; text-transform: none; }
+  .reveal .card p, .reveal .card li { font-size: 0.6em; }
+  .reveal .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 0.8em 0; }
+  .reveal .flow-box { border: 1px solid #ccc; padding: 8px 16px; font-size: 0.6em; color: #555; }
+  .reveal .flow-arrow { color: #aaa; font-size: 0.9em; }
+  .reveal .code-block { background: #f7f7f7; border: 1px solid #ddd; padding: 16px 20px; margin: 0.6em 0; font-family: 'SF Mono', monospace; font-size: 0.55em; line-height: 1.8; text-align: left; color: #444; }
+  .reveal .diff-add { color: #000; font-weight: 600; }
+  .reveal .diff-rm { color: #aaa; text-decoration: line-through; }
+  .reveal .dim { color: #aaa; }
+  .reveal .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+  .reveal .vs { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 0.6em 0; }
+  .reveal .vs-side { flex: 1; text-align: center; }
+  .reveal .vs-divider { font-size: 1.2em; font-weight: 300; color: #ccc; }
+  .reveal .footnote { font-size: 0.45em; color: #bbb; margin-top: 1.5em; }
+  .reveal .lang-row { display: flex; gap: 16px; justify-content: center; margin-top: 1.5em; flex-wrap: wrap; }
+  .reveal .lang-pill { border: 1px solid #ccc; padding: 6px 16px; font-size: 0.55em; color: #888; letter-spacing: 0.05em; }
+  .reveal blockquote { border-left: 2px solid #ccc; padding-left: 20px; margin: 0.8em 0; font-style: italic; }
+  .reveal blockquote p { color: #777; font-size: 0.7em; }
+  .reveal .timeline { display: flex; align-items: flex-start; gap: 0; margin: 0.8em 0; justify-content: center; }
+  .reveal .timeline-step { text-align: center; flex: 1; max-width: 180px; position: relative; }
+  .reveal .timeline-step::after { content: ""; position: absolute; top: 18px; right: -10px; width: 20px; height: 1px; background: #ccc; }
+  .reveal .timeline-step:last-child::after { display: none; }
+  .reveal .timeline-num { font-size: 1.8em; font-weight: 800; color: #000; }
+  .reveal .timeline-label { font-size: 0.5em; color: #999; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- SLIDE 1: Title -->
+<section>
+  <h1>Temper</h1>
+  <p style="font-size: 1em; color: #888; margin-top: 0.2em;">The Future of Banking Infrastructure</p>
+  <p style="font-size: 0.6em; color: #aaa; margin-top: 1.5em;">Secure mainframe continuity today. The only logical migration path tomorrow.</p>
+  <div class="lang-row">
+    <span class="lang-pill">JavaScript</span>
+    <span class="lang-pill">Python</span>
+    <span class="lang-pill">Java</span>
+    <span class="lang-pill">Rust</span>
+    <span class="lang-pill">C#</span>
+    <span class="lang-pill" style="border-width: 2px; color: #555; font-weight: 600;">COBOL</span>
+    <span class="lang-pill" style="border-style: dashed;">and more to come...</span>
+  </div>
+</section>
+
+<!-- SLIDE 2: The Mainframe Reality -->
+<section>
+  <h3>The Reality</h3>
+  <h2>The world runs on COBOL. That is not changing soon.</h2>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="big-num">95%</div>
+      <div class="label">of ATM transactions<br>touch COBOL</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">$3T</div>
+      <div class="label">in daily commerce<br>processed by COBOL</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">800B</div>
+      <div class="label">lines of COBOL<br>in production</div>
+    </div>
+  </div>
+  <p>Banks do not run COBOL because they love it. They run it because <strong>it works</strong>, it is battle-tested across decades, and the risk of replacing it is existential. Every failed mainframe migration reinforces the same conclusion: <strong>the plumbing stays</strong>.</p>
+  <p class="footnote">Source: Reuters, IBM Systems, Micro Focus industry reports</p>
+</section>
+
+<!-- SLIDE 3: The Crisis -->
+<section>
+  <h3>The Crisis</h3>
+  <h2>The people who understand the plumbing are retiring</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h4>The talent cliff</h4>
+      <ul>
+        <li>Average COBOL developer age: <strong>55+</strong></li>
+        <li>Universities stopped teaching COBOL decades ago</li>
+        <li>Institutional knowledge leaves when developers retire</li>
+        <li>Remaining experts command <strong>$200+/hr</strong> consulting rates</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>The migration trap</h4>
+      <ul>
+        <li>Rewrite projects average <strong>$100M+</strong> and 5&ndash;10 years</li>
+        <li>Commonwealth Bank of Australia: <strong>$750M, 5 years</strong></li>
+        <li>Most migrations fail or are abandoned mid-flight</li>
+        <li>Failed migrations leave systems <strong>worse than before</strong></li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 0.6em;">Banks face an impossible choice: maintain systems no one understands, or risk a migration that could bring down critical infrastructure. <strong>Temper offers a third option.</strong></p>
+</section>
+
+<!-- SLIDE 4: The Temper COBOL Story -->
+<section>
+  <h3>The Third Option</h3>
+  <h2>Write in Temper. Compile to COBOL. And to everything else.</h2>
+  <div class="flow">
+    <div class="flow-box" style="border-color: #999; font-weight: 600;">Temper Source</div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box"><code>temper build</code></div>
+    <span class="flow-arrow">&rarr;</span>
+    <div class="flow-box" style="border-width: 2px; font-weight: 600;">COBOL</div>
+    <div class="flow-box">Java</div>
+    <div class="flow-box">Python</div>
+    <div class="flow-box">Rust</div>
+    <div class="flow-box">C#</div>
+    <div class="flow-box">JavaScript</div>
+  </div>
+  <div class="grid-2" style="margin-top: 0.6em;">
+    <div class="card">
+      <h4>Today: safer mainframe maintenance</h4>
+      <ul>
+        <li>New business logic written in Temper, compiled to COBOL</li>
+        <li>Type-safe, testable code that runs on existing mainframes</li>
+        <li>No migration required &mdash; the output is native COBOL</li>
+        <li>Any developer can write Temper &mdash; no COBOL expertise needed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Tomorrow: the migration on-ramp</h4>
+      <ul>
+        <li>Same Temper source compiles to Java, Rust, or C#</li>
+        <li>Migrate at your own pace, one module at a time</li>
+        <li>COBOL and modern targets run <strong>the same logic</strong></li>
+        <li>Zero behavioral drift between old and new</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: The Strategic Position -->
+<section>
+  <h3>Strategic Position</h3>
+  <h2>The only company that can safely bridge both worlds</h2>
+  <p style="margin-bottom: 0.6em;">Temper is uniquely positioned to become the infrastructure layer for banking's next chapter.</p>
+  <table>
+    <tr><th>Capability</th><th>IBM/Micro Focus</th><th>Cloud Rewrite Vendors</th><th>Temper</th></tr>
+    <tr><td>Maintains existing COBOL</td><td><strong>Yes</strong></td><td>No</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Produces new COBOL safely</td><td>No</td><td>No</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Compiles to modern languages</td><td>No</td><td>Rewrites (risky)</td><td><strong>Yes &mdash; same source</strong></td></tr>
+    <tr><td>Behavioral equivalence guarantee</td><td>N/A</td><td>No</td><td><strong>By construction</strong></td></tr>
+    <tr><td>Compile-time security guarantees</td><td>No</td><td>No</td><td><strong>5 defense layers</strong></td></tr>
+    <tr><td>Migration risk</td><td>Status quo</td><td><strong>Existential</strong></td><td><strong>Incremental</strong></td></tr>
+  </table>
+  <p style="margin-top: 0.4em;">No one else can say: <strong>&ldquo;Use us to maintain your mainframes today, and we are the safest path off them tomorrow.&rdquo;</strong></p>
+</section>
+
+<!-- SLIDE 6: The Moat -->
+<section>
+  <h3>The Moat</h3>
+  <h2>Every line of Temper a bank writes deepens the relationship</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Phase 1: Maintenance</h4>
+      <p>Banks adopt Temper to write new COBOL safely. Modern syntax, type safety, testability. The output runs on their existing mainframes unchanged. <strong>Zero migration risk.</strong></p>
+      <p style="margin-top: 8px;">This solves the talent crisis immediately.</p>
+    </div>
+    <div class="card">
+      <h4>Phase 2: Migration</h4>
+      <p>Every module written in Temper is already portable. When the bank is ready to move off the mainframe, the same source compiles to Java, Rust, or C#. <strong>No rewrite needed.</strong></p>
+      <p style="margin-top: 8px;">Temper becomes the only logical migration vendor.</p>
+    </div>
+  </div>
+  <blockquote style="margin-top: 0.6em;">
+    <p>The more Temper a bank writes for COBOL maintenance, the more portable their codebase becomes &mdash; and the more locked in they are to Temper as their migration path.</p>
+  </blockquote>
+</section>
+
+<!-- SLIDE 7: Security Story -->
+<section>
+  <h3>Security for Regulators</h3>
+  <h2>Compile-time guarantees for regulated infrastructure</h2>
+  <p style="margin-bottom: 0.4em;">Financial regulators increasingly demand proof of secure software practices. Temper provides it structurally.</p>
+  <table>
+    <tr><th>Regulatory Concern</th><th>Traditional Approach</th><th>Temper Approach</th></tr>
+    <tr><td>SQL injection (CWE-89)</td><td>Developer discipline + SAST</td><td><strong>Type system prevents construction</strong></td></tr>
+    <tr><td>Mass assignment (CWE-915)</td><td>Framework conventions</td><td><strong>Whitelist enforced at compile time</strong></td></tr>
+    <tr><td>Cross-platform consistency</td><td>Manual testing per platform</td><td><strong>Single source, guaranteed equivalence</strong></td></tr>
+    <tr><td>Audit trail</td><td>N codebases &times; N reviews</td><td><strong>1 source + compiler = 1 audit</strong></td></tr>
+    <tr><td>Incident response SLA</td><td>Weeks (coordinated patches)</td><td><strong>Hours (single rebuild)</strong></td></tr>
+  </table>
+  <p style="margin-top: 0.4em;">When OCC or Fed examiners ask how you ensure security across platforms, the answer is not process. <strong>The answer is the compiler.</strong></p>
+</section>
+
+<!-- SLIDE 8: Proven Today -->
+<section>
+  <h3>Proven Today</h3>
+  <h2>A type-safe ORM running in 6 languages with 0 vulnerabilities</h2>
+  <p>We built a production-grade SQL ORM with 5 compile-time defense layers, compiled it to 6 backends, and subjected each to independent MITRE ATT&CK / CWE analysis.</p>
+  <div class="stat-row" style="margin: 0.6em 0;">
+    <div class="stat">
+      <div class="big-num">0</div>
+      <div class="label">SQL injection<br>vulnerabilities</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">6</div>
+      <div class="label">language backends<br>from single source</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">1</div>
+      <div class="label">commit to fix<br>all findings</div>
+    </div>
+  </div>
+  <p>An equivalent AI-generated ORM in a single language produced <strong>9 critical/high vulnerabilities</strong> (CVSS 9.8). Temper's type system made every one of those attack vectors <strong>structurally impossible</strong>.</p>
+  <p style="margin-top: 0.3em;">The COBOL backend extends this same guarantee to mainframe-targeted output.</p>
+</section>
+
+<!-- SLIDE 9: Market Opportunity -->
+<section>
+  <h3>Market Opportunity</h3>
+  <h2>Banking's $16B mainframe problem needs a new answer</h2>
+  <div class="stat-row" style="margin: 0.6em 0;">
+    <div class="stat">
+      <div class="big-num" style="font-size: 2.8em;">$16B</div>
+      <div class="label">annual mainframe<br>modernization spend</div>
+    </div>
+    <div class="stat">
+      <div class="big-num" style="font-size: 2.8em;">72%</div>
+      <div class="label">of banks say mainframe<br>modernization is critical</div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Addressable market</h4>
+      <ul>
+        <li><strong>Top 50 global banks</strong> all run COBOL mainframes</li>
+        <li>Insurance, government, and healthcare share the same stack</li>
+        <li>Each institution spends <strong>$50M&ndash;$500M/yr</strong> on mainframe ops</li>
+        <li>Modernization budgets are growing as talent retires</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Temper's wedge</h4>
+      <ul>
+        <li>Start with <strong>maintenance</strong> &mdash; lowest risk, immediate value</li>
+        <li>Expand to <strong>new module development</strong> in Temper</li>
+        <li>Grow into <strong>incremental migration</strong> when bank is ready</li>
+        <li>Become the <strong>platform</strong> for banking infrastructure</li>
+      </ul>
+    </div>
+  </div>
+  <p class="footnote">Source: Deloitte Mainframe Modernization Survey, Gartner</p>
+</section>
+
+<!-- SLIDE 10: The Vision -->
+<section>
+  <h3>The Vision</h3>
+  <h2>Temper becomes the plumbing of modern banking</h2>
+  <p style="margin-bottom: 0.6em;">Banking infrastructure has two requirements: it must be secure, and it must never go down. Temper is built for both.</p>
+  <div class="grid-2">
+    <div class="card">
+      <h4>Near term (12&ndash;24 months)</h4>
+      <ul>
+        <li>COBOL backend release</li>
+        <li>First banking pilot: new modules in Temper &rarr; COBOL</li>
+        <li>Regulatory compliance toolkit</li>
+        <li>IBM partnership exploration</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Long term (3&ndash;5 years)</h4>
+      <ul>
+        <li>Temper as the standard for cross-platform banking logic</li>
+        <li>Incremental mainframe migration tooling</li>
+        <li>Security certification for Temper compiler output</li>
+        <li>The platform banks build their future on</li>
+      </ul>
+    </div>
+  </div>
+  <blockquote style="margin-top: 0.4em;">
+    <p>The company that solves mainframe maintenance becomes the company that owns mainframe migration. Temper is that company.</p>
+  </blockquote>
+</section>
+
+<!-- SLIDE 11: Why Now -->
+<section>
+  <h3>Why Now</h3>
+  <h2>Three forces converging</h2>
+  <div class="grid-2" style="grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+    <div class="card">
+      <h4>1. Talent exodus</h4>
+      <p>The COBOL workforce is retiring faster than it can be replaced. Banks need a way to write mainframe code without COBOL expertise. <strong>Temper is that way.</strong></p>
+    </div>
+    <div class="card">
+      <h4>2. AI code generation</h4>
+      <p>AI generates plausible but insecure code. Without type-level guardrails, AI-written banking logic is a regulatory nightmare. <strong>Temper makes AI output safe by construction.</strong></p>
+    </div>
+    <div class="card">
+      <h4>3. Regulatory pressure</h4>
+      <p>OCC, Fed, and global regulators are tightening software security requirements. Compile-time guarantees are the strongest evidence a bank can present. <strong>Temper provides that evidence.</strong></p>
+    </div>
+  </div>
+  <p style="margin-top: 0.6em;">These three forces create an urgent, growing market for exactly what Temper offers: <strong>safe, portable, auditable infrastructure code</strong>.</p>
+</section>
+
+<!-- SLIDE 12: Summary -->
+<section>
+  <h2 style="margin-bottom: 0.8em;">The opportunity</h2>
+  <div class="stat-row">
+    <div class="stat">
+      <div class="big-num">$16B</div>
+      <div class="label">annual mainframe<br>modernization market</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">0</div>
+      <div class="label">competitors that compile<br>to COBOL + modern</div>
+    </div>
+    <div class="stat">
+      <div class="big-num">1</div>
+      <div class="label">source of truth<br>for all platforms</div>
+    </div>
+  </div>
+  <p style="margin-top: 1.2em; font-size: 0.85em; color: #888;">Banks do not need another rewrite vendor. They need a bridge.</p>
+  <p style="font-size: 0.95em; color: #000; font-weight: 600; margin-top: 0.2em;">Temper is the bridge between the mainframe era and whatever comes next.</p>
+  <p style="margin-top: 0.4em; font-size: 0.75em; color: #555;">Maintain COBOL today. Migrate tomorrow. Same source. Same security. Zero risk.</p>
+  <p style="margin-top: 1.5em; font-size: 0.5em; color: #aaa;">
+    github.com/temperlang/temper
+  </p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'fade',
+  center: true,
+  controls: true,
+  controlsTutorial: false,
+  progress: true,
+  slideNumber: true,
+  width: 1280,
+  height: 720,
+  margin: 0.08,
+});
+</script>
+</body>
+</html>

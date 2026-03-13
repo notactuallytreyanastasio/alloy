@@ -1,0 +1,82 @@
+[
+  {
+    "hash": "ce6b2aef0309b124d0459474381cacc64f229638",
+    "short_hash": "ce6b2ae",
+    "author": "Robert Grayson",
+    "date": "2026-03-12T21:39:34-04:00",
+    "message": "lets see",
+    "files_changed": 11
+  },
+  {
+    "hash": "e57869aee785d44eabe641d83aa09078b4de16f4",
+    "short_hash": "e57869a",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T12:03:51-04:00",
+    "message": "Flatten module structure for Temper nightly compatibility\n\n- Add config.temper.md to define \"orm\" library (required by Temper)\n- Move sql/ files into src/ (sql_builder, sql_model, sql_imports, sql_tests)\n  to avoid cross-module @I stage parallelism failures\n- Move test files from test/ into src/ for same-module visibility\n- Remove intra-module import statements (same-module files share scope)\n- Convert when expressions to if-else chains (nightly parser compat)\n- Fix nullable Int32? narrowing with local variable pattern\n- Rename test helper sid->csid in changeset_test to avoid name collision\n\nAll 51 tests pass locally with temper test -b js.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 21
+  },
+  {
+    "hash": "345137eb7f29562a4296e0e6325b4515171f0ce1",
+    "short_hash": "345137e",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:34:52-04:00",
+    "message": "Remove ### headers inside class bodies for nightly parser compat\n\nThe Temper nightly (0.6.1-dev) parser treats ### markdown headers as\ncode block boundaries, breaking class method continuity and causing\nparse errors like ClassName.if(). Replace all ### headers inside class\nbodies with // inline comments so each class is one continuous block.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 5
+  },
+  {
+    "hash": "68a4a5aa164a544cd634490e1a791fdba0a7c80e",
+    "short_hash": "68a4a5a",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:26:28-04:00",
+    "message": "Extract BoolField logic to helper to fix nightly parser\n\nThe temper nightly parser cannot handle multi-line if/else blocks\ninside when arms. Extract the bool-to-SqlBoolean conversion to a\nseparate parseBoolSqlPart() method so the when arm is a single\nexpression call.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "551b566215a576798d5a5e29279b2f1001b8c561",
+    "short_hash": "551b566",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:23:02-04:00",
+    "message": "Inline secure-composition SQL into ORM source tree\n\nInstead of vendoring all of secure-composition as a separate nested\nproject (which confuses temper's project boundary detection), include\nonly the SQL files (builder, model, imports, tests) directly under\nsrc/sql/. This makes everything one temper project with clean imports.\n\nImport paths updated:\n- src/*.temper.md: ../secure-composition/src/sql/* → ./sql/*\n- test/query_test.temper.md: ../secure-composition/src/sql/* → ../src/sql/*\n\nRemoved the standalone secure-composition/ directory and its\nfile: dependency from package.json.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 36
+  },
+  {
+    "hash": "2b6c38e4c6ab3c37809a8b3dc4c9c828da1ecf78",
+    "short_hash": "2b6c38e",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:16:11-04:00",
+    "message": "Use system JDK instead of bundled minimal JRE\n\nThe temper nightly bundles a minimal JRE missing java.desktop module.\nOverride the launcher script to use system JDK 21 (temurin) which has\nall required modules including java.beans.Introspector.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "52b6488b38aa55a57e73079234dde6c16c8eac3f",
+    "short_hash": "52b6488",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:13:42-04:00",
+    "message": "Add JDK 21 setup and inspect temper binary layout\n\nThe nightly temper bundles a minimal JRE missing java.desktop module.\nAdd setup-java with temurin JDK 21 so JAVA_HOME is available. Also\nadd debug output to understand the temper binary structure.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "96628b49a587f7704b44eb89d2bccca3d14dea5a",
+    "short_hash": "96628b4",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:11:34-04:00",
+    "message": "Switch CI to Temper nightly (0.6.1-dev)\n\nsecure-composition uses features (@overload, generic interfaces) that\naren't in v0.6.0. The code was developed against a dev build, so use\nthe nightly release which supports these language features.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "3033637a58e8fa1bfd3a73fcdb2ea20b96cb32f7",
+    "short_hash": "3033637",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T11:09:01-04:00",
+    "message": "Vendor secure-composition and add CI with Temper v0.6.0\n\n- Vendor secure-composition source directly (private repo, not a submodule)\n- Fix import paths from ../../secure-composition/ to ../secure-composition/\n- Fix package.json file: dependency path for nested layout\n- Add GitHub Actions workflow: downloads Temper v0.6.0 linux binary,\n  builds secure-composition first, then builds and tests the ORM\n- Track temper.keep/ build config for both packages\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 35
+  },
+  {
+    "hash": "328d02d0ff1a314857d2579de5759b43e2bb300e",
+    "short_hash": "328d02d",
+    "author": "Robert Grayson",
+    "date": "2026-03-08T10:46:54-04:00",
+    "message": "initial",
+    "files_changed": 0
+  }
+]
