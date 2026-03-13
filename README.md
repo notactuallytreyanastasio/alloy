@@ -139,7 +139,7 @@ All source lives in [`src/`](src/) as Temper literate markdown (`.temper.md`):
 | [`orm.temper.md`](src/orm.temper.md) | `deleteSql()` top-level helper |
 | [`sql_builder.temper.md`](src/sql_builder.temper.md) | `SqlBuilder`, `sql` tag |
 | [`sql_model.temper.md`](src/sql_model.temper.md) | `SqlFragment`, `SqlPart`, `SqlString`, `SqlInt32`, `SqlDefault`, etc. |
-| [`sql_imports.temper.md`](src/sql_imports.temper.md) | Re-exports from vendored `secure-composition` |
+| [`sql_imports.temper.md`](src/sql_imports.temper.md) | SQL builder/model type re-exports |
 | [`schema_test.temper.md`](src/schema_test.temper.md) | Schema tests |
 | [`query_test.temper.md`](src/query_test.temper.md) | Query builder tests |
 | [`changeset_test.temper.md`](src/changeset_test.temper.md) | Changeset tests |
@@ -599,7 +599,7 @@ All Phase 6 methods (`putChange`, `getChange`, `deleteChange`, `validateInclusio
 
 ### Full Security Research
 
-See [RESEARCH.md](RESEARCH.md) for detailed per-phase MITRE CWE Top 25 analysis with component-level security assessment tables.
+See [RESEARCH.md](docs/RESEARCH.md) for detailed per-phase MITRE CWE Top 25 analysis with component-level security assessment tables.
 
 ---
 
