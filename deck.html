@@ -4,416 +4,381 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Temper: Write Once, Secure Everywhere</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/theme/black.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, 'Helvetica Neue', sans-serif; background: #0a0a0a; color: #e0e0e0; }
-  .slide {
-    min-height: 100vh; padding: 60px 80px; display: flex; flex-direction: column;
-    justify-content: center; border-bottom: 1px solid #222;
+  :root {
+    --r-background-color: #000;
+    --r-main-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --r-heading-font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --r-main-color: #ccc;
+    --r-heading-color: #fff;
+    --r-link-color: #999;
+    --r-link-color-hover: #fff;
+    --r-heading-text-transform: none;
+    --r-heading-font-weight: 600;
   }
-  h1 { font-size: 3.2em; font-weight: 700; margin-bottom: 24px; line-height: 1.15; }
-  h2 { font-size: 2.4em; font-weight: 600; margin-bottom: 20px; line-height: 1.2; }
-  h3 { font-size: 1.5em; font-weight: 600; margin-bottom: 12px; color: #aaa; }
-  p, li { font-size: 1.25em; line-height: 1.7; color: #bbb; }
-  ul { list-style: none; padding-left: 0; }
-  ul li::before { content: ""; display: inline-block; width: 8px; height: 8px; background: #4a9eff; border-radius: 50%; margin-right: 14px; vertical-align: middle; }
-  .accent { color: #4a9eff; }
-  .green { color: #22c55e; }
-  .red { color: #ef4444; }
-  .yellow { color: #eab308; }
-  .dim { color: #666; }
-  .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
-  .tag { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.75em; font-weight: 600; vertical-align: middle; }
-  .tag-red { background: #3b1111; color: #ef4444; border: 1px solid #7f1d1d; }
-  .tag-green { background: #052e16; color: #22c55e; border: 1px solid #166534; }
-  .tag-yellow { background: #422006; color: #eab308; border: 1px solid #854d0e; }
-  .tag-blue { background: #0c1a3a; color: #4a9eff; border: 1px solid #1e3a5f; }
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-  th { text-align: left; padding: 12px 16px; font-size: 0.95em; color: #888; border-bottom: 2px solid #333; font-weight: 600; }
-  td { padding: 12px 16px; font-size: 1.05em; border-bottom: 1px solid #1a1a1a; }
-  .big-num { font-size: 5em; font-weight: 800; line-height: 1; }
-  .stat-row { display: flex; gap: 60px; margin: 30px 0; }
-  .stat { text-align: center; }
-  .stat .big-num { margin-bottom: 8px; }
-  .stat .label { font-size: 1em; color: #888; }
-  .code-block {
-    background: #111; border: 1px solid #333; border-radius: 8px;
-    padding: 20px 24px; margin: 16px 0; font-family: 'SF Mono', monospace;
-    font-size: 0.95em; line-height: 1.7; overflow-x: auto; color: #ccc;
-  }
-  .diff-add { color: #22c55e; }
-  .diff-rm { color: #ef4444; text-decoration: line-through; opacity: 0.6; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 20px 0; }
-  .card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 28px; }
-  .card h3 { margin-bottom: 16px; }
-  .vs { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 30px 0; }
-  .vs-side { flex: 1; text-align: center; }
-  .vs-divider { font-size: 2em; font-weight: 800; color: #333; }
-  .flow { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
-  .flow-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 12px 20px; font-size: 1em; }
-  .flow-arrow { color: #4a9eff; font-size: 1.4em; }
-  .subtitle { font-size: 1.3em; color: #666; margin-bottom: 40px; }
-  .logo-row { display: flex; gap: 24px; margin: 20px 0; flex-wrap: wrap; }
-  .logo-pill { background: #151515; border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px 20px; font-size: 1em; font-weight: 600; color: #999; }
-  .quote { border-left: 3px solid #4a9eff; padding-left: 24px; margin: 24px 0; font-style: italic; font-size: 1.15em; color: #999; }
-  .footnote { font-size: 0.85em; color: #555; margin-top: 40px; }
-  @media print { .slide { page-break-after: always; } }
+  .reveal { font-size: 32px; }
+  .reveal h1 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.02em; }
+  .reveal h2 { font-size: 1.6em; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.6em; }
+  .reveal h3 { font-size: 0.7em; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: #666; margin-bottom: 0.4em; }
+  .reveal p { font-size: 0.75em; line-height: 1.6; color: #999; }
+  .reveal li { font-size: 0.7em; line-height: 1.6; color: #999; margin-bottom: 0.3em; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li::before { content: "\2014"; margin-right: 0.6em; color: #444; }
+  .reveal strong { color: #fff; font-weight: 600; }
+  .reveal em { color: #bbb; }
+  .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85em; color: #aaa; }
+  .reveal table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.65em; }
+  .reveal th { text-align: left; padding: 8px 12px; color: #666; border-bottom: 1px solid #333; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
+  .reveal td { padding: 8px 12px; border-bottom: 1px solid #181818; color: #999; }
+  .reveal .big-num { font-size: 3.5em; font-weight: 800; line-height: 1; color: #fff; }
+  .reveal .stat-row { display: flex; gap: 60px; justify-content: center; margin: 0.8em 0; }
+  .reveal .stat { text-align: center; }
+  .reveal .stat .label { font-size: 0.55em; color: #666; margin-top: 4px; }
+  .reveal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 0.8em 0; text-align: left; }
+  .reveal .card { border: 1px solid #222; padding: 24px; }
+  .reveal .card h4 { font-size: 0.75em; font-weight: 600; color: #fff; margin-bottom: 12px; text-transform: none; }
+  .reveal .card p, .reveal .card li { font-size: 0.6em; }
+  .reveal .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 0.8em 0; }
+  .reveal .flow-box { border: 1px solid #333; padding: 8px 16px; font-size: 0.6em; color: #999; }
+  .reveal .flow-arrow { color: #555; font-size: 0.9em; }
+  .reveal .code-block { background: #0a0a0a; border: 1px solid #222; padding: 16px 20px; margin: 0.6em 0; font-family: 'SF Mono', monospace; font-size: 0.55em; line-height: 1.8; text-align: left; color: #888; }
+  .reveal .diff-add { color: #fff; }
+  .reveal .diff-rm { color: #555; text-decoration: line-through; }
+  .reveal .dim { color: #555; }
+  .reveal .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+  .reveal .vs { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 0.6em 0; }
+  .reveal .vs-side { flex: 1; text-align: center; }
+  .reveal .vs-divider { font-size: 1.2em; font-weight: 300; color: #333; }
+  .reveal .footnote { font-size: 0.45em; color: #444; margin-top: 1.5em; }
+  .reveal .lang-row { display: flex; gap: 16px; justify-content: center; margin-top: 1.5em; flex-wrap: wrap; }
+  .reveal .lang-pill { border: 1px solid #333; padding: 6px 16px; font-size: 0.55em; color: #666; letter-spacing: 0.05em; }
+  .reveal blockquote { border-left: 2px solid #333; padding-left: 20px; margin: 0.8em 0; font-style: italic; }
+  .reveal blockquote p { color: #777; font-size: 0.7em; }
 </style>
 </head>
 <body>
 
+<div class="reveal">
+<div class="slides">
+
 <!-- SLIDE 1: Title -->
-<div class="slide" style="justify-content: center; text-align: center;">
-  <h1><span class="accent">Temper</span></h1>
-  <p style="font-size: 1.8em; color: #888; margin-bottom: 40px;">Write Once, Secure Everywhere</p>
-  <p style="font-size: 1.2em; color: #555;">A cross-compiled language for security-critical infrastructure at scale</p>
-  <div class="logo-row" style="justify-content: center; margin-top: 60px;">
-    <span class="logo-pill">JavaScript</span>
-    <span class="logo-pill">Python</span>
-    <span class="logo-pill">Rust</span>
-    <span class="logo-pill">Java</span>
-    <span class="logo-pill">Lua</span>
-    <span class="logo-pill">C#</span>
+<section>
+  <h1>Temper</h1>
+  <p style="font-size: 1em; color: #666; margin-top: 0.2em;">Write Once, Secure Everywhere</p>
+  <p style="font-size: 0.6em; color: #444; margin-top: 1.5em;">A cross-compiled language for security-critical infrastructure at scale</p>
+  <div class="lang-row">
+    <span class="lang-pill">JavaScript</span>
+    <span class="lang-pill">Python</span>
+    <span class="lang-pill">Rust</span>
+    <span class="lang-pill">Java</span>
+    <span class="lang-pill">Lua</span>
+    <span class="lang-pill">C#</span>
   </div>
-</div>
+</section>
 
 <!-- SLIDE 2: The Problem -->
-<div class="slide">
-  <h3>THE PROBLEM</h3>
-  <h2>SDK maintenance at scale is a <span class="red">security crisis</span></h2>
+<section>
+  <h3>The Problem</h3>
+  <h2>SDK maintenance at scale is a security crisis</h2>
   <div class="stat-row">
     <div class="stat">
-      <div class="big-num accent">3,600+</div>
+      <div class="big-num">3,600+</div>
       <div class="label">AWS service client libraries</div>
     </div>
     <div class="stat">
-      <div class="big-num accent">12</div>
+      <div class="big-num">12</div>
       <div class="label">language targets</div>
     </div>
     <div class="stat">
-      <div class="big-num accent">156K+</div>
+      <div class="big-num">156K+</div>
       <div class="label">operation implementations</div>
     </div>
   </div>
-  <p style="margin-top: 30px;">AWS maintains 300+ services across 12 SDKs. A single vulnerability in the serialization logic must be patched <strong>independently in every language</strong>. Miss one, and you have a CVE.</p>
-  <p style="margin-top: 16px;">Even with Smithy code generation, the Java SDK v1&rarr;v2 migration spanned <strong>7 years</strong> (2018&ndash;2025). Three major SDKs hit end-of-support in 2025 (Java v1, JavaScript v2, Go v1) &mdash; <span class="red">zero security patches after cutoff.</span></p>
-  <p style="margin-top: 16px;">The trend is accelerating: .NET SDK v3&rarr;v4 has a <strong>3-month maintenance window</strong> (vs the 12-month default). Organizations on end-of-support SDKs face accumulating risk with <strong>no remediation path from AWS</strong>.</p>
-  <p class="footnote">Source: AWS SDKs and Tools maintenance policy, March 2026. AWS SDK lifecycle analysis.</p>
-</div>
+  <p style="margin-top: 0.6em;">A single vulnerability in serialization logic must be patched <strong>independently in every language</strong>. The Java SDK v1&rarr;v2 migration spanned <strong>7 years</strong>. Three major SDKs hit end-of-support in 2025 &mdash; <strong>zero security patches after cutoff</strong>.</p>
+  <p style="margin-top: 0.4em;">.NET SDK v3&rarr;v4 has a <strong>3-month maintenance window</strong> vs the 12-month default. The trend is accelerating.</p>
+  <p class="footnote">Source: AWS SDKs and Tools maintenance policy, March 2026</p>
+</section>
 
 <!-- SLIDE 3: The Temper Answer -->
-<div class="slide">
-  <h3>THE ANSWER</h3>
-  <h2>One source. <span class="accent">Six backends.</span> Zero drift.</h2>
-  <p style="margin-bottom: 30px;">Temper compiles a single source tree to idiomatic output in 6 languages. Not transpilation &mdash; native, typed, importable libraries.</p>
+<section>
+  <h3>The Answer</h3>
+  <h2>One source. Six backends. Zero drift.</h2>
+  <p>Temper compiles a single source tree to idiomatic output in 6 languages. Not transpilation &mdash; native, typed, importable libraries.</p>
   <div class="flow">
-    <div class="flow-box" style="border-color: #4a9eff;">Temper Source (.temper.md)</div>
+    <div class="flow-box" style="border-color: #666;">Temper Source</div>
     <span class="flow-arrow">&rarr;</span>
-    <div class="flow-box"><span class="mono">temper build</span></div>
+    <div class="flow-box"><code>temper build</code></div>
     <span class="flow-arrow">&rarr;</span>
     <div class="flow-box">ES Modules</div>
     <div class="flow-box">Python 3</div>
     <div class="flow-box">Cargo Crate</div>
-    <div class="flow-box">Java Source</div>
-    <div class="flow-box">Lua Modules</div>
-    <div class="flow-box">.NET Source</div>
+    <div class="flow-box">Java</div>
+    <div class="flow-box">Lua</div>
+    <div class="flow-box">.NET</div>
   </div>
-  <div class="grid-2" style="margin-top: 30px;">
+  <div class="grid-2" style="margin-top: 0.6em;">
     <div class="card">
-      <h3>What Smithy does for AWS</h3>
+      <h4>What Smithy does for AWS</h4>
       <ul>
         <li>Generates API clients from models</li>
         <li>Still requires per-language runtime teams</li>
         <li>Security fixes need per-SDK patching</li>
-        <li>15-year major version migrations</li>
+        <li>Multi-year major version migrations</li>
       </ul>
     </div>
-    <div class="card" style="border-color: #4a9eff;">
-      <h3 class="accent">What Temper does better</h3>
+    <div class="card">
+      <h4>What Temper does better</h4>
       <ul>
-        <li>Compiles <em>arbitrary logic</em>, not just API shapes</li>
+        <li>Compiles <strong>arbitrary logic</strong>, not just API shapes</li>
         <li>One codebase = one security surface</li>
         <li>Fix once, rebuild, <strong>done everywhere</strong></li>
         <li>Same-day propagation to all backends</li>
       </ul>
     </div>
   </div>
-</div>
+</section>
 
 <!-- SLIDE 4: Proof - The ORM -->
-<div class="slide">
-  <h3>PROOF: GENERIC ORM</h3>
-  <h2>A type-safe SQL ORM in Temper, running in <span class="accent">6 languages</span></h2>
-  <p style="margin-bottom: 24px;">We built a security-focused ORM with 5 defense layers against SQL injection, compiled it to 6 backends, and built 6 identical todo-list apps to prove it works.</p>
+<section>
+  <h3>Proof</h3>
+  <h2>A type-safe SQL ORM, running in 6 languages</h2>
+  <p>We built a security-focused ORM with 5 defense layers against SQL injection, compiled it to 6 backends, and built 6 identical todo-list apps to prove it works.</p>
   <table>
     <tr><th>Language</th><th>Framework</th><th>ORM Import</th><th>SQL Injection Vulns</th></tr>
-    <tr><td>JavaScript</td><td>Express + EJS</td><td class="mono" style="font-size:0.9em">from 'orm/src'</td><td><span class="tag tag-green">0 found</span></td></tr>
-    <tr><td>Python</td><td>Flask + Jinja2</td><td class="mono" style="font-size:0.9em">from orm.src import</td><td><span class="tag tag-green">0 found</span></td></tr>
-    <tr><td>Rust</td><td>Axum + askama</td><td class="mono" style="font-size:0.9em">use orm::src::{...}</td><td><span class="tag tag-green">0 found</span></td></tr>
-    <tr><td>Java</td><td>Spring Boot</td><td class="mono" style="font-size:0.9em">import orm.src.*</td><td><span class="tag tag-green">0 found</span></td></tr>
-    <tr><td>Lua</td><td>Raw socket HTTP</td><td class="mono" style="font-size:0.9em">require("orm/src")</td><td><span class="tag tag-green">0 found</span></td></tr>
-    <tr><td>C#</td><td>ASP.NET Razor</td><td class="mono" style="font-size:0.9em">using Orm.Src</td><td><span class="tag tag-green">0 found</span></td></tr>
+    <tr><td>JavaScript</td><td>Express + EJS</td><td class="mono">from 'orm/src'</td><td><strong>0</strong></td></tr>
+    <tr><td>Python</td><td>Flask + Jinja2</td><td class="mono">from orm.src import</td><td><strong>0</strong></td></tr>
+    <tr><td>Rust</td><td>Axum + askama</td><td class="mono">use orm::src::{...}</td><td><strong>0</strong></td></tr>
+    <tr><td>Java</td><td>Spring Boot</td><td class="mono">import orm.src.*</td><td><strong>0</strong></td></tr>
+    <tr><td>Lua</td><td>Raw socket HTTP</td><td class="mono">require("orm/src")</td><td><strong>0</strong></td></tr>
+    <tr><td>C#</td><td>ASP.NET Razor</td><td class="mono">using Orm.Src</td><td><strong>0</strong></td></tr>
   </table>
-  <p class="dim">Full MITRE ATT&CK / CWE analysis conducted per app. Reports published in each app repo.</p>
-</div>
+  <p class="footnote">Full MITRE ATT&CK / CWE analysis conducted per app. Reports published in each app repository.</p>
+</section>
 
 <!-- SLIDE 5: Defense Layers -->
-<div class="slide">
-  <h3>SECURITY ARCHITECTURE</h3>
+<section>
+  <h3>Security Architecture</h3>
   <h2>5 compile-time defense layers</h2>
   <table>
-    <tr><th>#</th><th>Layer</th><th>CWE</th><th>What It Prevents</th></tr>
-    <tr>
-      <td><span class="accent" style="font-weight:700">1</span></td>
-      <td><strong>SafeIdentifier</strong></td>
-      <td class="mono dim">CWE-89</td>
-      <td>Table/column name injection. <span class="mono dim">[a-zA-Z_][a-zA-Z0-9_]*</span> validated, sealed class not exported.</td>
-    </tr>
-    <tr>
-      <td><span class="accent" style="font-weight:700">2</span></td>
-      <td><strong>Typed SqlPart</strong></td>
-      <td class="mono dim">CWE-89</td>
-      <td>Value injection. Sealed interface &mdash; SqlString escapes quotes, SqlInt32 renders bare integers. Exhaustive dispatch.</td>
-    </tr>
-    <tr>
-      <td><span class="accent" style="font-weight:700">3</span></td>
-      <td><strong>SqlBuilder</strong></td>
-      <td class="mono dim">CWE-89</td>
-      <td>Structural injection. <code>appendSafe</code> only accepts validated identifiers + hardcoded literals. No <code>appendRaw</code>.</td>
-    </tr>
-    <tr>
-      <td><span class="accent" style="font-weight:700">4</span></td>
-      <td><strong>Changeset</strong></td>
-      <td class="mono dim">CWE-915</td>
-      <td>Mass assignment. Sealed interface, <code>cast()</code> requires <code>List&lt;SafeIdentifier&gt;</code>. Raw params never exposed.</td>
-    </tr>
-    <tr>
-      <td><span class="accent" style="font-weight:700">5</span></td>
-      <td><strong>Query Builder</strong></td>
-      <td class="mono dim">CWE-400</td>
-      <td>Unbounded queries. <code>safeToSql(limit)</code> enforces result set bounds. WHERE accepts only <code>SqlFragment</code>.</td>
-    </tr>
+    <tr><th></th><th>Layer</th><th>CWE</th><th>What It Prevents</th></tr>
+    <tr><td><strong>1</strong></td><td><strong>SafeIdentifier</strong></td><td class="mono dim">CWE-89</td><td>Table/column name injection. Regex-validated, sealed class not exported.</td></tr>
+    <tr><td><strong>2</strong></td><td><strong>Typed SqlPart</strong></td><td class="mono dim">CWE-89</td><td>Value injection. Sealed interface with exhaustive type dispatch.</td></tr>
+    <tr><td><strong>3</strong></td><td><strong>SqlBuilder</strong></td><td class="mono dim">CWE-89</td><td>Structural injection. No <code>appendRaw</code>. Structure and data strictly separated.</td></tr>
+    <tr><td><strong>4</strong></td><td><strong>Changeset</strong></td><td class="mono dim">CWE-915</td><td>Mass assignment. <code>cast()</code> requires <code>List&lt;SafeIdentifier&gt;</code>.</td></tr>
+    <tr><td><strong>5</strong></td><td><strong>Query Builder</strong></td><td class="mono dim">CWE-400</td><td>Unbounded queries. WHERE accepts only <code>SqlFragment</code>.</td></tr>
   </table>
-  <p style="margin-top: 20px;">These defenses are <strong>structural, not advisory</strong>. The type system makes it impossible to construct unsafe SQL without deliberately circumventing the API.</p>
-</div>
+  <p style="margin-top: 0.6em;">These defenses are <strong>structural, not advisory</strong>. The type system makes it impossible to construct unsafe SQL without deliberately circumventing the API.</p>
+</section>
 
 <!-- SLIDE 6: The Fix-Once Story -->
-<div class="slide">
-  <h3>FIX ONCE, FIX EVERYWHERE</h3>
-  <h2>3 findings. 1 commit. <span class="green">6 backends patched.</span></h2>
-  <p style="margin-bottom: 24px;">MITRE analysis identified 3 ORM-level concerns. We fixed all 3 in one Temper commit and rebuilt.</p>
+<section>
+  <h3>Fix Once, Fix Everywhere</h3>
+  <h2>3 findings. 1 commit. 6 backends patched.</h2>
+  <p>MITRE analysis identified 3 ORM-level concerns. We fixed all 3 in one Temper commit and rebuilt.</p>
   <table>
     <tr><th>Finding</th><th>Severity</th><th>Issue</th><th>Fix</th><th>Status</th></tr>
-    <tr>
-      <td class="mono">ORM-1</td>
-      <td><span class="yellow">MEDIUM</span></td>
-      <td>Column names passed as <code>String</code> to <code>appendSafe</code></td>
-      <td>Routed through <code>SafeIdentifier</code></td>
-      <td><span class="tag tag-green">RESOLVED</span></td>
-    </tr>
-    <tr>
-      <td class="mono">ORM-2</td>
-      <td><span class="yellow">LOW</span></td>
-      <td><code>SqlDate</code> missing quote escaping</td>
-      <td>Added char-by-char escaping</td>
-      <td><span class="tag tag-green">RESOLVED</span></td>
-    </tr>
-    <tr>
-      <td class="mono">ORM-3</td>
-      <td><span class="yellow">LOW</span></td>
-      <td><code>SqlFloat64</code> produces NaN/Infinity</td>
-      <td>Renders <code>NULL</code> for non-finite</td>
-      <td><span class="tag tag-green">RESOLVED</span></td>
-    </tr>
-    <tr>
-      <td class="mono">ORM-4</td>
-      <td class="dim">INFO</td>
-      <td>Escaping-based, not parameterized</td>
-      <td>Design limitation (acknowledged)</td>
-      <td><span class="tag tag-blue">KNOWN</span></td>
-    </tr>
+    <tr><td class="mono">ORM-1</td><td>Medium</td><td>Column names passed as <code>String</code></td><td>Routed through <code>SafeIdentifier</code></td><td><strong>Resolved</strong></td></tr>
+    <tr><td class="mono">ORM-2</td><td>Low</td><td><code>SqlDate</code> missing quote escaping</td><td>Char-by-char escaping</td><td><strong>Resolved</strong></td></tr>
+    <tr><td class="mono">ORM-3</td><td>Low</td><td><code>SqlFloat64</code> produces NaN/Infinity</td><td>Renders <code>NULL</code></td><td><strong>Resolved</strong></td></tr>
+    <tr><td class="mono">ORM-4</td><td>Info</td><td>Escaping-based, not parameterized</td><td>Design limitation</td><td>Acknowledged</td></tr>
   </table>
   <div class="code-block">
 <span class="dim">// One change in Temper source (changeset.temper.md)</span>
 <span class="diff-rm">colNames.add(pair.key);           // raw String</span>
 <span class="diff-add">colNames.add(fd.name.sqlValue);   // SafeIdentifier &rarr; validated</span>
 
-<span class="dim">// Verified in compiled JS output:</span>
-<span class="diff-add">listBuilderAdd(colNames, fd_186.name.sqlValue);  // &check; SafeIdentifier path</span>
-<span class="dim">// Same fix confirmed in Python, Rust, Java, Lua, C# output</span>
+<span class="dim">// Verified in compiled output across all 6 backends</span>
   </div>
-  <p>In a traditional multi-SDK world, this would require <strong>6 separate PRs, 6 code reviews, 6 release cycles</strong>. With Temper: <strong>1 commit, 1 build, done.</strong></p>
-</div>
+  <p>Traditional multi-SDK: <strong>6 PRs, 6 reviews, 6 releases</strong>. Temper: <strong>1 commit, 1 build, done.</strong></p>
+</section>
 
 <!-- SLIDE 7: Head-to-Head Comparison -->
-<div class="slide">
-  <h3>AI-GENERATED ORM COMPARISON</h3>
-  <h2>Same prompts. Same goals. <span class="red">Drastically different security.</span></h2>
-  <p style="margin-bottom: 16px;">We asked an AI to build two ORMs with comparable prompts (3-4 prompts, same goals): one in Ruby (<a href="https://github.com/notactuallytreyanastasio/some_orm" style="color:#4a9eff">SomeORM</a>), one in Temper (<a href="https://github.com/notactuallytreyanastasio/generic_orm" style="color:#4a9eff">Generic ORM</a>). Both underwent identical MITRE/CWE analysis.</p>
+<section>
+  <h3>AI-Generated ORM Comparison</h3>
+  <h2>Same prompts. Same goals. Different security.</h2>
+  <p>Two ORMs built with comparable AI prompts (3&ndash;4 prompts, same goals). One in Ruby, one in Temper. Both underwent identical MITRE/CWE analysis.</p>
   <div class="vs">
     <div class="vs-side">
-      <div class="big-num red" style="font-size: 3.5em;">F</div>
-      <p style="font-size: 1.4em; font-weight: 700; margin: 12px 0;">SomeORM <span class="dim">(Ruby)</span></p>
-      <p class="dim">CVSS 9.8 &mdash; Critical</p>
+      <div class="big-num" style="font-size: 2.5em;">F</div>
+      <p style="font-size: 0.8em; font-weight: 600; color: #fff; margin: 8px 0;">SomeORM <span style="color:#555">(Ruby)</span></p>
+      <p style="font-size: 0.55em;">CVSS 9.8</p>
     </div>
     <div class="vs-divider">vs</div>
     <div class="vs-side">
-      <div class="big-num green" style="font-size: 3.5em;">A</div>
-      <p style="font-size: 1.4em; font-weight: 700; margin: 12px 0;">Generic ORM <span class="dim">(Temper)</span></p>
-      <p class="dim">0 injection vulnerabilities</p>
+      <div class="big-num" style="font-size: 2.5em;">A</div>
+      <p style="font-size: 0.8em; font-weight: 600; color: #fff; margin: 8px 0;">Generic ORM <span style="color:#555">(Temper)</span></p>
+      <p style="font-size: 0.55em;">0 injection vulnerabilities</p>
     </div>
   </div>
   <table>
     <tr><th>Metric</th><th>SomeORM (Ruby)</th><th>Generic ORM (Temper)</th></tr>
-    <tr><td>SQL injection vulnerabilities</td><td><span class="red"><strong>9 critical/high</strong></span></td><td><span class="green"><strong>0</strong></span></td></tr>
-    <tr><td>Identifier validation</td><td><span class="red">None &mdash; direct interpolation</span></td><td><span class="green">SafeIdentifier sealed type</span></td></tr>
-    <tr><td>Value escaping</td><td><span class="red">Single-quote only, no types</span></td><td><span class="green">Typed SqlPart hierarchy (6 types)</span></td></tr>
-    <tr><td>Mass assignment protection</td><td><span class="red">None</span></td><td><span class="green">Changeset cast() whitelist</span></td></tr>
-    <tr><td>Parameterized queries</td><td><span class="red">None &mdash; pure concat</span></td><td><span class="yellow">Escaping-based (correct for SQLite)</span></td></tr>
-    <tr><td>Languages supported</td><td>1 (Ruby)</td><td><span class="accent"><strong>6</strong></span> (JS, PY, RS, JV, LU, CS)</td></tr>
-    <tr><td>Fix propagation</td><td>Manual per-language</td><td><span class="green">Automatic &mdash; 1 commit</span></td></tr>
+    <tr><td>SQL injection vulnerabilities</td><td><strong>9 critical/high</strong></td><td><strong>0</strong></td></tr>
+    <tr><td>Identifier validation</td><td>None &mdash; direct interpolation</td><td>SafeIdentifier sealed type</td></tr>
+    <tr><td>Value escaping</td><td>Single-quote only</td><td>Typed SqlPart hierarchy (6 types)</td></tr>
+    <tr><td>Mass assignment protection</td><td>None</td><td>Changeset <code>cast()</code> whitelist</td></tr>
+    <tr><td>Languages supported</td><td>1</td><td><strong>6</strong></td></tr>
+    <tr><td>Fix propagation</td><td>Manual</td><td><strong>Automatic &mdash; 1 commit</strong></td></tr>
   </table>
-</div>
+</section>
 
 <!-- SLIDE 8: SomeORM Vulns Detail -->
-<div class="slide">
-  <h3>CONVENTIONAL ORM: 9 ATTACK VECTORS</h3>
-  <h2>What AI-generated code looks like <span class="red">without Temper</span></h2>
+<section>
+  <h3>Conventional ORM: 9 Attack Vectors</h3>
+  <h2>What AI-generated code looks like without Temper</h2>
   <table>
     <tr><th>#</th><th>CWE</th><th>Attack Surface</th><th>CVSS</th><th>Exploit</th></tr>
-    <tr><td>1</td><td class="mono dim">CWE-89</td><td>Table name injection</td><td><span class="red">9.8</span></td><td class="mono" style="font-size:0.85em">from("users; DROP TABLE users; --")</td></tr>
-    <tr><td>2</td><td class="mono dim">CWE-89</td><td>SELECT field injection</td><td><span class="red">9.1</span></td><td class="mono" style="font-size:0.85em">select("(SELECT password FROM admin)")</td></tr>
-    <tr><td>3</td><td class="mono dim">CWE-89</td><td>WHERE raw SQL</td><td><span class="red">9.8</span></td><td class="mono" style="font-size:0.85em">where("id = #{user_input}")</td></tr>
-    <tr><td>4</td><td class="mono dim">CWE-89</td><td>Comparison field injection</td><td><span class="red">8.6</span></td><td class="mono" style="font-size:0.85em">eq("id) OR 1=1; --", 1)</td></tr>
-    <tr><td>5</td><td class="mono dim">CWE-89</td><td>GROUP BY injection</td><td><span class="yellow">8.1</span></td><td class="mono" style="font-size:0.85em">group_by("user_id; DROP TABLE")</td></tr>
-    <tr><td>6</td><td class="mono dim">CWE-89</td><td>ORDER BY injection</td><td><span class="yellow">8.1</span></td><td class="mono" style="font-size:0.85em">order_by("id; DROP TABLE")</td></tr>
-    <tr><td>7</td><td class="mono dim">CWE-89</td><td>Direction injection</td><td><span class="dim">5.3</span></td><td class="mono" style="font-size:0.85em">order_by("id", direction: "ASC; --")</td></tr>
-    <tr><td>8</td><td class="mono dim">CWE-20</td><td>LIMIT type confusion</td><td><span class="dim">5.3</span></td><td class="mono" style="font-size:0.85em">limit("10; DROP TABLE")</td></tr>
-    <tr><td>9</td><td class="mono dim">CWE-116</td><td>Incomplete escaping</td><td><span class="yellow">6.5</span></td><td class="dim">Backslash, NULL byte, encoding</td></tr>
+    <tr><td>1</td><td class="mono dim">CWE-89</td><td>Table name injection</td><td>9.8</td><td class="mono" style="font-size:0.85em">from("users; DROP TABLE users; --")</td></tr>
+    <tr><td>2</td><td class="mono dim">CWE-89</td><td>SELECT field injection</td><td>9.1</td><td class="mono" style="font-size:0.85em">select("(SELECT password FROM admin)")</td></tr>
+    <tr><td>3</td><td class="mono dim">CWE-89</td><td>WHERE raw SQL</td><td>9.8</td><td class="mono" style="font-size:0.85em">where("id = #{user_input}")</td></tr>
+    <tr><td>4</td><td class="mono dim">CWE-89</td><td>Comparison field injection</td><td>8.6</td><td class="mono" style="font-size:0.85em">eq("id) OR 1=1; --", 1)</td></tr>
+    <tr><td>5</td><td class="mono dim">CWE-89</td><td>GROUP BY injection</td><td>8.1</td><td class="mono" style="font-size:0.85em">group_by("user_id; DROP TABLE")</td></tr>
+    <tr><td>6</td><td class="mono dim">CWE-89</td><td>ORDER BY injection</td><td>8.1</td><td class="mono" style="font-size:0.85em">order_by("id; DROP TABLE")</td></tr>
+    <tr><td>7</td><td class="mono dim">CWE-89</td><td>Direction injection</td><td>5.3</td><td class="mono" style="font-size:0.85em">order_by("id", direction: "ASC; --")</td></tr>
+    <tr><td>8</td><td class="mono dim">CWE-20</td><td>LIMIT type confusion</td><td>5.3</td><td class="mono" style="font-size:0.85em">limit("10; DROP TABLE")</td></tr>
+    <tr><td>9</td><td class="mono dim">CWE-116</td><td>Incomplete escaping</td><td>6.5</td><td class="dim">Backslash, NULL byte, encoding</td></tr>
   </table>
-  <p style="margin-top: 20px;">Every one of these is <strong>structurally impossible</strong> in the Temper ORM. Not prevented by developer discipline &mdash; prevented by the type system.</p>
-</div>
+  <p style="margin-top: 0.4em;">Every one of these is <strong>structurally impossible</strong> in the Temper ORM. Prevented by the type system, not developer discipline.</p>
+</section>
 
 <!-- SLIDE 9: AI Development -->
-<div class="slide">
-  <h3>AI-FIRST DEVELOPMENT</h3>
-  <h2>Temper makes AI-generated code <span class="green">secure by default</span></h2>
-  <p style="margin-bottom: 30px;">AI coding assistants are writing more production code every month. The question isn't <em>whether</em> AI writes your code &mdash; it's whether the language <em>constrains</em> AI to produce safe output.</p>
+<section>
+  <h3>AI-First Development</h3>
+  <h2>Temper makes AI-generated code secure by default</h2>
+  <p style="margin-bottom: 0.6em;">The question is not whether AI writes your code. It is whether the language constrains AI to produce safe output.</p>
   <div class="grid-2">
     <div class="card">
-      <h3 class="red">Without Temper</h3>
+      <h4>Without Temper</h4>
       <ul>
         <li>AI generates plausible but insecure SQL builders</li>
         <li>String concatenation is the path of least resistance</li>
         <li>Escaping bugs are subtle and language-specific</li>
         <li>Each language needs independent security review</li>
-        <li>9 critical vulns from 3-4 prompts (SomeORM)</li>
+        <li>9 critical vulns from 3&ndash;4 prompts (SomeORM)</li>
       </ul>
     </div>
-    <div class="card" style="border-color: #22c55e;">
-      <h3 class="green">With Temper</h3>
+    <div class="card">
+      <h4>With Temper</h4>
       <ul>
         <li>Type system prevents unsafe SQL construction</li>
         <li>SafeIdentifier + sealed interfaces = no bypass</li>
-        <li>AI can't accidentally skip validation</li>
+        <li>AI cannot accidentally skip validation</li>
         <li>One security review covers all 6 backends</li>
         <li>0 vulnerabilities from same-effort prompts</li>
       </ul>
     </div>
   </div>
-  <div class="quote" style="margin-top: 30px;">
-    The best security is the kind that doesn't depend on the developer &mdash; or the AI &mdash; remembering to do the right thing. Temper's type system makes the wrong thing impossible to express.
-  </div>
-</div>
+  <blockquote style="margin-top: 0.6em;">
+    <p>The best security does not depend on the developer &mdash; or the AI &mdash; remembering to do the right thing. Temper makes the wrong thing impossible to express.</p>
+  </blockquote>
+</section>
 
 <!-- SLIDE 10: AWS Scale -->
-<div class="slide">
-  <h3>IMAGINE THIS AT AWS SCALE</h3>
-  <h2>What if AWS SDK security was <span class="accent">a single source of truth</span>?</h2>
-  <div class="stat-row">
+<section>
+  <h3>At Scale</h3>
+  <h2>What if SDK security was a single source of truth?</h2>
+  <div class="stat-row" style="margin: 0.6em 0;">
     <div class="stat">
-      <div class="big-num red" style="font-size: 3em;">3,600</div>
+      <div class="big-num" style="font-size: 2.8em;">3,600</div>
       <div class="label">libraries to patch today</div>
     </div>
-    <div class="stat" style="font-size: 2em; color: #333; align-self: center;">&rarr;</div>
+    <div class="stat" style="align-self: center; color: #333; font-size: 1.2em;">&rarr;</div>
     <div class="stat">
-      <div class="big-num green" style="font-size: 3em;">300</div>
+      <div class="big-num" style="font-size: 2.8em;">300</div>
       <div class="label">Temper sources to maintain</div>
     </div>
   </div>
-  <p style="margin: 24px 0;">AWS manages 300+ services &times; 12 languages. Even with Smithy code generation, security-critical serialization and validation logic is reimplemented per language. A single vulnerability requires coordinated patches across:</p>
+  <p>AWS manages 300+ services across 12 languages. A single vulnerability requires coordinated patches across:</p>
   <ul>
     <li>12 SDK repositories with independent release cycles</li>
     <li>8+ package registries (npm, PyPI, Maven, NuGet, crates.io, RubyGems, Packagist, Go proxy)</li>
     <li>Daily releases that must be synchronized</li>
-    <li>Different language-specific escaping and type-safety semantics</li>
   </ul>
-  <p style="margin-top: 20px;">With Temper, security logic lives in <strong>one place</strong>. A fix to the serialization layer compiles to all targets in a single build. No coordination. No drift. No missed languages.</p>
-</div>
+  <p style="margin-top: 0.4em;">With Temper, security logic lives in <strong>one place</strong>. A fix compiles to all targets in a single build. No coordination. No drift.</p>
+</section>
 
 <!-- SLIDE 11: Beyond ORMs -->
-<div class="slide">
-  <h3>BEYOND THIS DEMO</h3>
+<section>
+  <h3>Beyond This Demo</h3>
   <h2>Where Temper changes the game</h2>
   <div class="grid-2">
     <div class="card">
-      <h3>SDK Libraries</h3>
-      <p>API clients, serialization, auth flows, retry logic &mdash; write once in Temper, ship to every language your customers use.</p>
+      <h4>SDK Libraries</h4>
+      <p>API clients, serialization, auth flows, retry logic &mdash; write once, ship to every language your customers use.</p>
     </div>
     <div class="card">
-      <h3>Security Primitives</h3>
-      <p>Crypto wrappers, input validators, token parsers &mdash; the code that <em>must</em> be correct everywhere gets one audit, not twelve.</p>
+      <h4>Security Primitives</h4>
+      <p>Crypto wrappers, input validators, token parsers &mdash; the code that must be correct everywhere gets one audit, not twelve.</p>
     </div>
     <div class="card">
-      <h3>Data Validation</h3>
-      <p>Schema validators, sanitizers, format parsers &mdash; consistent behavior across frontend (JS), backend (Java/Python), and systems (Rust).</p>
+      <h4>Data Validation</h4>
+      <p>Schema validators, sanitizers, format parsers &mdash; consistent behavior across frontend, backend, and systems languages.</p>
     </div>
     <div class="card">
-      <h3>AI-Safe Foundations</h3>
-      <p>As AI generates more code, Temper provides <strong>typed guardrails</strong> that prevent entire categories of bugs regardless of what generates the code.</p>
+      <h4>AI-Safe Foundations</h4>
+      <p>Typed guardrails that prevent entire categories of bugs regardless of what generates the code &mdash; human or AI.</p>
     </div>
   </div>
-</div>
+</section>
 
 <!-- SLIDE 12: Summary -->
-<div class="slide" style="text-align: center;">
-  <h2 style="margin-bottom: 40px;">The numbers</h2>
-  <div class="stat-row" style="justify-content: center;">
+<section>
+  <h2 style="margin-bottom: 0.8em;">The numbers</h2>
+  <div class="stat-row">
     <div class="stat">
-      <div class="big-num green">0</div>
+      <div class="big-num">0</div>
       <div class="label">SQL injection vulnerabilities<br>across 6 backends</div>
     </div>
     <div class="stat">
-      <div class="big-num accent">1</div>
+      <div class="big-num">1</div>
       <div class="label">commit to fix 3 findings<br>in all 6 languages</div>
     </div>
     <div class="stat">
-      <div class="big-num accent">56</div>
+      <div class="big-num">56</div>
       <div class="label">tests passing<br>after remediation</div>
     </div>
   </div>
-  <div class="stat-row" style="justify-content: center; margin-top: 10px;">
+  <div class="stat-row" style="margin-top: 0.4em;">
     <div class="stat">
-      <div class="big-num red">9</div>
-      <div class="label">critical vulns in conventional<br>AI-generated ORM (Ruby)</div>
+      <div class="big-num">9</div>
+      <div class="label">critical vulns in conventional<br>AI-generated ORM</div>
     </div>
     <div class="stat">
-      <div class="big-num accent">6</div>
+      <div class="big-num">6</div>
       <div class="label">language targets<br>from single source</div>
     </div>
     <div class="stat">
-      <div class="big-num accent">5</div>
+      <div class="big-num">5</div>
       <div class="label">compile-time<br>defense layers</div>
     </div>
   </div>
-  <p style="margin-top: 50px; font-size: 1.4em; color: #888;">Temper doesn't just reduce development surface area.</p>
-  <p style="font-size: 1.6em; font-weight: 600; margin-top: 8px;">It makes security a <span class="green">compile-time guarantee</span>, not a runtime hope.</p>
-  <p style="margin-top: 50px; color: #444; font-size: 1em;">
-    <a href="https://github.com/temperlang/temper" style="color: #4a9eff; text-decoration: none;">github.com/temperlang/temper</a>
-    &nbsp;&bull;&nbsp;
-    <a href="https://github.com/notactuallytreyanastasio/generic_orm" style="color: #4a9eff; text-decoration: none;">github.com/notactuallytreyanastasio/generic_orm</a>
+  <p style="margin-top: 1.2em; font-size: 0.85em; color: #666;">Temper does not just reduce development surface area.</p>
+  <p style="font-size: 0.95em; color: #fff; font-weight: 600; margin-top: 0.2em;">It makes security a compile-time guarantee, not a runtime hope.</p>
+  <p style="margin-top: 1.5em; font-size: 0.5em; color: #444;">
+    github.com/temperlang/temper &nbsp;&bull;&nbsp; github.com/notactuallytreyanastasio/generic_orm
   </p>
+</section>
+
+</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'fade',
+  center: true,
+  controls: true,
+  controlsTutorial: false,
+  progress: true,
+  slideNumber: true,
+  width: 1280,
+  height: 720,
+  margin: 0.08,
+});
+</script>
 </body>
 </html>
