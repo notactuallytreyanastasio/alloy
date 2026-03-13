@@ -1,5 +1,13 @@
 [
   {
+    "hash": "dabc93e17e9bab67235404a5c8aa0b65676bc70e",
+    "short_hash": "dabc93e",
+    "author": "Robert Grayson",
+    "date": "2026-03-13T03:48:15-04:00",
+    "message": "Fix broken RESEARCH.md link and update stale sql_imports description\n\n- RESEARCH.md link pointed to repo root instead of docs/RESEARCH.md\n- sql_imports description referenced removed \"vendored secure-composition\"\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
     "hash": "a3e645ac9f1d43b0934422951fee472cf792d762",
     "short_hash": "a3e645a",
     "author": "Robert Grayson",

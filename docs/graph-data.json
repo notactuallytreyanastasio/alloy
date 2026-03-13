@@ -340,6 +340,39 @@
       "created_at": "2026-03-13T03:13:37.567076-04:00",
       "updated_at": "2026-03-13T03:13:37.567076-04:00",
       "metadata_json": "{\"branch\":\"main\",\"confidence\":90}"
+    },
+    {
+      "id": 32,
+      "change_id": "28ca44ad-5c8b-4a3f-b0b1-801dcf249a7a",
+      "node_type": "goal",
+      "title": "Make every app use ALL SQL features",
+      "description": null,
+      "status": "pending",
+      "created_at": "2026-03-13T03:21:31.732027-04:00",
+      "updated_at": "2026-03-13T03:21:31.732027-04:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":90,\"prompt\":\"once you finish the rename, go back to making every app use ALL the sql features\"}"
+    },
+    {
+      "id": 33,
+      "change_id": "9cfafdb1-2b50-4d83-8331-781d07c940f1",
+      "node_type": "action",
+      "title": "Rewrite all 6 apps to use ALL SQL features",
+      "description": null,
+      "status": "pending",
+      "created_at": "2026-03-13T03:21:49.459803-04:00",
+      "updated_at": "2026-03-13T03:21:49.459803-04:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":85}"
+    },
+    {
+      "id": 34,
+      "change_id": "819ee911-295e-4791-9dda-5ebb813cf11a",
+      "node_type": "outcome",
+      "title": "All READMEs complete and pushed - 6 lib repos (600-674 lines each), 6 app repos, main repo README fixed",
+      "description": null,
+      "status": "pending",
+      "created_at": "2026-03-13T03:48:23.308458-04:00",
+      "updated_at": "2026-03-13T03:48:23.308458-04:00",
+      "metadata_json": "{\"branch\":\"main\",\"commit\":\"dabc93e\",\"confidence\":95}"
     }
   ],
   "edges": [
@@ -562,6 +595,28 @@
       "weight": 1.0,
       "rationale": "Implementation of rename goal",
       "created_at": "2026-03-13T03:13:42.382893-04:00"
+    },
+    {
+      "id": 21,
+      "from_node_id": 32,
+      "to_node_id": 33,
+      "from_change_id": "28ca44ad-5c8b-4a3f-b0b1-801dcf249a7a",
+      "to_change_id": "9cfafdb1-2b50-4d83-8331-781d07c940f1",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Implementation of goal",
+      "created_at": "2026-03-13T03:21:49.629960-04:00"
+    },
+    {
+      "id": 22,
+      "from_node_id": 33,
+      "to_node_id": 34,
+      "from_change_id": "9cfafdb1-2b50-4d83-8331-781d07c940f1",
+      "to_change_id": "819ee911-295e-4791-9dda-5ebb813cf11a",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "README writing and fixing completed",
+      "created_at": "2026-03-13T03:48:26.727694-04:00"
     }
   ],
   "documents": [

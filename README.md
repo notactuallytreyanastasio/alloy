@@ -5,19 +5,29 @@ A type-safe, security-focused ORM written in [Temper](https://github.com/temperl
 ## Table of Contents
 
 - [Architecture Overview](#architecture-overview)
-- [The ORM](#the-orm)
-  - [Security Model](#security-model)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Building](#building)
+  - [Running the Demo Apps](#running-the-demo-apps)
+- [API Reference](#api-reference)
   - [Core API](#core-api)
-  - [Source Files](#source-files)
+  - [Query Features](#query-features)
+  - [Changeset Validations](#changeset-validations)
+  - [Schema](#schema)
+- [Source Files](#source-files)
 - [Compilation Targets](#compilation-targets)
 - [Demo Applications](#demo-applications)
+  - [Cross-Language Usage](#cross-language-usage)
+- [Security](#security)
+  - [Defense Layers](#defense-layers)
+  - [ORM-Level Findings](#orm-level-findings)
+  - [Remediation](#remediation)
+  - [MITRE CWE Top 25 Mapping](#mitre-cwe-top-25-mapping)
+  - [Per-Phase Security Analysis](#per-phase-security-analysis)
+  - [Per-App Reports](#per-app-detailed-reports)
+  - [Full Security Research](#full-security-research)
 - [CI Pipeline](#ci-pipeline)
-  - [Build Stage](#build-stage)
-  - [Publish Stage](#publish-stage)
-  - [App Vendor Update](#app-vendor-update)
 - [Repository Map](#repository-map)
-- [Building Locally](#building-locally)
-- [Running the Demo Apps](#running-the-demo-apps)
 - [Project Structure](#project-structure)
 
 ---
@@ -56,19 +66,118 @@ A push to `main` in this repo triggers CI, which:
 
 ---
 
-## The ORM
+## Getting Started
 
-### Security Model
+### Prerequisites
 
-The ORM is built on a defense-in-depth approach to SQL injection prevention, using Temper's type system to enforce safety at compile time:
+- **JDK 21** (for building the Temper compiler)
+- **Node.js 18+** (for running JS tests)
+- **Git**
 
-- **`SafeIdentifier`** — Table and column names must pass through [`safeIdentifier()`](src/schema.temper.md), which validates against `[a-zA-Z_][a-zA-Z0-9_]*`. The `ValidatedIdentifier` implementation class is *not exported*, so external code cannot construct one without validation. This is the only path to `appendSafe` at runtime.
+### Building
 
-- **`SqlBuilder`** — The [query builder](src/sql_builder.temper.md) separates SQL structure (`appendSafe`) from user data (`appendString`, `appendInt32`, etc.). User values are typed as `SqlPart` instances that handle escaping per-type. `SqlString` escapes single quotes; `SqlInt32`/`SqlInt64` render bare integers; `SqlBoolean` emits `TRUE`/`FALSE` literals.
+```bash
+# Clone and build the Temper compiler
+git clone https://github.com/temperlang/temper.git /tmp/temper
+cd /tmp/temper
+./gradlew cli:installDist --no-daemon
+export PATH="/tmp/temper/cli/build/install/temper/bin:$PATH"
 
-- **`Changeset`** — The [changeset pipeline](src/changeset.temper.md) follows Ecto's cast-then-validate pattern. `Changeset` is a *sealed interface* — `ChangesetImpl` is not exported, so the only construction path is through the `changeset()` factory. Raw `params` are never exposed; only whitelisted `changes` are readable. `cast()` requires `List<SafeIdentifier>` for field whitelisting. `toInsertSql()` independently enforces non-nullable fields. Type dispatch uses exhaustive `when` on the sealed `FieldType` union.
+# Clone this repo
+git clone https://github.com/notactuallytreyanastasio/alloy.git
+cd alloy
 
-- **`Query`** — The [query builder](src/query.temper.md) requires `SafeIdentifier` for table names, selected fields, ORDER BY clauses, and JOIN table names. WHERE and ON conditions accept only `SqlFragment` (never raw strings). `safeToSql(defaultLimit)` provides CWE-400 protection by enforcing a result set size limit. JOIN type keywords are hardcoded from a sealed `JoinType` interface (5 variants: INNER, LEFT, RIGHT, FULL OUTER, CROSS). WHERE conditions are wrapped in a sealed `WhereClause` interface (`AndCondition`/`OrCondition`) enabling mixed AND/OR logic. Convenience methods (`whereNull`, `whereNotNull`, `whereIn`, `whereNot`, `whereBetween`, `whereLike`, `whereILike`) build SQL fragments internally using only validated identifiers and typed values — no raw strings reach `appendSafe`. The `col()` helper produces qualified column references (`table.column`) from two `SafeIdentifier` values. Aggregate functions (`countAll`, `countCol`, `sumCol`, `avgCol`, `minCol`, `maxCol`) are free functions returning `SqlFragment` with hardcoded function names. Set operations (`unionSql`, `intersectSql`, etc.) accept only `Query` objects and parenthesize sub-SELECTs. `UpdateQuery` and `DeleteQuery` bubble on missing WHERE clauses to prevent accidental full-table mutations. Row locking (`ForUpdate`/`ForShare`) and ORDER BY nulls position (`NullsFirst`/`NullsLast`) use sealed interfaces with hardcoded keywords.
+# Build all 6 backends
+temper build
+
+# Run tests (JS backend)
+temper test -b js
+```
+
+Build output will be in `temper.out/` with subdirectories for each backend.
+
+### Running the Demo Apps
+
+Each app needs the ORM vendored into its local `vendor/` directory. Clone an app repo or use the local `apps/<lang>/` directory if present.
+
+<details>
+<summary><strong>JavaScript</strong> (Express + EJS, port 5006)</summary>
+
+```bash
+cd apps/js
+mkdir -p vendor
+cp -r ../../temper.out/js/{orm,std,temper-core} vendor/
+npm install
+node app.js
+# Open http://localhost:5006
+```
+</details>
+
+<details>
+<summary><strong>Python</strong> (Flask, port 5001)</summary>
+
+```bash
+cd apps/py
+mkdir -p vendor
+cp -r ../../temper.out/py/{orm,std,temper-core} vendor/
+pip install flask
+python app.py
+# Open http://localhost:5001
+```
+</details>
+
+<details>
+<summary><strong>Rust</strong> (Axum + askama, port 5003)</summary>
+
+```bash
+cd apps/rust
+mkdir -p vendor
+cp -r ../../temper.out/rust/{orm,std,temper-core} vendor/
+cargo run
+# Open http://localhost:5003
+```
+</details>
+
+<details>
+<summary><strong>Java</strong> (Spring Boot, port 5004)</summary>
+
+```bash
+cd apps/java
+mkdir -p vendor
+cp -r ../../temper.out/java/{orm,std,temper-core} vendor/
+mvn spring-boot:run
+# Open http://localhost:5004
+```
+</details>
+
+<details>
+<summary><strong>Lua</strong> (Raw socket HTTP, port 5005)</summary>
+
+```bash
+cd apps/lua
+mkdir -p vendor
+cp -r ../../temper.out/lua/{orm,std,temper-core} vendor/
+# Requires lsqlite3: luarocks install lsqlite3
+lua app.lua
+# Open http://localhost:5005
+```
+</details>
+
+<details>
+<summary><strong>C#</strong> (ASP.NET Core Razor Pages, port 5002)</summary>
+
+```bash
+cd apps/csharp/TodoApp
+mkdir -p vendor
+cp -r ../../../temper.out/csharp/{orm,std,temper-core} vendor/
+dotnet run
+# Open http://localhost:5002
+```
+</details>
+
+---
+
+## API Reference
 
 ### Core API
 
@@ -105,29 +214,44 @@ The ORM is built on a defense-in-depth approach to SQL injection prevention, usi
 └─────────────────────────────────────────────────────────┘
 ```
 
+### Query Features
+
+| Category | Methods |
+|----------|---------|
+| **WHERE** | `where`, `orWhere`, `whereNull`, `whereNotNull`, `whereIn`, `whereNot`, `whereBetween`, `whereLike`, `whereILike`, `whereInSubquery` |
+| **SELECT** | `select`, `selectExpr`, `distinct`, `countSql` |
+| **ORDER** | `orderBy`, `orderByNulls` (`NullsFirst` / `NullsLast`) |
+| **LIMIT** | `limit`, `offset`, `safeToSql(defaultLimit)` |
+| **JOIN** | `join` (INNER, LEFT, RIGHT, FULL OUTER), `crossJoin` |
+| **GROUP** | `groupBy`, `having`, `orHaving` |
+| **Aggregates** | `countAll`, `countCol`, `sumCol`, `avgCol`, `minCol`, `maxCol` |
+| **Set operations** | `unionSql`, `unionAllSql`, `intersectSql`, `exceptSql` |
+| **Subqueries** | `subquery`, `existsSql`, `whereInSubquery` |
+| **Mutations** | `update(table).set(field, value).where(cond).toSql()`, `deleteFrom(table).where(cond).toSql()` |
+| **Locking** | `lock(new ForUpdate())`, `lock(new ForShare())` |
+
+### Changeset Validations
+
+| Category | Validators |
+|----------|------------|
+| **Required** | `validateRequired` |
+| **Type** | `validateInt`, `validateInt64`, `validateFloat`, `validateBool` |
+| **Length** | `validateLength` |
+| **Range** | `validateNumber` |
+| **Inclusion** | `validateInclusion`, `validateExclusion` |
+| **String** | `validateContains`, `validateStartsWith`, `validateEndsWith` |
+| **Confirmation** | `validateConfirmation`, `validateAcceptance` |
+| **Data** | `putChange`, `getChange`, `deleteChange` |
+
+### Schema
+
 **Field types:** `StringField`, `IntField`, `Int64Field`, `FloatField`, `BoolField`, `DateField`
 
-**Query features:** `where`, `orWhere`, `whereNull`, `whereNotNull`, `whereIn`, `whereNot`, `whereBetween`, `whereLike`, `whereILike`, `whereInSubquery`, `select`, `selectExpr`, `orderBy`, `orderByNulls`, `limit`, `offset`, `join`, `crossJoin`, `groupBy`, `having`, `orHaving`, `distinct`, `countSql`, `lock`, `safeToSql`
+**Schema features:** `TableDef.primaryKey` (custom PK column), `FieldDef.defaultValue` (`SqlDefault` for DB defaults), `FieldDef.virtual` (excluded from SQL), `timestamps()` (inserted_at/updated_at with DEFAULT)
 
-**Aggregate functions:** `countAll`, `countCol`, `sumCol`, `avgCol`, `minCol`, `maxCol`
+---
 
-**Set operations:** `unionSql`, `unionAllSql`, `intersectSql`, `exceptSql`
-
-**Subqueries:** `subquery`, `existsSql`, `whereInSubquery`
-
-**Batch mutations:** `update(table).set(field, value).where(cond).toSql()`, `deleteFrom(table).where(cond).toSql()`
-
-**Row locking:** `lock(new ForUpdate())`, `lock(new ForShare())`
-
-**ORDER BY extensions:** `orderByNulls(field, ascending, new NullsFirst())`, `orderByNulls(field, ascending, new NullsLast())`
-
-**Changeset validations:** `validateRequired`, `validateLength`, `validateInt`, `validateInt64`, `validateFloat`, `validateBool`, `validateInclusion`, `validateExclusion`, `validateNumber`, `validateAcceptance`, `validateConfirmation`, `validateContains`, `validateStartsWith`, `validateEndsWith`
-
-**Changeset data manipulation:** `putChange`, `getChange`, `deleteChange`
-
-**Schema enrichment:** `TableDef.primaryKey` (custom PK column), `FieldDef.defaultValue` (`SqlDefault` for DB defaults), `FieldDef.virtual` (excluded from SQL), `timestamps()` (inserted_at/updated_at with DEFAULT)
-
-### Source Files
+## Source Files
 
 All source lives in [`src/`](src/) as Temper literate markdown (`.temper.md`):
 
@@ -175,16 +299,16 @@ Each demo is a **todo list manager** with the same retro Mac System 6 + Windows 
 - Inline editing with confirmation dialogs
 - Completion tracking in the status bar
 
-| Language | Framework | Port | App Repo | Source |
-|----------|-----------|------|----------|--------|
-| **JavaScript** | Express + EJS + better-sqlite3 | 5006 | [`alloy-js-app`](https://github.com/notactuallytreyanastasio/alloy-js-app) | [`apps/js/`](apps/js/) |
-| **Python** | Flask + sqlite3 | 5001 | [`alloy-py-app`](https://github.com/notactuallytreyanastasio/alloy-py-app) | [`apps/py/`](apps/py/) |
-| **Rust** | Axum + rusqlite + askama | 5003 | [`alloy-rust-app`](https://github.com/notactuallytreyanastasio/alloy-rust-app) | [`apps/rust/`](apps/rust/) |
-| **Java** | Spring Boot + SQLite JDBC + Thymeleaf | 5004 | [`alloy-java-app`](https://github.com/notactuallytreyanastasio/alloy-java-app) | [`apps/java/`](apps/java/) |
-| **Lua** | Raw socket HTTP + lsqlite3 | 5005 | [`alloy-lua-app`](https://github.com/notactuallytreyanastasio/alloy-lua-app) | [`apps/lua/`](apps/lua/) |
-| **C#** | ASP.NET Core Razor Pages + SQLite | 5002 | [`alloy-csharp-app`](https://github.com/notactuallytreyanastasio/alloy-csharp-app) | [`apps/csharp/`](apps/csharp/) |
+| Language | Framework | Port | App Repo |
+|----------|-----------|------|----------|
+| **JavaScript** | Express + EJS + better-sqlite3 | 5006 | [`alloy-js-app`](https://github.com/notactuallytreyanastasio/alloy-js-app) |
+| **Python** | Flask + sqlite3 | 5001 | [`alloy-py-app`](https://github.com/notactuallytreyanastasio/alloy-py-app) |
+| **Rust** | Axum + rusqlite + askama | 5003 | [`alloy-rust-app`](https://github.com/notactuallytreyanastasio/alloy-rust-app) |
+| **Java** | Spring Boot + SQLite JDBC + Thymeleaf | 5004 | [`alloy-java-app`](https://github.com/notactuallytreyanastasio/alloy-java-app) |
+| **Lua** | Raw socket HTTP + lsqlite3 | 5005 | [`alloy-lua-app`](https://github.com/notactuallytreyanastasio/alloy-lua-app) |
+| **C#** | ASP.NET Core Razor Pages + SQLite | 5002 | [`alloy-csharp-app`](https://github.com/notactuallytreyanastasio/alloy-csharp-app) |
 
-### ORM API Usage Across Languages
+### Cross-Language Usage
 
 Each app adapts the same ORM API to its language's idioms. Here's how a SELECT query looks in each:
 
@@ -242,89 +366,28 @@ var q = SrcGlobal.From(SrcGlobal.SafeIdentifier("todos"))
     .ToSql().ToString();
 ```
 
----
+### How Each App Uses the ORM vs Raw SQL
 
-## CI Pipeline
+Every app needs raw SQL for DDL (`CREATE TABLE`), which the ORM intentionally does not cover. All user-facing CRUD flows through the ORM.
 
-The pipeline is defined in [`.github/workflows/publish-libs.yml`](.github/workflows/publish-libs.yml).
+| Operation | JS | PY | RS | JV | LU | CS |
+|-----------|----|----|----|----|----|----|
+| SELECT (single table) | ORM `from()` | ORM `from_()` | ORM `from()` | ORM `from()` | ORM `from()` | ORM `From()` |
+| INSERT | ORM `changeset().toInsertSql()` | ORM `changeset().to_insert_sql()` | ORM `changeset().to_insert_sql()` | ORM `changeset().toInsertSql()` | ORM `changeset().toInsertSql()` | ORM `Changeset().ToInsertSql()` |
+| UPDATE | ORM `changeset().toUpdateSql()` | ORM `changeset().to_update_sql()` | ORM `changeset().to_update_sql()` | ORM `changeset().toUpdateSql()` | Raw `?` param | ORM `Changeset().ToUpdateSql()` |
+| DELETE | ORM `deleteSql()` | ORM `delete_sql()` | ORM `delete_sql()` | ORM `deleteSql()` | ORM `deleteSql()` | ORM `DeleteSql()` |
+| Toggle completed | Raw `?` param | Raw `?` param | ORM changeset | Raw `?` param | Raw `?` param | Raw via SqlBuilder |
+| JOIN + aggregate | Raw `?` param | Raw `?` param | Raw (hardcoded) | Raw `?` param | Raw (hardcoded) | ORM `From()` |
+| DDL | Raw (static) | Raw (static) | Raw (static) | Raw (static) | Raw (static) | Raw (static) |
+| WHERE clauses | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` |
 
-### Build Stage
-
-1. **Checkout** this repository
-2. **Set up JDK 21** (Temurin)
-3. **Clone and build** the [Temper compiler](https://github.com/temperlang/temper) from `main`
-4. **Run `temper build`** — compiles the ORM for all 6 backends into `temper.out/`
-5. **Run `temper test -b js`** — executes the full test suite against the JS backend
-6. **Upload artifacts** — `temper.out/` and the [notify-app template](.github/notify-app-template.yml)
-
-### Publish Stage
-
-A **matrix of 6 jobs** (one per language) runs in parallel after the build:
-
-| Matrix Entry | Lib Repo | App Repo | Vendor Path |
-|-------------|----------|----------|-------------|
-| `js` | [`alloy-js`](https://github.com/notactuallytreyanastasio/alloy-js) | [`alloy-js-app`](https://github.com/notactuallytreyanastasio/alloy-js-app) | `vendor` |
-| `py` | [`alloy-py`](https://github.com/notactuallytreyanastasio/alloy-py) | [`alloy-py-app`](https://github.com/notactuallytreyanastasio/alloy-py-app) | `vendor` |
-| `rust` | [`alloy-rust`](https://github.com/notactuallytreyanastasio/alloy-rust) | [`alloy-rust-app`](https://github.com/notactuallytreyanastasio/alloy-rust-app) | `vendor` |
-| `java` | [`alloy-java`](https://github.com/notactuallytreyanastasio/alloy-java) | [`alloy-java-app`](https://github.com/notactuallytreyanastasio/alloy-java-app) | `vendor` |
-| `lua` | [`alloy-lua`](https://github.com/notactuallytreyanastasio/alloy-lua) | [`alloy-lua-app`](https://github.com/notactuallytreyanastasio/alloy-lua-app) | `vendor` |
-| `csharp` | [`alloy-csharp`](https://github.com/notactuallytreyanastasio/alloy-csharp) | [`alloy-csharp-app`](https://github.com/notactuallytreyanastasio/alloy-csharp-app) | `TodoApp/vendor` |
-
-Each publish job:
-1. Downloads the `temper.out/` artifact
-2. Configures SSH with a per-language deploy key (`DEPLOY_KEY_JS`, `DEPLOY_KEY_PY`, etc.)
-3. Clones the target lib repo
-4. Replaces all content with the new build output (orm/ + std/ + temper-core/)
-5. Writes the [notify-app workflow](.github/notify-app-template.yml) into `.github/workflows/`
-6. Commits and pushes
-
-### App Vendor Update
-
-When a lib repo receives a push (from the publish stage above), its [`notify-app.yml`](.github/notify-app-template.yml) workflow:
-1. Clones the corresponding app repo
-2. Removes old `vendor/orm`, `vendor/std`, `vendor/temper-core`
-3. Copies the new compiled output into `vendor/`
-4. Commits and pushes
-
-This creates a fully automated cascade: **ORM source change** -> **build** -> **lib repos** -> **app repos**.
+**Raw SQL parameterization**: JS and Java achieve 100% parameterized raw SQL. Python and C# are near-100%. Rust and Lua have hardcoded JOIN queries (safe — no user input) and use `?` params elsewhere.
 
 ---
 
-## Repository Map
+## Security
 
-### This Repository (Source)
-
-| Repo | Description |
-|------|-------------|
-| [`alloy`](https://github.com/notactuallytreyanastasio/alloy) | Temper ORM source, CI pipeline, app source code |
-
-### Library Repos (Compiled Output)
-
-| Repo | Language | Contents |
-|------|----------|----------|
-| [`alloy-js`](https://github.com/notactuallytreyanastasio/alloy-js) | JavaScript | ES modules |
-| [`alloy-py`](https://github.com/notactuallytreyanastasio/alloy-py) | Python | Python 3 modules |
-| [`alloy-rust`](https://github.com/notactuallytreyanastasio/alloy-rust) | Rust | Cargo crate |
-| [`alloy-java`](https://github.com/notactuallytreyanastasio/alloy-java) | Java | Java source |
-| [`alloy-lua`](https://github.com/notactuallytreyanastasio/alloy-lua) | Lua | Lua modules |
-| [`alloy-csharp`](https://github.com/notactuallytreyanastasio/alloy-csharp) | C# | .NET source |
-
-### Application Repos (Demo Apps)
-
-| Repo | Language | Framework |
-|------|----------|-----------|
-| [`alloy-js-app`](https://github.com/notactuallytreyanastasio/alloy-js-app) | JavaScript | Express + EJS |
-| [`alloy-py-app`](https://github.com/notactuallytreyanastasio/alloy-py-app) | Python | Flask |
-| [`alloy-rust-app`](https://github.com/notactuallytreyanastasio/alloy-rust-app) | Rust | Axum + askama |
-| [`alloy-java-app`](https://github.com/notactuallytreyanastasio/alloy-java-app) | Java | Spring Boot |
-| [`alloy-lua-app`](https://github.com/notactuallytreyanastasio/alloy-lua-app) | Lua | Raw socket HTTP |
-| [`alloy-csharp-app`](https://github.com/notactuallytreyanastasio/alloy-csharp-app) | C# | ASP.NET Core Razor |
-
----
-
-## SQL Security Analysis
-
-The entire point of this project is demonstrating type-safe SQL generation across 6 languages from a single source. Here's how the ORM prevents SQL injection and where the boundaries are.
+The entire point of this project is demonstrating type-safe SQL generation across 6 languages from a single source. The ORM is built on a defense-in-depth approach to SQL injection prevention, using Temper's type system to enforce safety at compile time.
 
 ### Defense Layers
 
@@ -373,54 +436,25 @@ There is no `appendRaw` or bypass method. The only way to get unescaped content 
 
 **Layer 5: Query builder (CWE-89, CWE-400)**
 
-[`Query`](src/query.temper.md) requires `SafeIdentifier` for table names, column selections, ORDER BY clauses, and JOIN table names. WHERE and ON conditions accept only `SqlFragment` (never raw strings). `safeToSql(defaultLimit)` enforces result set bounds (CWE-400). JOIN type keywords (`INNER JOIN`, `LEFT JOIN`, `CROSS JOIN`, etc.) are hardcoded from a sealed `JoinType` interface with exactly 5 implementations — no user input can influence the keyword. WHERE conditions are wrapped in a sealed `WhereClause` interface (`AndCondition`/`OrCondition`), and convenience methods (`whereNull`, `whereIn`, `whereNot`, `whereBetween`, `whereLike`, `whereILike`) build fragments internally using only `SafeIdentifier` field names and `SqlPart`/`SqlString` values. `UpdateQuery` and `DeleteQuery` bubble on empty WHERE clauses, preventing accidental full-table mutations. Row locking (`ForUpdate`/`ForShare`) and nulls position (`NullsFirst`/`NullsLast`) use sealed interfaces with hardcoded keywords.
+[`Query`](src/query.temper.md) requires `SafeIdentifier` for table names, column selections, ORDER BY clauses, and JOIN table names. WHERE and ON conditions accept only `SqlFragment` (never raw strings). `safeToSql(defaultLimit)` enforces result set bounds (CWE-400). JOIN type keywords are hardcoded from a sealed `JoinType` interface. WHERE conditions use a sealed `WhereClause` interface (`AndCondition`/`OrCondition`), and convenience methods build fragments internally using only validated identifiers and typed values. `UpdateQuery` and `DeleteQuery` bubble on empty WHERE clauses, preventing accidental full-table mutations. Row locking and nulls position use sealed interfaces with hardcoded keywords.
 
 ### ORM-Level Findings
 
-| # | Severity | CWE | Finding |
-|---|----------|-----|---------|
-| ORM-1 | MEDIUM | CWE-89 | `toInsertSql`/`toUpdateSql` pass `pair.key` (a `String`) to `appendSafe`. Safe by construction — keys originate from `cast()` which requires `SafeIdentifier` — but the type system doesn't enforce this at the call site. A refactor that introduces a new code path to `changes` could silently bypass validation. |
-| ORM-2 | LOW | CWE-89 | `SqlDate.formatTo` wraps `value.toString()` in quotes without escaping. If `Date.toString()` ever contains a single quote, this produces malformed SQL. Currently safe because date format is `YYYY-MM-DD`. |
-| ORM-3 | LOW | CWE-20 | `SqlFloat64.formatTo` calls `value.toString()` which can produce `NaN` or `Infinity` — not valid SQL literals. SQLite silently accepts these as column names, so `SELECT NaN` returns a null rather than erroring. |
-| ORM-4 | INFO | CWE-89 | The ORM renders fully-formed SQL strings via escaping rather than parameterized queries (`?` placeholders). While the escaping is correct for SQLite, parameterized queries are the gold standard defense. The TODO in [`sql_builder.temper.md`](src/sql_builder.temper.md) acknowledges this. |
-
-### How Each App Uses the ORM vs Raw SQL
-
-Every app needs raw SQL for DDL (`CREATE TABLE`), which the ORM intentionally does not cover. The ORM now supports JOINs (INNER, LEFT, RIGHT, FULL OUTER, CROSS), aggregate functions (COUNT, SUM, AVG, MIN, MAX), GROUP BY, HAVING, DISTINCT, set operations (UNION, INTERSECT, EXCEPT), subqueries, batch UPDATE/DELETE, row locking, and ORDER BY NULLS FIRST/LAST. All user-facing CRUD flows through the ORM.
-
-| Operation | JS | PY | RS | JV | LU | CS |
-|-----------|----|----|----|----|----|----|
-| SELECT (single table) | ORM `from()` | ORM `from_()` | ORM `from()` | ORM `from()` | ORM `from()` | ORM `From()` |
-| INSERT | ORM `changeset().toInsertSql()` | ORM `changeset().to_insert_sql()` | ORM `changeset().to_insert_sql()` | ORM `changeset().toInsertSql()` | ORM `changeset().toInsertSql()` | ORM `Changeset().ToInsertSql()` |
-| UPDATE | ORM `changeset().toUpdateSql()` | ORM `changeset().to_update_sql()` | ORM `changeset().to_update_sql()` | ORM `changeset().toUpdateSql()` | Raw `?` param | ORM `Changeset().ToUpdateSql()` |
-| DELETE | ORM `deleteSql()` | ORM `delete_sql()` | ORM `delete_sql()` | ORM `deleteSql()` | ORM `deleteSql()` | ORM `DeleteSql()` |
-| Toggle completed | Raw `?` param | Raw `?` param | ORM changeset | Raw `?` param | Raw `?` param | Raw via SqlBuilder |
-| JOIN + aggregate | Raw `?` param | Raw `?` param | Raw (hardcoded) | Raw `?` param | Raw (hardcoded) | ORM `From()` |
-| DDL | Raw (static) | Raw (static) | Raw (static) | Raw (static) | Raw (static) | Raw (static) |
-| WHERE clauses | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` | ORM `SqlBuilder` |
-
-**Raw SQL parameterization**: JS and Java achieve 100% parameterized raw SQL. Python and C# are near-100%. Rust and Lua have hardcoded JOIN queries (safe — no user input) and use `?` params elsewhere.
-
-### Per-App Detailed Reports
-
-Each app repo contains a `SECURITY_ANALYSIS.md` with SQL-specific findings:
-
-| App | Report |
-|-----|--------|
-| JavaScript | [`alloy-js-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-js-app/blob/main/SECURITY_ANALYSIS.md) |
-| Python | [`alloy-py-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-py-app/blob/main/SECURITY_ANALYSIS.md) |
-| Rust | [`alloy-rust-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-rust-app/blob/main/SECURITY_ANALYSIS.md) |
-| Java | [`alloy-java-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-java-app/blob/main/SECURITY_ANALYSIS.md) |
-| Lua | [`alloy-lua-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-lua-app/blob/main/SECURITY_ANALYSIS.md) |
-| C# | [`alloy-csharp-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-csharp-app/blob/main/SECURITY_ANALYSIS.md) |
+| # | Severity | CWE | Finding | Status |
+|---|----------|-----|---------|--------|
+| ORM-1 | MEDIUM | CWE-89 | `toInsertSql`/`toUpdateSql` passed `pair.key` (a `String`) to `appendSafe`. Safe by construction but type system didn't enforce it. | RESOLVED |
+| ORM-2 | LOW | CWE-89 | `SqlDate.formatTo` wrapped `value.toString()` in quotes without escaping. | RESOLVED |
+| ORM-3 | LOW | CWE-20 | `SqlFloat64.formatTo` could produce `NaN` or `Infinity` — not valid SQL literals. | RESOLVED |
+| ORM-4 | INFO | CWE-89 | ORM renders fully-formed SQL via escaping rather than parameterized queries. | ACKNOWLEDGED |
+| ORM-5 | INFO | — | `SqlSource` and `appendSafe` are exported escape hatches that could be misused by application code. | NEW |
+| ORM-6 | LOW | CWE-190 | No upper-bound enforcement on `limit()`/`offset()` values in `toSql()`. | NEW |
 
 ### Remediation
 
-Three of the four ORM-level findings were fixed in the Temper source, rebuilt across all 6 backends, and verified in compiled output. Here's the process and results.
+<details>
+<summary><strong>ORM-1 (MEDIUM → RESOLVED):</strong> Column name type downgrade</summary>
 
-#### ORM-1 (MEDIUM → RESOLVED): Column name type downgrade
-
-**Problem:** `toInsertSql()` and `toUpdateSql()` in [`changeset.temper.md`](src/changeset.temper.md) passed `pair.key` (a raw `String`) to `appendSafe()`. The keys originate from `cast()` via `SafeIdentifier.sqlValue`, but the type system didn't enforce this — a future refactor could silently introduce an unvalidated code path.
+**Problem:** `toInsertSql()` and `toUpdateSql()` in [`changeset.temper.md`](src/changeset.temper.md) passed `pair.key` (a raw `String`) to `appendSafe()`. The keys originate from `cast()` via `SafeIdentifier.sqlValue`, but the type system didn't enforce this.
 
 **Fix:** Route column names through the looked-up `FieldDef.name` (a `SafeIdentifier`) instead of the raw map key:
 
@@ -433,8 +467,10 @@ Three of the four ORM-level findings were fixed in the Temper source, rebuilt ac
 ```
 
 **Verification:** Compiled JS output confirms `fd_186.name.sqlValue` (INSERT) and `fd_204.name.sqlValue` (UPDATE) — no raw `pair.key` in `appendSafe` calls.
+</details>
 
-#### ORM-2 (LOW → RESOLVED): SqlDate missing quote escaping
+<details>
+<summary><strong>ORM-2 (LOW → RESOLVED):</strong> SqlDate missing quote escaping</summary>
 
 **Problem:** [`SqlDate.formatTo()`](src/sql_model.temper.md) wrapped `value.toString()` in quotes without escaping. If `Date.toString()` ever contained a single quote, it would produce malformed SQL.
 
@@ -454,14 +490,14 @@ Three of the four ORM-level findings were fixed in the Temper source, rebuilt ac
     builder.append("'");
   }
 ```
+</details>
 
-**Verification:** Compiled output shows the escaping loop in SqlDate across all backends.
-
-#### ORM-3 (LOW → RESOLVED): SqlFloat64 NaN/Infinity
+<details>
+<summary><strong>ORM-3 (LOW → RESOLVED):</strong> SqlFloat64 NaN/Infinity</summary>
 
 **Problem:** [`SqlFloat64.formatTo()`](src/sql_model.temper.md) called `value.toString()` which produces `NaN`, `Infinity`, or `-Infinity` — not valid SQL literals.
 
-**Fix:** Check for non-representable values and render `NULL` (safest SQL representation):
+**Fix:** Check for non-representable values and render `NULL`:
 
 ```diff
   public formatTo(builder: StringBuilder): Void {
@@ -475,51 +511,36 @@ Three of the four ORM-level findings were fixed in the Temper source, rebuilt ac
   }
 ```
 
-**Verification:** New tests confirm `NaN`, `Infinity`, and `-Infinity` all render as `NULL`. Compiled JS shows the guard (`if (s_404 === "NaN") ... builder.append("NULL")`).
+**Verification:** New tests confirm `NaN`, `Infinity`, and `-Infinity` all render as `NULL`.
+</details>
 
-#### ORM-4 (INFO → ACKNOWLEDGED): No parameterized query support
+<details>
+<summary><strong>ORM-4 (INFO → ACKNOWLEDGED):</strong> No parameterized query support</summary>
 
-**Status:** Not fixable in a patch — this is a design-level property. The TODO in [`sql_builder.temper.md`](src/sql_builder.temper.md) acknowledges the desire for prepared statement extraction. The current escaping-based approach is correct for SQLite; parameterized queries would add defense-in-depth.
+Not fixable in a patch — this is a design-level property. The TODO in [`sql_builder.temper.md`](src/sql_builder.temper.md) acknowledges the desire for prepared statement extraction. The current escaping-based approach is correct for SQLite; parameterized queries would add defense-in-depth.
+</details>
 
-#### Test Coverage
+**Test Coverage:** 4 new test cases in [`sql_tests.temper.md`](src/sql_tests.temper.md) — all 184 tests pass across the full suite.
 
-4 new test cases added to [`sql_tests.temper.md`](src/sql_tests.temper.md):
-- `SqlFloat64 NaN renders as NULL`
-- `SqlFloat64 Infinity renders as NULL`
-- `SqlFloat64 negative Infinity renders as NULL`
-- `SqlFloat64 normal values still work`
+### MITRE CWE Top 25 Mapping
 
-All 184 tests pass across the full suite.
-
-#### Summary
-
-| Finding | Severity | Status | Fix |
-|---------|----------|--------|-----|
-| ORM-1 | MEDIUM | RESOLVED | Column names routed through `SafeIdentifier` in INSERT/UPDATE SQL |
-| ORM-2 | LOW | RESOLVED | `SqlDate.formatTo()` now escapes single quotes |
-| ORM-3 | LOW | RESOLVED | `SqlFloat64.formatTo()` renders NaN/Infinity as `NULL` |
-| ORM-4 | INFO | ACKNOWLEDGED | Design limitation — escaping-based, not parameterized |
-| ORM-5 | INFO | NEW | `SqlSource` and `appendSafe` are exported escape hatches that could be misused by application code |
-| ORM-6 | LOW | NEW | No upper-bound enforcement on `limit()`/`offset()` values in `toSql()` |
-
-### MITRE CWE Top 25 (2024) — SQL-Relevant Mapping
-
-Assessment of the ORM against SQL-relevant CWEs from the [2024 Top 25](https://cwe.mitre.org/top25/archive/2024/2024_cwe_top25.html). Non-SQL CWEs (memory safety, XSS, CSRF, authentication, etc.) are omitted — the ORM is a SQL generation library and those concerns belong to the application layer.
+Assessment against SQL-relevant CWEs from the [2024 Top 25](https://cwe.mitre.org/top25/archive/2024/2024_cwe_top25.html). Non-SQL CWEs (memory safety, XSS, CSRF, authentication) are omitted — the ORM is a SQL generation library and those concerns belong to the application layer.
 
 | CWE | Name | Status | Notes |
 |-----|------|--------|-------|
-| CWE-89 | SQL Injection | **Mitigated** | 5 defense layers: SafeIdentifier, SqlPart hierarchy, SqlBuilder separation, Changeset pipeline, Query builder. JOIN support follows identical patterns. |
-| CWE-20 | Improper Input Validation | **Mitigated** | `safeIdentifier()` rejects non-`[a-zA-Z_][a-zA-Z0-9_]*]`. Float NaN/Infinity → NULL. Negative limit/offset → bubble. |
-| CWE-190 | Integer Overflow | **Partial** | Negative limit/offset rejected. No upper bound on LIMIT (see ORM-6). |
-| CWE-400 | Resource Consumption | **Mitigated** | `safeToSql(defaultLimit)` enforces result set bounds. Set operations unbounded. |
-| CWE-915 | Mass Assignment | **Mitigated** | `cast(allowedFields)` with `SafeIdentifier` whitelist. Sealed `Changeset` interface. |
-| CWE-284 | Access Control | **Mitigated** | `UpdateQuery`/`DeleteQuery` bubble on empty WHERE — prevents accidental full-table mutations. |
+| CWE-89 | SQL Injection | **Mitigated** | 5 defense layers: SafeIdentifier, SqlPart hierarchy, SqlBuilder separation, Changeset pipeline, Query builder |
+| CWE-20 | Improper Input Validation | **Mitigated** | `safeIdentifier()` rejects non-`[a-zA-Z_][a-zA-Z0-9_]*]`. Float NaN/Infinity → NULL. Negative limit/offset → bubble |
+| CWE-190 | Integer Overflow | **Partial** | Negative limit/offset rejected. No upper bound on LIMIT (see ORM-6) |
+| CWE-400 | Resource Consumption | **Mitigated** | `safeToSql(defaultLimit)` enforces result set bounds. Set operations unbounded |
+| CWE-915 | Mass Assignment | **Mitigated** | `cast(allowedFields)` with `SafeIdentifier` whitelist. Sealed `Changeset` interface |
+| CWE-284 | Access Control | **Mitigated** | `UpdateQuery`/`DeleteQuery` bubble on empty WHERE — prevents accidental full-table mutations |
 
 **Summary:** 5 Mitigated, 1 Partial. All SQL-relevant CWEs are mitigated or partially mitigated at the ORM level.
 
-### JOIN Feature Security Analysis
+### Per-Phase Security Analysis
 
-The ORM's JOIN support (added 2026-03-13) follows the same security model as the rest of the query builder:
+<details>
+<summary><strong>Phase 1: JOIN</strong></summary>
 
 | Component | Type | Injection Risk |
 |-----------|------|----------------|
@@ -528,16 +549,11 @@ The ORM's JOIN support (added 2026-03-13) follows the same security model as the
 | ON condition | `SqlFragment` — type-safe parts via `SqlBuilder` or `sql` tag | None |
 | `col()` helper | Two `SafeIdentifier` values joined by hardcoded `"."` | None |
 
-**Key properties:**
-- `JoinType` is sealed — no external subclass can return a malicious keyword
-- JOIN table names require the same `SafeIdentifier` validation as `from()`
-- ON conditions use the same `SqlFragment` type as WHERE conditions
-- `toSql()` renders JOINs using only `appendSafe` (literals/identifiers) and `appendFragment` (structured parts)
-- 8 dedicated test cases verify all join types, chaining, composition, and the `col()` helper
+`JoinType` is sealed — no external subclass can return a malicious keyword. JOIN table names require the same `SafeIdentifier` validation as `from()`. ON conditions use the same `SqlFragment` type as WHERE conditions. 8 dedicated test cases verify all join types, chaining, composition, and the `col()` helper.
+</details>
 
-### WHERE Clause Enrichment Security Analysis
-
-The ORM's WHERE clause enrichment (Phase 1) adds OR logic, NULL checks, IN, NOT, BETWEEN, and LIKE/ILIKE operators. All follow the same safety model:
+<details>
+<summary><strong>Phase 2: WHERE Clause Enrichment</strong></summary>
 
 | Component | Type | Injection Risk |
 |-----------|------|----------------|
@@ -549,53 +565,74 @@ The ORM's WHERE clause enrichment (Phase 1) adds OR logic, NULL checks, IN, NOT,
 | `whereBetween` bounds | `SqlPart` values — type-dispatched rendering | None |
 | `whereLike` / `whereILike` pattern | `String` → `SqlString` — single-quote escaping | None |
 
-**Key properties:**
-- `WhereClause` is sealed — no external subclass can return a malicious keyword
-- All convenience methods delegate to `this.where()` which wraps in `AndCondition`
-- LIKE/ILIKE patterns go through `SqlString` escaping (single-quote doubling)
-- Empty IN list produces `1 = 0` rather than invalid SQL syntax
-- 21 dedicated test cases verify all operators, chaining, mixed AND/OR logic, and injection attempts
+21 dedicated test cases verify all operators, chaining, mixed AND/OR logic, and injection attempts.
+</details>
 
-### Aggregation Security Analysis (Phase 2)
+<details>
+<summary><strong>Phase 3: Aggregation</strong></summary>
 
 All 6 aggregate functions (`countAll`, `countCol`, `sumCol`, `avgCol`, `minCol`, `maxCol`) use hardcoded function name strings via `appendSafe`. Field names require `SafeIdentifier`. `selectExpr`, `groupBy`, `having`/`orHaving` reuse existing safe types (`SqlFragment`, `WhereClause`). `distinct()` is a boolean flag selecting between two hardcoded strings. No new injection vectors.
+</details>
 
-### Set Operations & Subqueries Security Analysis (Phase 3)
+<details>
+<summary><strong>Phase 4: Set Operations & Subqueries</strong></summary>
 
 Set operation keywords (`UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`) are hardcoded string literals. Both operands are `Query` objects (not strings). Sub-SELECTs are parenthesized via hardcoded `(...)`. `subquery()` alias requires `SafeIdentifier`. `existsSql()` wraps in hardcoded `EXISTS (...)`. `whereInSubquery()` combines `SafeIdentifier` field with `Query` subquery. No injection vectors.
+</details>
 
-### Batch UPDATE/DELETE Security Analysis (Phase 4)
+<details>
+<summary><strong>Phase 5: Batch UPDATE/DELETE</strong></summary>
 
 | Component | Type Safety Mechanism | Risk |
 |-----------|----------------------|------|
-| `SetClause.field` | `SafeIdentifier` -- sealed, validated | None |
-| `SetClause.value` | `SqlPart` -- sealed, type-dispatched escaping | None |
+| `SetClause.field` | `SafeIdentifier` — sealed, validated | None |
+| `SetClause.value` | `SqlPart` — sealed, type-dispatched escaping | None |
 | `UpdateQuery.toSql()` no-WHERE guard | Bubbles on empty conditions | **Prevents full-table UPDATE** |
 | `DeleteQuery.toSql()` no-WHERE guard | Bubbles on empty conditions | **Prevents full-table DELETE** |
+</details>
 
-### Extended Query Features Security Analysis (Phase 5)
+<details>
+<summary><strong>Phase 6: Extended Query Features</strong></summary>
 
 | Component | Type Safety Mechanism | Risk |
 |-----------|----------------------|------|
-| `NullsPosition.keyword()` | Sealed interface -- 2 hardcoded strings | None |
-| `CrossJoin.keyword()` | Sealed interface -- hardcoded `"CROSS JOIN"` | None |
+| `NullsPosition.keyword()` | Sealed interface — 2 hardcoded strings | None |
+| `CrossJoin.keyword()` | Sealed interface — hardcoded `"CROSS JOIN"` | None |
 | Nullable `onCondition` | When null, ON clause omitted entirely | None |
-| `LockMode.keyword()` | Sealed interface -- 2 hardcoded strings | None |
+| `LockMode.keyword()` | Sealed interface — 2 hardcoded strings | None |
+</details>
 
-### Changeset Enrichment Security Analysis (Phase 6)
+<details>
+<summary><strong>Phase 7: Changeset Enrichment</strong></summary>
 
-All Phase 6 methods (`putChange`, `getChange`, `deleteChange`, `validateInclusion`, `validateExclusion`, `validateNumber`, `validateAcceptance`, `validateConfirmation`, `validateContains`, `validateStartsWith`, `validateEndsWith`) operate on the `changes` Map — string validation and manipulation only, no SQL generation. Field parameters require `SafeIdentifier`. Values only reach SQL later through `toInsertSql()`/`toUpdateSql()`, which use `valueToSqlPart` (type-dispatched escaping). Immutable pattern preserved — all methods return new `Changeset` instances. No new SQL injection surface.
+All Phase 7 methods (`putChange`, `getChange`, `deleteChange`, `validateInclusion`, `validateExclusion`, `validateNumber`, `validateAcceptance`, `validateConfirmation`, `validateContains`, `validateStartsWith`, `validateEndsWith`) operate on the `changes` Map — string validation and manipulation only, no SQL generation. Field parameters require `SafeIdentifier`. Values only reach SQL later through `toInsertSql()`/`toUpdateSql()`, which use `valueToSqlPart` (type-dispatched escaping). Immutable pattern preserved — all methods return new `Changeset` instances. No new SQL injection surface.
+</details>
 
-### Schema Enrichment Security Analysis (Phase 7)
+<details>
+<summary><strong>Phase 8: Schema Enrichment</strong></summary>
 
 | Component | Type Safety Mechanism | Risk |
 |-----------|----------------------|------|
-| `TableDef.primaryKey` | `SafeIdentifier?` -- validated at construction | None |
+| `TableDef.primaryKey` | `SafeIdentifier?` — validated at construction | None |
 | `pkName()` | Returns `SafeIdentifier.sqlValue` or hardcoded `"id"` | None |
-| `FieldDef.defaultValue` | `SqlPart?` -- type-dispatched rendering | None |
+| `FieldDef.defaultValue` | `SqlPart?` — type-dispatched rendering | None |
 | `SqlDefault` | Renders hardcoded `"DEFAULT"` string | None |
-| `FieldDef.virtual` | Boolean flag -- virtual fields excluded from SQL entirely | **Reduces attack surface** |
+| `FieldDef.virtual` | Boolean flag — virtual fields excluded from SQL entirely | **Reduces attack surface** |
 | `timestamps()` | Hardcoded field names via `safeIdentifier()` + `SqlDefault` | None |
+</details>
+
+### Per-App Detailed Reports
+
+Each app repo contains a `SECURITY_ANALYSIS.md` with SQL-specific findings:
+
+| App | Report |
+|-----|--------|
+| JavaScript | [`alloy-js-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-js-app/blob/main/SECURITY_ANALYSIS.md) |
+| Python | [`alloy-py-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-py-app/blob/main/SECURITY_ANALYSIS.md) |
+| Rust | [`alloy-rust-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-rust-app/blob/main/SECURITY_ANALYSIS.md) |
+| Java | [`alloy-java-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-java-app/blob/main/SECURITY_ANALYSIS.md) |
+| Lua | [`alloy-lua-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-lua-app/blob/main/SECURITY_ANALYSIS.md) |
+| C# | [`alloy-csharp-app/SECURITY_ANALYSIS.md`](https://github.com/notactuallytreyanastasio/alloy-csharp-app/blob/main/SECURITY_ANALYSIS.md) |
 
 ### Full Security Research
 
@@ -603,104 +640,81 @@ See [RESEARCH.md](docs/RESEARCH.md) for detailed per-phase MITRE CWE Top 25 anal
 
 ---
 
-## Building Locally
+## CI Pipeline
 
-### Prerequisites
+The pipeline is defined in [`.github/workflows/publish-libs.yml`](.github/workflows/publish-libs.yml).
 
-- **JDK 21** (for building the Temper compiler)
-- **Node.js 18+** (for running JS tests)
-- **Git**
+### Build Stage
 
-### Build Steps
+1. **Checkout** this repository
+2. **Set up JDK 21** (Temurin)
+3. **Clone and build** the [Temper compiler](https://github.com/temperlang/temper) from `main`
+4. **Run `temper build`** — compiles the ORM for all 6 backends into `temper.out/`
+5. **Run `temper test -b js`** — executes the full test suite against the JS backend
+6. **Upload artifacts** — `temper.out/` and the [notify-app template](.github/notify-app-template.yml)
 
-```bash
-# Clone and build the Temper compiler
-git clone https://github.com/temperlang/temper.git /tmp/temper
-cd /tmp/temper
-./gradlew cli:installDist --no-daemon
-export PATH="/tmp/temper/cli/build/install/temper/bin:$PATH"
+### Publish Stage
 
-# Clone this repo
-git clone https://github.com/notactuallytreyanastasio/alloy.git
-cd alloy
+A **matrix of 6 jobs** (one per language) runs in parallel after the build:
 
-# Build all 6 backends
-temper build
+| Matrix Entry | Lib Repo | App Repo | Vendor Path |
+|-------------|----------|----------|-------------|
+| `js` | [`alloy-js`](https://github.com/notactuallytreyanastasio/alloy-js) | [`alloy-js-app`](https://github.com/notactuallytreyanastasio/alloy-js-app) | `vendor` |
+| `py` | [`alloy-py`](https://github.com/notactuallytreyanastasio/alloy-py) | [`alloy-py-app`](https://github.com/notactuallytreyanastasio/alloy-py-app) | `vendor` |
+| `rust` | [`alloy-rust`](https://github.com/notactuallytreyanastasio/alloy-rust) | [`alloy-rust-app`](https://github.com/notactuallytreyanastasio/alloy-rust-app) | `vendor` |
+| `java` | [`alloy-java`](https://github.com/notactuallytreyanastasio/alloy-java) | [`alloy-java-app`](https://github.com/notactuallytreyanastasio/alloy-java-app) | `vendor` |
+| `lua` | [`alloy-lua`](https://github.com/notactuallytreyanastasio/alloy-lua) | [`alloy-lua-app`](https://github.com/notactuallytreyanastasio/alloy-lua-app) | `vendor` |
+| `csharp` | [`alloy-csharp`](https://github.com/notactuallytreyanastasio/alloy-csharp) | [`alloy-csharp-app`](https://github.com/notactuallytreyanastasio/alloy-csharp-app) | `TodoApp/vendor` |
 
-# Run tests (JS backend)
-temper test -b js
-```
+Each publish job:
+1. Downloads the `temper.out/` artifact
+2. Configures SSH with a per-language deploy key (`DEPLOY_KEY_JS`, `DEPLOY_KEY_PY`, etc.)
+3. Clones the target lib repo
+4. Replaces all content with the new build output (orm/ + std/ + temper-core/)
+5. Writes the [notify-app workflow](.github/notify-app-template.yml) into `.github/workflows/`
+6. Commits and pushes
 
-Build output will be in `temper.out/` with subdirectories for each backend.
+### App Vendor Update
+
+When a lib repo receives a push (from the publish stage above), its [`notify-app.yml`](.github/notify-app-template.yml) workflow:
+1. Clones the corresponding app repo
+2. Removes old `vendor/orm`, `vendor/std`, `vendor/temper-core`
+3. Copies the new compiled output into `vendor/`
+4. Commits and pushes
+
+This creates a fully automated cascade: **ORM source change** → **build** → **lib repos** → **app repos**.
 
 ---
 
-## Running the Demo Apps
+## Repository Map
 
-Each app is in [`apps/<lang>/`](apps/) and needs the ORM vendored into its local `vendor/` directory.
+### This Repository (Source)
 
-### JavaScript
+| Repo | Description |
+|------|-------------|
+| [`alloy`](https://github.com/notactuallytreyanastasio/alloy) | Temper ORM source, CI pipeline, app source code |
 
-```bash
-cd apps/js
-mkdir -p vendor
-cp -r ../../temper.out/js/{orm,std,temper-core} vendor/
-npm install
-node app.js
-# Open http://localhost:5006
-```
+### Library Repos (Compiled Output)
 
-### Python
+| Repo | Language | Contents |
+|------|----------|----------|
+| [`alloy-js`](https://github.com/notactuallytreyanastasio/alloy-js) | JavaScript | ES modules |
+| [`alloy-py`](https://github.com/notactuallytreyanastasio/alloy-py) | Python | Python 3 modules |
+| [`alloy-rust`](https://github.com/notactuallytreyanastasio/alloy-rust) | Rust | Cargo crate |
+| [`alloy-java`](https://github.com/notactuallytreyanastasio/alloy-java) | Java | Java source |
+| [`alloy-lua`](https://github.com/notactuallytreyanastasio/alloy-lua) | Lua | Lua modules |
+| [`alloy-csharp`](https://github.com/notactuallytreyanastasio/alloy-csharp) | C# | .NET source |
 
-```bash
-cd apps/py
-mkdir -p vendor
-cp -r ../../temper.out/py/{orm,std,temper-core} vendor/
-pip install flask
-python app.py
-# Open http://localhost:5001
-```
+### Application Repos (Demo Apps)
 
-### Rust
-
-```bash
-cd apps/rust
-mkdir -p vendor
-cp -r ../../temper.out/rust/{orm,std,temper-core} vendor/
-cargo run
-# Open http://localhost:5003
-```
-
-### Java
-
-```bash
-cd apps/java
-mkdir -p vendor
-cp -r ../../temper.out/java/{orm,std,temper-core} vendor/
-mvn spring-boot:run
-# Open http://localhost:5004
-```
-
-### Lua
-
-```bash
-cd apps/lua
-mkdir -p vendor
-cp -r ../../temper.out/lua/{orm,std,temper-core} vendor/
-# Requires lsqlite3: luarocks install lsqlite3
-lua app.lua
-# Open http://localhost:5005
-```
-
-### C#
-
-```bash
-cd apps/csharp/TodoApp
-mkdir -p vendor
-cp -r ../../../temper.out/csharp/{orm,std,temper-core} vendor/
-dotnet run
-# Open http://localhost:5002
-```
+| Repo | Language | Framework |
+|------|----------|-----------|
+| [`alloy-js-app`](https://github.com/notactuallytreyanastasio/alloy-js-app) | JavaScript | Express + EJS |
+| [`alloy-py-app`](https://github.com/notactuallytreyanastasio/alloy-py-app) | Python | Flask |
+| [`alloy-rust-app`](https://github.com/notactuallytreyanastasio/alloy-rust-app) | Rust | Axum + askama |
+| [`alloy-java-app`](https://github.com/notactuallytreyanastasio/alloy-java-app) | Java | Spring Boot |
+| [`alloy-lua-app`](https://github.com/notactuallytreyanastasio/alloy-lua-app) | Lua | Raw socket HTTP |
+| [`alloy-csharp-app`](https://github.com/notactuallytreyanastasio/alloy-csharp-app) | C# | ASP.NET Core Razor |
 
 ---
 
@@ -716,16 +730,9 @@ alloy/
 │   ├── orm.temper.md             # deleteSql() helper
 │   ├── sql_builder.temper.md     # SqlBuilder
 │   ├── sql_model.temper.md       # SqlFragment, SqlPart types
-│   ├── sql_imports.temper.md     # Re-exports from secure-composition
+│   ├── sql_imports.temper.md     # Type re-exports
 │   ├── *_test.temper.md          # Test files
 │   └── sql_tests.temper.md       # SQL builder tests
-├── apps/                         # Demo applications
-│   ├── js/                       # Express + EJS
-│   ├── py/                       # Flask
-│   ├── rust/                     # Axum + askama
-│   ├── java/                     # Spring Boot
-│   ├── lua/                      # Raw socket HTTP
-│   └── csharp/                   # ASP.NET Core Razor Pages
 ├── .github/
 │   ├── workflows/
 │   │   └── publish-libs.yml      # CI: build + publish to lib repos
