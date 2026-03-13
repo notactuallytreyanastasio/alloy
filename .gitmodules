@@ -18,4 +18,4 @@
 	url = git@github.com:notactuallytreyanastasio/alloy-csharp-app.git
 [submodule "apps/juice-shop"]
 	path = apps/juice-shop
-	url = git@github.com:juice-shop/juice-shop.git
+	url = git@github.com:notactuallytreyanastasio/juice-shop.git
