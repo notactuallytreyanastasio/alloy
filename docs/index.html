@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generic ORM — Write Once, Secure Everywhere</title>
+<style>
+  :root {
+    --font-sans: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    --black: #000;
+    --near-black: #111;
+    --dark: #333;
+    --text: #444;
+    --muted: #555;
+    --dim: #888;
+    --light: #999;
+    --border: #ddd;
+    --subtle: #eee;
+    --bg-code: #f7f7f7;
+    --white: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    z-index: 100; padding: 0 2rem;
+  }
+  nav .inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  nav .logo { font-weight: 700; font-size: 0.9rem; color: var(--black); text-decoration: none; letter-spacing: -0.02em; }
+  nav .links { display: flex; gap: 1.5rem; }
+  nav .links a { font-size: 0.72rem; color: var(--dim); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
+  nav .links a:hover { color: var(--black); }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; border-bottom: 1px solid var(--subtle); }
+  section:last-of-type { border-bottom: none; }
+  .hero { padding: 8rem 0 5rem; text-align: center; }
+  .hero h1 { font-size: 3rem; font-weight: 800; color: var(--black); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
+  .hero .subtitle { font-size: 1.1rem; color: var(--dim); max-width: 560px; margin: 0 auto 2rem; line-height: 1.6; }
+  .lang-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .lang-pill { border: 1px solid var(--border); padding: 6px 16px; font-size: 0.72rem; color: var(--dim); letter-spacing: 0.05em; }
+  h2 { font-size: 1.8rem; font-weight: 700; color: var(--near-black); letter-spacing: -0.02em; margin-bottom: 0.4rem; line-height: 1.2; }
+  h3 { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); margin-bottom: 0.5rem; }
+  p { margin-bottom: 1.2rem; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  .lead { font-size: 1.05rem; color: var(--text); margin-bottom: 2rem; }
+  strong { color: var(--near-black); font-weight: 600; }
+  code { font-family: var(--font-mono); font-size: 0.85em; color: var(--muted); background: var(--bg-code); padding: 2px 6px; border-radius: 3px; }
+  pre { background: var(--bg-code); border: 1px solid var(--border); padding: 1.2rem 1.5rem; margin: 1.5rem 0; overflow-x: auto; line-height: 1.7; font-size: 0.8rem; }
+  pre code { background: none; padding: 0; font-size: 1em; color: var(--dark); }
+  .diff-add { color: var(--black); font-weight: 600; }
+  .diff-rm { color: var(--light); text-decoration: line-through; }
+  .comment { color: var(--light); }
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+  th { text-align: left; padding: 10px 14px; color: var(--light); border-bottom: 1px solid var(--border); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75rem; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--subtle); color: var(--muted); vertical-align: top; }
+  td code { font-size: 0.85em; }
+  td a { color: var(--dim); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  .card { border: 1px solid var(--border); padding: 1.5rem; }
+  .card h4 { font-size: 0.9rem; font-weight: 600; color: var(--near-black); margin-bottom: 0.8rem; }
+  .card p, .card li { font-size: 0.85rem; line-height: 1.6; }
+  .card ul { list-style: none; padding: 0; }
+  .card ul li { margin-bottom: 0.4rem; }
+  .card ul li::before { content: "\2014"; margin-right: 0.5em; color: var(--border); }
+  .stat-row { display: flex; gap: 3rem; justify-content: center; margin: 2.5rem 0; text-align: center; }
+  .stat .big-num { font-size: 3.2rem; font-weight: 800; line-height: 1; color: var(--black); }
+  .stat .label { font-size: 0.72rem; color: var(--light); margin-top: 6px; line-height: 1.4; }
+  .flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 2rem 0; }
+  .flow-box { border: 1px solid var(--border); padding: 8px 16px; font-size: 0.78rem; color: var(--muted); }
+  .flow-box.accent { border-color: var(--light); color: var(--dark); font-weight: 600; }
+  .flow-arrow { color: var(--border); font-size: 1rem; }
+  blockquote { border-left: 2px solid var(--border); padding-left: 1.5rem; margin: 2rem 0; }
+  blockquote p { color: var(--dim); font-style: italic; font-size: 0.95rem; }
+  .literate-example { background: var(--bg-code); border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; }
+  .literate-example .md-part { font-family: var(--font-sans); font-size: 0.85rem; color: var(--dim); margin-bottom: 0.8rem; line-height: 1.5; }
+  .literate-example .md-heading { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--near-black); margin-bottom: 0.5rem; }
+  .literate-example .code-part { font-family: var(--font-mono); font-size: 0.78rem; color: var(--dark); padding-left: 1.5rem; border-left: 3px solid var(--border); line-height: 1.7; margin: 0.5rem 0; }
+  footer { padding: 3rem 0; text-align: center; color: var(--light); font-size: 0.75rem; }
+  footer a { color: var(--dim); text-decoration: none; }
+  footer a:hover { color: var(--black); }
+  @media (max-width: 640px) {
+    html { font-size: 16px; }
+    .hero h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.5rem; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .stat-row { flex-direction: column; gap: 1.5rem; }
+    nav .links { display: none; }
+    .flow { gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="#" class="logo">Generic ORM</a>
+    <div class="links">
+      <a href="#the-problem">The Problem</a>
+      <a href="#the-idea">The Idea</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#reading-the-source">The Source</a>
+      <a href="#finding-bugs">Finding Bugs</a>
+      <a href="#ai-story">The AI Story</a>
+      <a href="#the-proof">The Proof</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero container">
+  <h1>Write Once,<br>Secure Everywhere</h1>
+  <p class="subtitle">We built a SQL ORM in a language nobody's heard of. It compiles to 6 languages, has zero injection vulnerabilities in all of them, and the whole thing was built by one person and an AI. This is the story of how.</p>
+  <div class="lang-row">
+    <span class="lang-pill">JavaScript</span>
+    <span class="lang-pill">Python</span>
+    <span class="lang-pill">Rust</span>
+    <span class="lang-pill">Java</span>
+    <span class="lang-pill">Lua</span>
+    <span class="lang-pill">C#</span>
+  </div>
+</header>
+
+<!-- THE PROBLEM -->
+<section id="the-problem">
+  <div class="container">
+    <h3>Chapter 1</h3>
+    <h2>The problem nobody wants to solve</h2>
+
+    <p>Imagine you maintain a library that ships in 6 languages. Maybe it's an SDK. Maybe it's a database driver. Maybe it's an ORM. You find a SQL injection bug on a Tuesday afternoon.</p>
+
+    <p>Now multiply everything by 6. You need 6 patches, written in 6 languages, by people who know those 6 ecosystems. You need 6 PRs, 6 code reviews, 6 CI runs, 6 releases, pushed to 6 package registries. And you need them all to behave identically, because if the Python fix escapes quotes differently than the Java fix, you've just traded one vulnerability for a new inconsistency.</p>
+
+    <p>This is not hypothetical. AWS maintains 300+ services across 12 languages. Their Java SDK v1 to v2 migration took <strong>7 years</strong>. Three major SDKs hit end-of-support in 2025 &mdash; zero security patches after cutoff.</p>
+
+    <p>The standard answer is "hire more people" or "use code generation." But code generation only handles API shapes &mdash; the actual logic, the escaping, the validation, the edge cases &mdash; those still need per-language implementations. And per-language implementations drift.</p>
+
+    <blockquote>
+      <p>We wanted to know: what if the security logic itself was written once and compiled to every target?</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- THE IDEA -->
+<section id="the-idea">
+  <div class="container">
+    <h3>Chapter 2</h3>
+    <h2>Temper: the language that compiles to other languages</h2>
+
+    <p><a href="https://github.com/temperlang/temper" style="color: var(--dim);">Temper</a> is a typed language that compiles to idiomatic output in JavaScript, Python, Rust, Java, Lua, and C#. Not transpilation. Not wrappers. Native, importable libraries that look like they were written by a developer in that language.</p>
+
+    <p>The idea was simple: build a security-critical library &mdash; a SQL ORM &mdash; in Temper. If the type system can prevent SQL injection at compile time in the Temper source, then the compiled output inherits those guarantees in every target language. One set of safety invariants, enforced everywhere.</p>
+
+    <div class="flow">
+      <div class="flow-box accent">schema.temper.md</div>
+      <span class="flow-arrow">&rarr;</span>
+      <div class="flow-box"><code>temper build</code></div>
+      <span class="flow-arrow">&rarr;</span>
+      <div class="flow-box">ES Modules</div>
+      <div class="flow-box">Python 3</div>
+      <div class="flow-box">Cargo Crate</div>
+      <div class="flow-box">Java</div>
+      <div class="flow-box">Lua</div>
+      <div class="flow-box">.NET</div>
+    </div>
+
+    <p>A JavaScript app imports it as <code>import { from, safeIdentifier } from 'orm'</code>. A Rust app uses <code>use orm::src::{from, safe_identifier}</code>. The API adapts to each language's idioms. The safety model doesn't.</p>
+
+    <p>We built the ORM in 7 phases over a single evening, adding features iteratively: query builder, WHERE clauses, JOINs, aggregation, set operations, batch mutations, changeset validation, and schema enrichment. At every phase, we ran a MITRE CWE Top 25 security analysis against the new code.</p>
+
+    <p>The result: <strong>184 tests passing, zero SQL injection vulnerabilities, across all 6 backends.</strong></p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <h3>Chapter 3</h3>
+    <h2>Five layers that make injection impossible</h2>
+
+    <p>The ORM doesn't prevent SQL injection by being careful. It prevents it by making unsafe SQL <strong>impossible to construct</strong>. The type system won't let you. There are five layers, and they build on each other.</p>
+
+    <p><strong>Layer 1</strong> is <code>SafeIdentifier</code>. Every table name and column name must pass through a validator that accepts only <code>[a-zA-Z_][a-zA-Z0-9_]*</code>. The implementation class is sealed and not exported &mdash; there is no way to construct a valid identifier without going through validation. Try to use <code>users; DROP TABLE</code> as a table name and you get a compile-time error path, not a runtime surprise.</p>
+
+    <pre><code>safeIdentifier("users")       <span class="comment">// accepted</span>
+safeIdentifier("users; DROP") <span class="comment">// bubble (rejected at construction)</span></code></pre>
+
+    <p><strong>Layer 2</strong> is the <code>SqlPart</code> sealed hierarchy. User values never touch the "safe" append path. Instead, each data type &mdash; strings, integers, booleans, floats, dates &mdash; gets its own class that knows how to render itself safely. <code>SqlString</code> escapes quotes. <code>SqlInt32</code> renders bare integers. <code>SqlFloat64</code> renders <code>NULL</code> for NaN and Infinity. The interface is sealed, so the compiler enforces exhaustive handling. You cannot add a new type without updating every rendering path.</p>
+
+    <p><strong>Layer 3</strong> is the <code>SqlBuilder</code> itself. It has two families of methods: <code>appendSafe()</code> for SQL keywords and validated identifiers, and typed <code>append()</code> overloads for user data. There is no <code>appendRaw</code>. There is no escape hatch. Structure and data are separated at the API level, not by convention.</p>
+
+    <p><strong>Layer 4</strong> is the <code>Changeset</code> pipeline, inspired by Elixir's Ecto. It's a sealed interface &mdash; you can only construct one through the factory function. <code>cast()</code> requires a list of <code>SafeIdentifier</code> for field whitelisting. Raw params are never exposed. Values reach SQL only through type-dispatched escaping.</p>
+
+    <p><strong>Layer 5</strong> is the query builder itself. It requires <code>SafeIdentifier</code> for everything structural &mdash; table names, columns, ORDER BY, JOIN targets. WHERE conditions accept only <code>SqlFragment</code>, never raw strings. All SQL keywords come from sealed interfaces with hardcoded strings. <code>UpdateQuery</code> and <code>DeleteQuery</code> refuse to generate SQL without a WHERE clause, preventing accidental full-table mutations.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="big-num">5</div>
+        <div class="label">defense layers</div>
+      </div>
+      <div class="stat">
+        <div class="big-num">7</div>
+        <div class="label">sealed interfaces</div>
+      </div>
+      <div class="stat">
+        <div class="big-num">0</div>
+        <div class="label">raw string paths to SQL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LITERATE PROGRAMMING -->
+<section id="reading-the-source">
+  <div class="container">
+    <h3>Chapter 4</h3>
+    <h2>Source code you can actually read</h2>
+
+    <p>Temper source files are <code>.temper.md</code> &mdash; literate markdown. The source code is a document. Code lives in indented blocks. Everything else is prose: explanations, design rationale, security notes. When you open <code>schema.temper.md</code>, you're not reading code with comments. You're reading a document that happens to contain code.</p>
+
+    <div class="literate-example">
+      <div class="md-heading">## SafeIdentifier</div>
+      <div class="md-part">Table and column names must be validated before they can appear in SQL. The <code>SafeIdentifier</code> interface is sealed &mdash; the implementation class is not exported, so external code must go through validation.</div>
+      <div class="code-part">export sealed interface SafeIdentifier {<br>&nbsp;&nbsp;public get sqlValue(): String;<br>}</div>
+      <div class="md-part">The validator rejects any name containing SQL metacharacters.</div>
+      <div class="code-part">export let safeIdentifier(name: String): SafeIdentifier throws Bubble {<br>&nbsp;&nbsp;if (name.isEmpty) { bubble() }<br>&nbsp;&nbsp;// ... character-by-character validation<br>&nbsp;&nbsp;new ValidatedIdentifier(name)<br>}</div>
+    </div>
+
+    <p>This matters for a security-critical library because the <strong>reasoning lives with the code</strong>. When a reviewer opens <code>changeset.temper.md</code>, they don't just see a <code>cast()</code> function &mdash; they see the paragraph explaining why field whitelisting is enforced here, what CWE it prevents, and why the implementation class is sealed. When an auditor opens <code>sql_model.temper.md</code>, each <code>SqlPart</code> subclass comes with its escaping rationale.</p>
+
+    <p>The whole library is 6 source files. You can read the entire security model in an afternoon:</p>
+
+    <table>
+      <tr><th>File</th><th>What it covers</th></tr>
+      <tr><td><code>schema.temper.md</code></td><td>How identifiers are validated and why the implementation is hidden</td></tr>
+      <tr><td><code>query.temper.md</code></td><td>How queries are composed and why every structural position requires a safe type</td></tr>
+      <tr><td><code>changeset.temper.md</code></td><td>How the cast-validate-SQL pipeline works and what it prevents</td></tr>
+      <tr><td><code>sql_builder.temper.md</code></td><td>How structure and data are separated at the API level</td></tr>
+      <tr><td><code>sql_model.temper.md</code></td><td>How each value type renders itself and why the hierarchy is sealed</td></tr>
+      <tr><td><code>orm.temper.md</code></td><td>The top-level delete helper and how it uses the schema</td></tr>
+    </table>
+
+    <p>This is what makes the project auditable. Not just "here's the code" but "here's the code, here's why it's this way, and here's what goes wrong if you change it."</p>
+  </div>
+</section>
+
+<!-- FINDING BUGS -->
+<section id="finding-bugs">
+  <div class="container">
+    <h3>Chapter 5</h3>
+    <h2>We found 3 bugs. We fixed all 6 languages in one commit.</h2>
+
+    <p>After building the ORM, we ran a systematic MITRE CWE Top 25 analysis against every component, phase by phase. The analysis found 3 real issues.</p>
+
+    <p>The first was the most interesting. In <code>toInsertSql()</code> and <code>toUpdateSql()</code>, column names were being passed as raw <code>String</code> values to <code>appendSafe()</code>. They happened to originate from <code>SafeIdentifier</code> &mdash; so they were safe <em>by construction</em> &mdash; but the type system didn't enforce this at the call site. A future refactor could silently introduce an unvalidated path.</p>
+
+    <p>The fix was two lines:</p>
+
+    <pre><code><span class="comment">// Before: raw String from map key</span>
+<span class="diff-rm">colNames.add(pair.key);</span>
+<span class="diff-rm">b.appendSafe(pair.key);</span>
+
+<span class="comment">// After: SafeIdentifier from looked-up FieldDef</span>
+<span class="diff-add">colNames.add(fd.name.sqlValue);</span>
+<span class="diff-add">b.appendSafe(fd.name.sqlValue);</span></code></pre>
+
+    <p>The second issue: <code>SqlDate</code> wrapped dates in quotes without escaping. If <code>Date.toString()</code> ever produced a single quote, you'd get malformed SQL. We added character-by-character escaping.</p>
+
+    <p>The third: <code>SqlFloat64</code> rendered <code>NaN</code> and <code>Infinity</code> as literal strings &mdash; not valid SQL. We made them render as <code>NULL</code>.</p>
+
+    <p><strong>One commit. One build. All 3 fixes propagated to JavaScript, Python, Rust, Java, Lua, and C#.</strong> We verified in the compiled output &mdash; grepped the generated code for each backend and confirmed the fixes were present. No raw <code>pair.key</code> in any <code>appendSafe</code> call. Escaping loops in <code>SqlDate</code>. NaN guards in <code>SqlFloat64</code>.</p>
+
+    <p>In a traditional multi-language setup, that's 6 PRs, 6 reviews, 6 releases. Here it was one afternoon.</p>
+
+    <table>
+      <tr><th>CWE</th><th>Name</th><th>Status after fix</th></tr>
+      <tr><td><code>CWE-89</code></td><td>SQL Injection</td><td><strong>Mitigated</strong> &mdash; 5 defense layers</td></tr>
+      <tr><td><code>CWE-20</code></td><td>Input Validation</td><td><strong>Mitigated</strong> &mdash; SafeIdentifier + NaN guard</td></tr>
+      <tr><td><code>CWE-400</code></td><td>Resource Consumption</td><td><strong>Mitigated</strong> &mdash; safeToSql(defaultLimit)</td></tr>
+      <tr><td><code>CWE-915</code></td><td>Mass Assignment</td><td><strong>Mitigated</strong> &mdash; cast() whitelist</td></tr>
+      <tr><td><code>CWE-284</code></td><td>Access Control</td><td><strong>Mitigated</strong> &mdash; no-WHERE guards on UPDATE/DELETE</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- AI STORY -->
+<section id="ai-story">
+  <div class="container">
+    <h3>Chapter 6</h3>
+    <h2>This whole thing was built by one person and an AI</h2>
+
+    <p>Here's the part that makes people uncomfortable: this entire project &mdash; the ORM, all 6 demo applications, the CI pipeline, the MITRE security analysis, the bug fixes, the pitch decks, and this website &mdash; was built by a single developer working with Claude.</p>
+
+    <p>The AI didn't need to know 6 languages to secure 6 backends. It worked in Temper &mdash; one language, one type system, one set of safety invariants. The compiler did the rest.</p>
+
+    <p>To test whether this actually matters, we ran a comparison. We asked an AI to build an ORM in Ruby with comparable prompts and comparable effort. Then we ran the same MITRE/CWE analysis on both.</p>
+
+    <table>
+      <tr><th>Metric</th><th>Ruby ORM</th><th>Temper ORM</th></tr>
+      <tr><td>SQL injection vulnerabilities</td><td><strong>9 critical/high</strong></td><td><strong>0</strong></td></tr>
+      <tr><td>Identifier validation</td><td>None &mdash; direct interpolation</td><td>SafeIdentifier sealed type</td></tr>
+      <tr><td>Value escaping</td><td>Single-quote only</td><td>Typed SqlPart hierarchy (6 types)</td></tr>
+      <tr><td>Mass assignment protection</td><td>None</td><td>Changeset <code>cast()</code> whitelist</td></tr>
+      <tr><td>Languages supported</td><td>1</td><td><strong>6</strong></td></tr>
+    </table>
+
+    <p>The Ruby ORM had table name injection, WHERE clause injection, ORDER BY injection, GROUP BY injection, direction injection, LIMIT type confusion, and incomplete escaping. Nine attack vectors from a few prompts. Not because the AI was bad &mdash; because Ruby doesn't stop you from interpolating strings into SQL. It's the path of least resistance, and the AI took it.</p>
+
+    <p>In Temper, those same mistakes are <strong>impossible to express</strong>. The type system won't compile code that passes a raw string where a <code>SafeIdentifier</code> is required. The AI didn't write better code because it was smarter. It wrote safer code because the language wouldn't let it do otherwise.</p>
+
+    <blockquote>
+      <p>The best security doesn't depend on the developer &mdash; or the AI &mdash; remembering to do the right thing. It makes the wrong thing impossible to express.</p>
+    </blockquote>
+
+    <p>This is what AI-driven development actually needs. Not smarter models. Better foundations. When the language enforces invariants, the review burden collapses from N languages to 1. Adding a 7th backend requires zero security re-audit.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="big-num" style="font-size: 2.5rem;">6&times;</div>
+        <div class="label">review burden<br>without Temper</div>
+      </div>
+      <div class="stat" style="align-self: center; color: var(--border); font-size: 1.5rem;">&rarr;</div>
+      <div class="stat">
+        <div class="big-num" style="font-size: 2.5rem;">1&times;</div>
+        <div class="label">review burden<br>with Temper</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROOF -->
+<section id="the-proof">
+  <div class="container">
+    <h3>Chapter 7</h3>
+    <h2>Six apps. Six languages. Same ORM. Zero vulnerabilities.</h2>
+
+    <p>To prove this isn't theoretical, we built 6 identical todo-list applications &mdash; one in each target language &mdash; all using the compiled ORM for every database operation. Same functionality, same UI, same security properties. Every SELECT, INSERT, UPDATE, and DELETE flows through the ORM. The only raw SQL is DDL (<code>CREATE TABLE</code>) &mdash; static strings with no user input.</p>
+
+    <table>
+      <tr><th>Language</th><th>Framework</th><th>Port</th><th>Repository</th></tr>
+      <tr><td>JavaScript</td><td>Express + EJS + better-sqlite3</td><td>5006</td><td><a href="https://github.com/notactuallytreyanastasio/generic-orm-js-app">generic-orm-js-app</a></td></tr>
+      <tr><td>Python</td><td>Flask + sqlite3</td><td>5001</td><td><a href="https://github.com/notactuallytreyanastasio/generic-orm-py-app">generic-orm-py-app</a></td></tr>
+      <tr><td>Rust</td><td>Axum + rusqlite + askama</td><td>5003</td><td><a href="https://github.com/notactuallytreyanastasio/generic-orm-rust-app">generic-orm-rust-app</a></td></tr>
+      <tr><td>Java</td><td>Spring Boot + Thymeleaf + SQLite JDBC</td><td>5004</td><td><a href="https://github.com/notactuallytreyanastasio/generic-orm-java-app">generic-orm-java-app</a></td></tr>
+      <tr><td>Lua</td><td>Raw socket HTTP + lsqlite3</td><td>5005</td><td><a href="https://github.com/notactuallytreyanastasio/generic-orm-lua-app">generic-orm-lua-app</a></td></tr>
+      <tr><td>C#</td><td>ASP.NET Core Razor Pages + SQLite</td><td>5002</td><td><a href="https://github.com/notactuallytreyanastasio/generic-orm-csharp-app">generic-orm-csharp-app</a></td></tr>
+    </table>
+
+    <p>The CI pipeline ties it all together. A push to <code>main</code> in the ORM repo triggers a build that compiles all 6 backends, runs the test suite, and pushes the compiled output to 6 library repos. Each library repo cascades an update to its app repo. Source change to deployed update, fully automated.</p>
+
+    <div class="flow">
+      <div class="flow-box accent">ORM source change</div>
+      <span class="flow-arrow">&rarr;</span>
+      <div class="flow-box">Build + 184 tests</div>
+      <span class="flow-arrow">&rarr;</span>
+      <div class="flow-box">6 lib repos</div>
+      <span class="flow-arrow">&rarr;</span>
+      <div class="flow-box">6 app repos</div>
+    </div>
+
+    <p>The ORM was built across 7 development phases, each with its own security analysis:</p>
+
+    <table>
+      <tr><th>Phase</th><th>What was added</th><th>Tests</th></tr>
+      <tr><td>Baseline</td><td>Core ORM: schema, changeset, query builder, SQL primitives</td><td>64</td></tr>
+      <tr><td>1</td><td>WHERE enrichment: OR, NULL, IN, NOT, BETWEEN, LIKE/ILIKE</td><td>85</td></tr>
+      <tr><td>2</td><td>Aggregation: GROUP BY, HAVING, DISTINCT, COUNT/SUM/AVG/MIN/MAX</td><td>105</td></tr>
+      <tr><td>3</td><td>Set operations: UNION, INTERSECT, EXCEPT, subqueries</td><td>115</td></tr>
+      <tr><td>4</td><td>Batch mutations: UPDATE and DELETE with no-WHERE guards</td><td>128</td></tr>
+      <tr><td>5</td><td>Extensions: NULLS FIRST/LAST, CROSS JOIN, FOR UPDATE/SHARE</td><td>136</td></tr>
+      <tr><td>6</td><td>Changeset enrichment: 14 validators, data manipulation methods</td><td>170</td></tr>
+      <tr><td>7</td><td>Schema enrichment: custom primary keys, defaults, virtual fields, timestamps</td><td>184</td></tr>
+    </table>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="big-num">184</div>
+        <div class="label">tests passing</div>
+      </div>
+      <div class="stat">
+        <div class="big-num">6</div>
+        <div class="label">language targets</div>
+      </div>
+      <div class="stat">
+        <div class="big-num">0</div>
+        <div class="label">injection vulnerabilities</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" style="background: var(--bg-code);">
+  <div class="container">
+    <h3>Go Deeper</h3>
+    <h2>Research, analysis, and presentations</h2>
+
+    <table>
+      <tr><th>Document</th><th>What's in it</th></tr>
+      <tr><td><a href="RESEARCH.md">RESEARCH.md</a></td><td>Full MITRE CWE Top 25 analysis across all 7 phases &mdash; component-level tables, findings, and severity ratings</td></tr>
+      <tr><td><a href="narratives.md">narratives.md</a></td><td>How the project evolved: 4 design narratives covering the ORM, dependency strategy, CI, and parser compatibility</td></tr>
+      <tr><td><a href="plans/">plans/</a></td><td>Implementation plans for 4 major phases &mdash; the thinking before the code</td></tr>
+      <tr><td><a href="decks/deck.html">Pitch deck</a></td><td>The full presentation: cross-compilation, defense layers, AI comparison, and the numbers</td></tr>
+      <tr><td><a href="decks/deck-enterprise.html">Enterprise deck</a></td><td>Enterprise-focused: AWS SDK scale analysis, maintenance windows, the cost of drift</td></tr>
+      <tr><td><a href="https://github.com/notactuallytreyanastasio/generic_orm">Source code</a></td><td>The ORM itself &mdash; 6 literate markdown files you can read top-to-bottom</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;">
+      <a href="https://github.com/notactuallytreyanastasio/generic_orm">Source</a>
+      &nbsp;&bull;&nbsp;
+      <a href="https://github.com/temperlang/temper">Temper</a>
+      &nbsp;&bull;&nbsp;
+      <a href="RESEARCH.md">Research</a>
+      &nbsp;&bull;&nbsp;
+      <a href="decks/deck.html">Deck</a>
+    </p>
+    <p>Generic ORM &mdash; Write Once, Secure Everywhere</p>
+  </div>
+</footer>
+
+</body>
+</html>

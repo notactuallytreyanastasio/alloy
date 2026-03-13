@@ -582,6 +582,10 @@ Set operation keywords (`UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`) are hardcod
 | Nullable `onCondition` | When null, ON clause omitted entirely | None |
 | `LockMode.keyword()` | Sealed interface -- 2 hardcoded strings | None |
 
+### Changeset Enrichment Security Analysis (Phase 6)
+
+All Phase 6 methods (`putChange`, `getChange`, `deleteChange`, `validateInclusion`, `validateExclusion`, `validateNumber`, `validateAcceptance`, `validateConfirmation`, `validateContains`, `validateStartsWith`, `validateEndsWith`) operate on the `changes` Map — string validation and manipulation only, no SQL generation. Field parameters require `SafeIdentifier`. Values only reach SQL later through `toInsertSql()`/`toUpdateSql()`, which use `valueToSqlPart` (type-dispatched escaping). Immutable pattern preserved — all methods return new `Changeset` instances. No new SQL injection surface.
+
 ### Schema Enrichment Security Analysis (Phase 7)
 
 | Component | Type Safety Mechanism | Risk |
