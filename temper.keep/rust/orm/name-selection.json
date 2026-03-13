@@ -1,0 +1,7 @@
+{
+    "about": "Backend names selected by user via the temper CLI. This file should be committed.",
+    "toolchain-version": "<debug>",
+    "library-name": "orm",
+    "backend-id": "rust",
+    "selections": []
+}

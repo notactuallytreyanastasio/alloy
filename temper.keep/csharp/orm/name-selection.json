@@ -1,0 +1,484 @@
+{
+    "about": "Backend names selected by user via the temper CLI. This file should be committed.",
+    "toolchain-version": "<debug>",
+    "library-name": "orm",
+    "backend-id": "csharp",
+    "selections": [
+        {
+            "qualified-name": "orm/src.type ChangesetError",
+            "selected-name": "ChangesetError"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetError.field",
+            "selected-name": "Field"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetError.message",
+            "selected-name": "Message"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset",
+            "selected-name": "Changeset"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get tableDef()",
+            "selected-name": "TableDef"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get changes()",
+            "selected-name": "Changes"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get errors()",
+            "selected-name": "Errors"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get isValid()",
+            "selected-name": "IsValid"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.cast()",
+            "selected-name": "Cast"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateRequired()",
+            "selected-name": "ValidateRequired"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateLength()",
+            "selected-name": "ValidateLength"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateInt()",
+            "selected-name": "ValidateInt"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateInt64()",
+            "selected-name": "ValidateInt64"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateFloat()",
+            "selected-name": "ValidateFloat"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateBool()",
+            "selected-name": "ValidateBool"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.toInsertSql()",
+            "selected-name": "ToInsertSql"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.toUpdateSql()",
+            "selected-name": "ToUpdateSql"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl",
+            "selected-name": "ChangesetImpl"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get tableDef()",
+            "selected-name": "TableDef"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get changes()",
+            "selected-name": "Changes"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get errors()",
+            "selected-name": "Errors"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get isValid()",
+            "selected-name": "IsValid"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.cast()",
+            "selected-name": "Cast"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateRequired()",
+            "selected-name": "ValidateRequired"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength()",
+            "selected-name": "ValidateLength"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt()",
+            "selected-name": "ValidateInt"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt64()",
+            "selected-name": "ValidateInt64"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateFloat()",
+            "selected-name": "ValidateFloat"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool()",
+            "selected-name": "ValidateBool"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.parseBoolSqlPart()",
+            "selected-name": "ParseBoolSqlPart"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.valueToSqlPart()",
+            "selected-name": "ValueToSqlPart"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql()",
+            "selected-name": "ToInsertSql"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql()",
+            "selected-name": "ToUpdateSql"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause",
+            "selected-name": "OrderClause"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause.field",
+            "selected-name": "Field"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause.ascending",
+            "selected-name": "Ascending"
+        },
+        {
+            "qualified-name": "orm/src.type Query",
+            "selected-name": "Query"
+        },
+        {
+            "qualified-name": "orm/src.type Query.where()",
+            "selected-name": "Where"
+        },
+        {
+            "qualified-name": "orm/src.type Query.select()",
+            "selected-name": "Select"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderBy()",
+            "selected-name": "OrderBy"
+        },
+        {
+            "qualified-name": "orm/src.type Query.limit()",
+            "selected-name": "Limit"
+        },
+        {
+            "qualified-name": "orm/src.type Query.offset()",
+            "selected-name": "Offset"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql()",
+            "selected-name": "ToSql"
+        },
+        {
+            "qualified-name": "orm/src.type Query.safeToSql()",
+            "selected-name": "SafeToSql"
+        },
+        {
+            "qualified-name": "orm/src.type Query.tableName",
+            "selected-name": "TableName"
+        },
+        {
+            "qualified-name": "orm/src.type Query.conditions",
+            "selected-name": "Conditions"
+        },
+        {
+            "qualified-name": "orm/src.type Query.selectedFields",
+            "selected-name": "SelectedFields"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderClauses",
+            "selected-name": "OrderClauses"
+        },
+        {
+            "qualified-name": "orm/src.type Query.limitVal",
+            "selected-name": "LimitVal"
+        },
+        {
+            "qualified-name": "orm/src.type Query.offsetVal",
+            "selected-name": "OffsetVal"
+        },
+        {
+            "qualified-name": "orm/src.type SafeIdentifier",
+            "selected-name": "SafeIdentifier"
+        },
+        {
+            "qualified-name": "orm/src.type SafeIdentifier.get sqlValue()",
+            "selected-name": "SqlValue"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier",
+            "selected-name": "ValidatedIdentifier"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier.get sqlValue()",
+            "selected-name": "SqlValue"
+        },
+        {
+            "qualified-name": "orm/src.type FieldType",
+            "selected-name": "FieldType"
+        },
+        {
+            "qualified-name": "orm/src.type StringField",
+            "selected-name": "StringField"
+        },
+        {
+            "qualified-name": "orm/src.type IntField",
+            "selected-name": "IntField"
+        },
+        {
+            "qualified-name": "orm/src.type Int64Field",
+            "selected-name": "Int64_Field"
+        },
+        {
+            "qualified-name": "orm/src.type FloatField",
+            "selected-name": "FloatField"
+        },
+        {
+            "qualified-name": "orm/src.type BoolField",
+            "selected-name": "BoolField"
+        },
+        {
+            "qualified-name": "orm/src.type DateField",
+            "selected-name": "DateField"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef",
+            "selected-name": "FieldDef"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.name",
+            "selected-name": "Name"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.fieldType",
+            "selected-name": "FieldType"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.nullable",
+            "selected-name": "Nullable"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef",
+            "selected-name": "TableDef"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.field()",
+            "selected-name": "Field"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.tableName",
+            "selected-name": "TableName"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.fields",
+            "selected-name": "Fields"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder",
+            "selected-name": "SqlBuilder"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendSafe()",
+            "selected-name": "AppendSafe"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendFragment()",
+            "selected-name": "AppendFragment"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendPart()",
+            "selected-name": "AppendPart"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendPartList()",
+            "selected-name": "AppendPartList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendBoolean()",
+            "selected-name": "AppendBoolean"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendBooleanList()",
+            "selected-name": "AppendBooleanList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendDate()",
+            "selected-name": "AppendDate"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendDateList()",
+            "selected-name": "AppendDateList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendFloat64()",
+            "selected-name": "AppendFloat64"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendFloat64List()",
+            "selected-name": "AppendFloat64_List"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt32()",
+            "selected-name": "AppendInt32"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt32List()",
+            "selected-name": "AppendInt32_List"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt64()",
+            "selected-name": "AppendInt64"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt64List()",
+            "selected-name": "AppendInt64_List"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendString()",
+            "selected-name": "AppendString"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendStringList()",
+            "selected-name": "AppendStringList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendList()",
+            "selected-name": "AppendList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.get accumulated()",
+            "selected-name": "Accumulated"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment",
+            "selected-name": "SqlFragment"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.toSource()",
+            "selected-name": "ToSource"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.toString()",
+            "selected-name": "ToString"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.parts",
+            "selected-name": "Parts"
+        },
+        {
+            "qualified-name": "orm/src.type SqlPart",
+            "selected-name": "SqlPart"
+        },
+        {
+            "qualified-name": "orm/src.type SqlPart.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource",
+            "selected-name": "SqlSource"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource.source",
+            "selected-name": "Source"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean",
+            "selected-name": "SqlBoolean"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate",
+            "selected-name": "SqlDate"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64",
+            "selected-name": "SqlFloat64"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32",
+            "selected-name": "SqlInt32"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64",
+            "selected-name": "SqlInt64"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString",
+            "selected-name": "SqlString"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString.formatTo()",
+            "selected-name": "FormatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString.value",
+            "selected-name": "Value"
+        },
+        {
+            "qualified-name": "orm/src.changeset()",
+            "selected-name": "Changeset"
+        },
+        {
+            "qualified-name": "orm/src.safeIdentifier()",
+            "selected-name": "SafeIdentifier"
+        },
+        {
+            "qualified-name": "orm/src.deleteSql()",
+            "selected-name": "DeleteSql"
+        },
+        {
+            "qualified-name": "orm/src.from()",
+            "selected-name": "From"
+        }
+    ]
+}

@@ -1,0 +1,1320 @@
+{
+    "about": "Backend names selected by user via the temper CLI. This file should be committed.",
+    "toolchain-version": "<debug>",
+    "library-name": "orm",
+    "backend-id": "java",
+    "selections": [
+        {
+            "qualified-name": "orm/src.type ChangesetError",
+            "selected-name": "ChangesetError"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetError.field",
+            "selected-name": "field"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetError.message",
+            "selected-name": "message"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetError.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset",
+            "selected-name": "Changeset"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.tableDef",
+            "selected-name": "tableDef"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef",
+            "selected-name": "TableDef"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get tableDef()",
+            "selected-name": "get$2etableDef"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.changes",
+            "selected-name": "changes"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get changes()",
+            "selected-name": "get$2echanges"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.errors",
+            "selected-name": "errors"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get errors()",
+            "selected-name": "get$2eerrors"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.isValid",
+            "selected-name": "isValid"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.get isValid()",
+            "selected-name": "get$2eisValid"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.cast()",
+            "selected-name": "cast"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateRequired()",
+            "selected-name": "validateRequired"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateLength()",
+            "selected-name": "validateLength"
+        },
+        {
+            "qualified-name": "orm/src.type SafeIdentifier",
+            "selected-name": "SafeIdentifier"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateInt()",
+            "selected-name": "validateInt"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateInt64()",
+            "selected-name": "validateInt64"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateFloat()",
+            "selected-name": "validateFloat"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.validateBool()",
+            "selected-name": "validateBool"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.toInsertSql()",
+            "selected-name": "toInsertSql"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment",
+            "selected-name": "SqlFragment"
+        },
+        {
+            "qualified-name": "orm/src.type Changeset.toUpdateSql()",
+            "selected-name": "toUpdateSql"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl",
+            "selected-name": "ChangesetImpl"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl._tableDef",
+            "selected-name": "_tableDef"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl._params",
+            "selected-name": "_params"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl._changes",
+            "selected-name": "_changes"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl._errors",
+            "selected-name": "_errors"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl._isValid",
+            "selected-name": "_isValid"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.tableDef",
+            "selected-name": "tableDef"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get tableDef()",
+            "selected-name": "get$2etableDef"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.changes",
+            "selected-name": "changes"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get changes()",
+            "selected-name": "get$2echanges"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.errors",
+            "selected-name": "errors"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get errors()",
+            "selected-name": "get$2eerrors"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.isValid",
+            "selected-name": "isValid"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.get isValid()",
+            "selected-name": "get$2eisValid"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.cast()",
+            "selected-name": "cast"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.cast().mb=",
+            "selected-name": "mb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.cast().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateRequired()",
+            "selected-name": "validateRequired"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateRequired().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateRequired().eb=",
+            "selected-name": "eb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateRequired().valid=",
+            "selected-name": "valid"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength()",
+            "selected-name": "validateLength"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength().len=",
+            "selected-name": "len"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength().msg=",
+            "selected-name": "msg"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateLength().eb=",
+            "selected-name": "eb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt()",
+            "selected-name": "validateInt"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt().parseOk=",
+            "selected-name": "parseOk"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt().eb=",
+            "selected-name": "eb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt64()",
+            "selected-name": "validateInt64"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt64().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt64().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt64().parseOk=",
+            "selected-name": "parseOk"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateInt64().eb=",
+            "selected-name": "eb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateFloat()",
+            "selected-name": "validateFloat"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateFloat().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateFloat().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateFloat().parseOk=",
+            "selected-name": "parseOk"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateFloat().eb=",
+            "selected-name": "eb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool()",
+            "selected-name": "validateBool"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool().val=",
+            "selected-name": "val"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool().isTrue=",
+            "selected-name": "isTrue"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool().isFalse=",
+            "selected-name": "isFalse"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.validateBool().eb=",
+            "selected-name": "eb"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.parseBoolSqlPart()",
+            "selected-name": "parseBoolSqlPart"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean",
+            "selected-name": "SqlBoolean"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.parseBoolSqlPart().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.valueToSqlPart()",
+            "selected-name": "valueToSqlPart"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef",
+            "selected-name": "FieldDef"
+        },
+        {
+            "qualified-name": "orm/src.type SqlPart",
+            "selected-name": "SqlPart"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.valueToSqlPart().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.valueToSqlPart().ft=",
+            "selected-name": "ft"
+        },
+        {
+            "qualified-name": "orm/src.type FieldType",
+            "selected-name": "FieldType"
+        },
+        {
+            "qualified-name": "orm/src.type StringField",
+            "selected-name": "StringField"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString",
+            "selected-name": "SqlString"
+        },
+        {
+            "qualified-name": "orm/src.type IntField",
+            "selected-name": "IntField"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32",
+            "selected-name": "SqlInt32"
+        },
+        {
+            "qualified-name": "orm/src.type Int64Field",
+            "selected-name": "Int64Field"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64",
+            "selected-name": "SqlInt64"
+        },
+        {
+            "qualified-name": "orm/src.type FloatField",
+            "selected-name": "FloatField"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64",
+            "selected-name": "SqlFloat64"
+        },
+        {
+            "qualified-name": "orm/src.type BoolField",
+            "selected-name": "BoolField"
+        },
+        {
+            "qualified-name": "orm/src.type DateField",
+            "selected-name": "DateField"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate",
+            "selected-name": "SqlDate"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql()",
+            "selected-name": "toInsertSql"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().i=#0",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().f=",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().pairs=",
+            "selected-name": "pairs"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().colNames=",
+            "selected-name": "colNames"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().valParts=",
+            "selected-name": "valParts"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().i=#1",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().pair=",
+            "selected-name": "pair"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().fd=",
+            "selected-name": "fd"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder",
+            "selected-name": "SqlBuilder"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toInsertSql().j=",
+            "selected-name": "j"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql()",
+            "selected-name": "toUpdateSql"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().pairs=",
+            "selected-name": "pairs"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().pair=",
+            "selected-name": "pair"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.toUpdateSql().fd=",
+            "selected-name": "fd"
+        },
+        {
+            "qualified-name": "orm/src.type ChangesetImpl.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause",
+            "selected-name": "OrderClause"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause.field",
+            "selected-name": "field"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause.ascending",
+            "selected-name": "ascending"
+        },
+        {
+            "qualified-name": "orm/src.type OrderClause.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type Query",
+            "selected-name": "Query"
+        },
+        {
+            "qualified-name": "orm/src.type Query.tableName",
+            "selected-name": "tableName"
+        },
+        {
+            "qualified-name": "orm/src.type Query.conditions",
+            "selected-name": "conditions"
+        },
+        {
+            "qualified-name": "orm/src.type Query.selectedFields",
+            "selected-name": "selectedFields"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderClauses",
+            "selected-name": "orderClauses"
+        },
+        {
+            "qualified-name": "orm/src.type Query.limitVal",
+            "selected-name": "limitVal"
+        },
+        {
+            "qualified-name": "orm/src.type Query.offsetVal",
+            "selected-name": "offsetVal"
+        },
+        {
+            "qualified-name": "orm/src.type Query.where()",
+            "selected-name": "where"
+        },
+        {
+            "qualified-name": "orm/src.type Query.where().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.select()",
+            "selected-name": "select"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderBy()",
+            "selected-name": "orderBy"
+        },
+        {
+            "qualified-name": "orm/src.type Query.orderBy().nb=",
+            "selected-name": "nb"
+        },
+        {
+            "qualified-name": "orm/src.type Query.limit()",
+            "selected-name": "limit"
+        },
+        {
+            "qualified-name": "orm/src.type Query.offset()",
+            "selected-name": "offset"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql()",
+            "selected-name": "toSql"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().first=",
+            "selected-name": "first"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().lv=",
+            "selected-name": "lv"
+        },
+        {
+            "qualified-name": "orm/src.type Query.toSql().ov=",
+            "selected-name": "ov"
+        },
+        {
+            "qualified-name": "orm/src.type Query.safeToSql()",
+            "selected-name": "safeToSql"
+        },
+        {
+            "qualified-name": "orm/src.type Query.safeToSql().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.type Query.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SafeIdentifier.sqlValue",
+            "selected-name": "sqlValue"
+        },
+        {
+            "qualified-name": "orm/src.type SafeIdentifier.get sqlValue()",
+            "selected-name": "get$2esqlValue"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier",
+            "selected-name": "ValidatedIdentifier"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier._value",
+            "selected-name": "_value"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier.sqlValue",
+            "selected-name": "sqlValue"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier.get sqlValue()",
+            "selected-name": "get$2esqlValue"
+        },
+        {
+            "qualified-name": "orm/src.type ValidatedIdentifier.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type StringField.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type IntField.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type Int64Field.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type FloatField.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type BoolField.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type DateField.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.name",
+            "selected-name": "name"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.fieldType",
+            "selected-name": "fieldType"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.nullable",
+            "selected-name": "nullable"
+        },
+        {
+            "qualified-name": "orm/src.type FieldDef.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.tableName",
+            "selected-name": "tableName"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.fields",
+            "selected-name": "fields"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.field()",
+            "selected-name": "field"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.field().return=",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "implicits.type List.forEach().n=",
+            "selected-name": "n"
+        },
+        {
+            "qualified-name": "implicits.type List.forEach().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "implicits.type List.forEach().el=",
+            "selected-name": "el"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.field().(f)",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.type TableDef.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.buffer",
+            "selected-name": "buffer"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendSafe()",
+            "selected-name": "appendSafe"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource",
+            "selected-name": "SqlSource"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendFragment()",
+            "selected-name": "appendFragment"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendPart()",
+            "selected-name": "appendPart"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendPartList()",
+            "selected-name": "appendPartList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendBoolean()",
+            "selected-name": "appendBoolean"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendBooleanList()",
+            "selected-name": "appendBooleanList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendDate()",
+            "selected-name": "appendDate"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendDateList()",
+            "selected-name": "appendDateList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendFloat64()",
+            "selected-name": "appendFloat64"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendFloat64List()",
+            "selected-name": "appendFloat64List"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt32()",
+            "selected-name": "appendInt32"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt32List()",
+            "selected-name": "appendInt32List"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt64()",
+            "selected-name": "appendInt64"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendInt64List()",
+            "selected-name": "appendInt64List"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendString()",
+            "selected-name": "appendString"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendStringList()",
+            "selected-name": "appendStringList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendList()",
+            "selected-name": "appendList"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.appendList().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.accumulated",
+            "selected-name": "accumulated"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.get accumulated()",
+            "selected-name": "get$2eaccumulated"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBuilder.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.parts",
+            "selected-name": "parts"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.toSource()",
+            "selected-name": "toSource"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.toString()",
+            "selected-name": "toString"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.toString().builder=",
+            "selected-name": "builder"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.toString().i=",
+            "selected-name": "i"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFragment.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlPart.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource.source",
+            "selected-name": "source"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlSource.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlBoolean.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlDate.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlFloat64.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt32.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlInt64.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString.value",
+            "selected-name": "value"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString.formatTo()",
+            "selected-name": "formatTo"
+        },
+        {
+            "qualified-name": "orm/src.type SqlString.constructor()",
+            "selected-name": "constructor"
+        },
+        {
+            "qualified-name": "orm/src.changeset()",
+            "selected-name": "changeset"
+        },
+        {
+            "qualified-name": "orm/src.isIdentStart()",
+            "selected-name": "isIdentStart"
+        },
+        {
+            "qualified-name": "orm/src.isIdentStart().return",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.isIdentPart()",
+            "selected-name": "isIdentPart"
+        },
+        {
+            "qualified-name": "orm/src.isIdentPart().return",
+            "selected-name": "return_"
+        },
+        {
+            "qualified-name": "orm/src.safeIdentifier()",
+            "selected-name": "safeIdentifier"
+        },
+        {
+            "qualified-name": "orm/src.safeIdentifier().idx=",
+            "selected-name": "idx"
+        },
+        {
+            "qualified-name": "orm/src.csid()",
+            "selected-name": "csid"
+        },
+        {
+            "qualified-name": "orm/src.userTable()",
+            "selected-name": "userTable"
+        },
+        {
+            "qualified-name": "orm/src.params=#0",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#0",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#1",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#1",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#2",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#2",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#3",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#3",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#4",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#4",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#5",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#5",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#6",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#6",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#7",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#7",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#8",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#8",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#9",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#9",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#10",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#10",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#11",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#11",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#12",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#12",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#13",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#13",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#14",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#14",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#15",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#15",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.params=#16",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#16",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.sqlFrag=#0",
+            "selected-name": "sqlFrag"
+        },
+        {
+            "qualified-name": "orm/src.s=#0",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.params=#17",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#17",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.sqlFrag=#1",
+            "selected-name": "sqlFrag"
+        },
+        {
+            "qualified-name": "orm/src.s=#1",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.params=#18",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#18",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.sqlFrag=#2",
+            "selected-name": "sqlFrag"
+        },
+        {
+            "qualified-name": "orm/src.s=#2",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.params=#19",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#19",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#0",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.strictTable=",
+            "selected-name": "strictTable"
+        },
+        {
+            "qualified-name": "orm/src.params=#20",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#20",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#1",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.params=#21",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#21",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.sqlFrag=#3",
+            "selected-name": "sqlFrag"
+        },
+        {
+            "qualified-name": "orm/src.s=#3",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.params=#22",
+            "selected-name": "params"
+        },
+        {
+            "qualified-name": "orm/src.cs=#22",
+            "selected-name": "cs"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#2",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.deleteSql()",
+            "selected-name": "deleteSql"
+        },
+        {
+            "qualified-name": "orm/src.deleteSql().b=",
+            "selected-name": "b"
+        },
+        {
+            "qualified-name": "orm/src.from()",
+            "selected-name": "from"
+        },
+        {
+            "qualified-name": "orm/src.sid()",
+            "selected-name": "sid"
+        },
+        {
+            "qualified-name": "orm/src.q=#0",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#1",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#2",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#3",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#4",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#5",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#6",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#7",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#3",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#4",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.minAge=",
+            "selected-name": "minAge"
+        },
+        {
+            "qualified-name": "orm/src.q=#8",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.q=#9",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#4",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.q=#10",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#5",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#5",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.evil=",
+            "selected-name": "evil"
+        },
+        {
+            "qualified-name": "orm/src.q=#11",
+            "selected-name": "q"
+        },
+        {
+            "qualified-name": "orm/src.s=#6",
+            "selected-name": "s"
+        },
+        {
+            "qualified-name": "orm/src.attack=",
+            "selected-name": "attack"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#6",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.id=",
+            "selected-name": "id"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#7",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#8",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.cases=",
+            "selected-name": "cases"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#9",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.td=#0",
+            "selected-name": "td"
+        },
+        {
+            "qualified-name": "orm/src.f=",
+            "selected-name": "f"
+        },
+        {
+            "qualified-name": "orm/src.td=#1",
+            "selected-name": "td"
+        },
+        {
+            "qualified-name": "orm/src.didBubble=#10",
+            "selected-name": "didBubble"
+        },
+        {
+            "qualified-name": "orm/src.required=",
+            "selected-name": "required"
+        },
+        {
+            "qualified-name": "orm/src.optional=",
+            "selected-name": "optional"
+        },
+        {
+            "qualified-name": "orm/src.build()",
+            "selected-name": "build"
+        },
+        {
+            "qualified-name": "orm/src.buildWrong()",
+            "selected-name": "buildWrong"
+        },
+        {
+            "qualified-name": "orm/src.bobbyTables=",
+            "selected-name": "bobbyTables"
+        },
+        {
+            "qualified-name": "orm/src.date=",
+            "selected-name": "date"
+        },
+        {
+            "qualified-name": "orm/src.dates=",
+            "selected-name": "dates"
+        },
+        {
+            "qualified-name": "orm/src.name=",
+            "selected-name": "name"
+        },
+        {
+            "qualified-name": "orm/src.condition=",
+            "selected-name": "condition"
+        },
+        {
+            "qualified-name": "orm/src.parts=",
+            "selected-name": "parts"
+        }
+    ]
+}
