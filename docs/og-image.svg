@@ -56,7 +56,7 @@
   <line x1="500" y1="240" x2="700" y2="240" stroke="#94a3b8" stroke-width="2"/>
 
   <!-- Subtitle -->
-  <text x="600" y="290" text-anchor="middle" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="400" fill="#64748b" letter-spacing="1">Write Once, Secure SQL Everywhere</text>
+  <text x="600" y="290" text-anchor="middle" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="400" fill="#64748b" letter-spacing="1">Have Secure SQL Everywhere</text>
 
   <!-- Description -->
   <text x="600" y="345" text-anchor="middle" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#94a3b8">A SQL ORM written once in Temper, compiled to six languages</text>
