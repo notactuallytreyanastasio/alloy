@@ -152,6 +152,7 @@ jobs:
         if: matrix.lang == 'py'
         run: |
           cd temper.out/py
+          pip install pytest
           pip install -e ./temper-core -e ./std -e ./orm
 
       - name: Install deps (Java)
@@ -161,13 +162,18 @@ jobs:
       - name: Run native tests (JS)
         if: matrix.lang == 'js'
         id: native-test-js
-        run: cd temper.out/js/orm && npm test 2>&1 | tee /tmp/native-test-output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          cd temper.out/js/orm && npm test 2>&1 | tee /tmp/native-test-output.txt
         continue-on-error: true
 
       - name: Run native tests (Python)
         if: matrix.lang == 'py'
         id: native-test-py
+        shell: bash
         run: |
+          set -o pipefail
           cd temper.out/py
           python -m pytest orm/tests/ -v 2>&1 | tee /tmp/native-test-output.txt
         continue-on-error: true
@@ -175,25 +181,37 @@ jobs:
       - name: Run native tests (Java)
         if: matrix.lang == 'java'
         id: native-test-java
-        run: cd temper.out/java/orm && mvn test 2>&1 | tee /tmp/native-test-output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          cd temper.out/java/orm && mvn test 2>&1 | tee /tmp/native-test-output.txt
         continue-on-error: true
 
       - name: Run native tests (Rust)
         if: matrix.lang == 'rust'
         id: native-test-rust
-        run: cd temper.out/rust/orm && cargo test 2>&1 | tee /tmp/native-test-output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          cd temper.out/rust/orm && cargo test 2>&1 | tee /tmp/native-test-output.txt
         continue-on-error: true
 
       - name: Run native tests (Lua)
         if: matrix.lang == 'lua'
         id: native-test-lua
-        run: cd temper.out/lua/orm && lua tests/src-test.lua 2>&1 | tee /tmp/native-test-output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          cd temper.out/lua/orm && lua tests/src-test.lua 2>&1 | tee /tmp/native-test-output.txt
         continue-on-error: true
 
       - name: Run native tests (C#)
         if: matrix.lang == 'csharp'
         id: native-test-csharp
-        run: cd temper.out/csharp/orm/tests && dotnet test --verbosity normal 2>&1 | tee /tmp/native-test-output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          cd temper.out/csharp/orm/tests && dotnet test --verbosity normal 2>&1 | tee /tmp/native-test-output.txt
         continue-on-error: true
 
       # --- Collect native test result ---
