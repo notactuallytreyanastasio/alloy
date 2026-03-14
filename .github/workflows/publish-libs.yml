@@ -79,7 +79,7 @@ jobs:
           - lang: lua
           - lang: csharp
     steps:
-      - name: Checkout (for issue creation context)
+      - name: Checkout (for issue creation)
         uses: actions/checkout@v4
 
       - name: Download Temper compiler
@@ -94,8 +94,16 @@ jobs:
           name: orm-source
           path: .
 
+      - name: Download temper.out
+        uses: actions/download-artifact@v4
+        with:
+          name: temper-out
+          path: temper.out/
+
       - name: Make Temper executable
         run: chmod +x /tmp/temper/bin/temper
+
+      # --- Runtime setup ---
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -115,10 +123,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Setup Java (backend)
-        if: matrix.lang == 'java'
-        run: echo "JDK 21 already set up for Temper runtime"
-
       - name: Setup Lua
         if: matrix.lang == 'lua'
         run: sudo apt-get update && sudo apt-get install -y lua5.4
@@ -129,17 +133,92 @@ jobs:
         with:
           dotnet-version: '8.0'
 
-      - name: Run temper tests
-        id: run-tests
+      # --- Step 1: Temper-level tests ---
+
+      - name: Run temper test
+        id: temper-test
         run: |
           export PATH="/tmp/temper/bin:$PATH"
-          temper test -b ${{ matrix.lang }} 2>&1 | tee test-output.txt
+          temper test -b ${{ matrix.lang }} 2>&1 | tee temper-test-output.txt
         continue-on-error: true
+
+      # --- Step 2: Native runtime tests on generated code ---
+
+      - name: Install deps (JS)
+        if: matrix.lang == 'js'
+        run: cd temper.out/js/orm && npm install
+
+      - name: Install deps (Python)
+        if: matrix.lang == 'py'
+        run: |
+          cd temper.out/py
+          pip install -e ./temper-core -e ./std -e ./orm
+
+      - name: Install deps (Java)
+        if: matrix.lang == 'java'
+        run: cd temper.out/java/orm && mvn dependency:resolve -q
+
+      - name: Run native tests (JS)
+        if: matrix.lang == 'js'
+        id: native-test-js
+        run: cd temper.out/js/orm && npm test 2>&1 | tee /tmp/native-test-output.txt
+        continue-on-error: true
+
+      - name: Run native tests (Python)
+        if: matrix.lang == 'py'
+        id: native-test-py
+        run: |
+          cd temper.out/py
+          python -m pytest orm/tests/ -v 2>&1 | tee /tmp/native-test-output.txt
+        continue-on-error: true
+
+      - name: Run native tests (Java)
+        if: matrix.lang == 'java'
+        id: native-test-java
+        run: cd temper.out/java/orm && mvn test 2>&1 | tee /tmp/native-test-output.txt
+        continue-on-error: true
+
+      - name: Run native tests (Rust)
+        if: matrix.lang == 'rust'
+        id: native-test-rust
+        run: cd temper.out/rust/orm && cargo test 2>&1 | tee /tmp/native-test-output.txt
+        continue-on-error: true
+
+      - name: Run native tests (Lua)
+        if: matrix.lang == 'lua'
+        id: native-test-lua
+        run: cd temper.out/lua/orm && lua tests/src-test.lua 2>&1 | tee /tmp/native-test-output.txt
+        continue-on-error: true
+
+      - name: Run native tests (C#)
+        if: matrix.lang == 'csharp'
+        id: native-test-csharp
+        run: cd temper.out/csharp/orm/tests && dotnet test --verbosity normal 2>&1 | tee /tmp/native-test-output.txt
+        continue-on-error: true
+
+      # --- Collect native test result ---
+
+      - name: Determine native test outcome
+        id: native-result
+        run: |
+          # Grab the outcome from whichever native-test step ran
+          LANG="${{ matrix.lang }}"
+          case "$LANG" in
+            js)     OUTCOME="${{ steps.native-test-js.outcome }}" ;;
+            py)     OUTCOME="${{ steps.native-test-py.outcome }}" ;;
+            java)   OUTCOME="${{ steps.native-test-java.outcome }}" ;;
+            rust)   OUTCOME="${{ steps.native-test-rust.outcome }}" ;;
+            lua)    OUTCOME="${{ steps.native-test-lua.outcome }}" ;;
+            csharp) OUTCOME="${{ steps.native-test-csharp.outcome }}" ;;
+          esac
+          echo "outcome=${OUTCOME}" >> $GITHUB_OUTPUT
+
+      # --- Record result for publish gating ---
 
       - name: Record test result
         run: |
           mkdir -p test-result
-          if [ "${{ steps.run-tests.outcome }}" = "success" ]; then
+          if [ "${{ steps.native-result.outputs.outcome }}" = "success" ]; then
             echo "success" > test-result/status.txt
           else
             echo "failure" > test-result/status.txt
@@ -152,16 +231,18 @@ jobs:
           path: test-result/
           retention-days: 1
 
-      - name: Upload test output on failure
-        if: steps.run-tests.outcome == 'failure'
+      # --- On native failure: upload output + open issue if temper passed ---
+
+      - name: Upload native test output on failure
+        if: steps.native-result.outputs.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: test-output-${{ matrix.lang }}
-          path: test-output.txt
+          path: /tmp/native-test-output.txt
           retention-days: 7
 
-      - name: Open issue on failure
-        if: steps.run-tests.outcome == 'failure'
+      - name: Open issue — codegen bug (temper passed, native failed)
+        if: steps.temper-test.outcome == 'success' && steps.native-result.outputs.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -169,11 +250,11 @@ jobs:
           SHA="${{ github.sha }}"
           SHORT_SHA="${SHA:0:7}"
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          TEST_OUTPUT=$(tail -100 test-output.txt 2>/dev/null || echo "No test output captured")
+          NATIVE_OUTPUT=$(tail -100 /tmp/native-test-output.txt 2>/dev/null || echo "No test output captured")
 
           # Check for existing open issue to avoid duplicates
           EXISTING=$(gh issue list --state open \
-            --search "temper test ${LANG} backend failed" \
+            --search "${LANG} backend native tests failed" \
             --json number --jq '.[0].number' 2>/dev/null || echo "")
 
           if [ -n "$EXISTING" ]; then
@@ -181,36 +262,36 @@ jobs:
           **Still failing** at commit [\`${SHORT_SHA}\`](${RUN_URL})
 
           \`\`\`
-          ${TEST_OUTPUT}
+          ${NATIVE_OUTPUT}
           \`\`\`
           COMMENT_EOF
           )"
-            echo "::error::temper test -b ${LANG} failed — commented on issue #${EXISTING}"
-            exit 1
-          fi
+          else
+            gh label create "bug" --color "d73a4a" 2>/dev/null || true
+            gh label create "ci" --color "0e8a16" 2>/dev/null || true
+            gh label create "codegen" --color "d4c5f9" --description "Temper compiler codegen bug" 2>/dev/null || true
 
-          gh label create "bug" --color "d73a4a" 2>/dev/null || true
-          gh label create "ci" --color "0e8a16" 2>/dev/null || true
+            gh issue create \
+              --title "CI: ${LANG} backend native tests failed (codegen bug)" \
+              --body "$(cat <<ISSUE_EOF
+          ## Codegen Bug: \`temper test\` passed but native ${LANG} tests failed
 
-          gh issue create \
-            --title "CI: temper test ${LANG} backend failed on ${SHORT_SHA}" \
-            --body "$(cat <<ISSUE_EOF
-          ## Build-Time Test Failure
-
-          \`temper test -b ${LANG}\` failed during CI.
+          \`temper test -b ${LANG}\` **passed**, but running the generated code with the native ${LANG} test runner **failed**. This indicates a bug in the Temper compiler's ${LANG} code generation.
 
           **Commit:** [\`${SHORT_SHA}\`](https://github.com/${{ github.repository }}/commit/${SHA})
           **Workflow Run:** [View logs](${RUN_URL})
           **Backend:** ${LANG}
 
-          ### Test Output (last 100 lines)
+          ### Native Test Output (last 100 lines)
           \`\`\`
-          ${TEST_OUTPUT}
+          ${NATIVE_OUTPUT}
           \`\`\`
 
           ### Reproduce Locally
           \`\`\`bash
-          temper test -b ${LANG}
+          temper build
+          cd temper.out/${LANG}
+          # install deps, then run native test command for ${LANG}
           \`\`\`
 
           ### Impact
@@ -218,9 +299,13 @@ jobs:
           Other backends that passed were published normally.
           ISSUE_EOF
           )" \
-            --label "bug,ci"
+              --label "bug,ci,codegen"
+          fi
 
-          echo "::error::temper test -b ${LANG} failed — issue created, skipping publish"
+      - name: Fail job if native tests failed
+        if: steps.native-result.outputs.outcome == 'failure'
+        run: |
+          echo "::error::Native ${LANG} tests failed — skipping publish"
           exit 1
 
   publish:
@@ -342,7 +427,6 @@ jobs:
           cp templates/notify-app-template.yml target-repo/.github/workflows/notify-app.yml
           sed -i "s|__APP_REPO__|${{ matrix.app_repo }}|g" target-repo/.github/workflows/notify-app.yml
           sed -i "s|__VENDOR_PATH__|${{ matrix.vendor_path }}|g" target-repo/.github/workflows/notify-app.yml
-          sed -i "s|__LANG__|${{ matrix.lang }}|g" target-repo/.github/workflows/notify-app.yml
 
       - name: Commit and push
         if: steps.gate.outputs.skip != 'true'
