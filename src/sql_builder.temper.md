@@ -11,7 +11,7 @@ that be recognized and cached instead of rebuilt each time?
     export let sql = SqlBuilder;
 
     export class SqlBuilder {
-      private let buffer: ListBuilder<SqlPart> = new ListBuilder();
+      private let buffer: ListBuilder<SqlPart> = new ListBuilder<SqlPart>();
 
       // appendSafe
       public appendSafe(sqlSource: String): Void {

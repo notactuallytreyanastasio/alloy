@@ -95,17 +95,17 @@ TODO If contextual, we could put parens around automatically when needed.
 ## Float64 edge cases
 
     test("SqlFloat64 NaN renders as NULL") {
-      let nan = 0.0 / 0.0;
+      let nan = NaN;
       assert(sql"v = ${nan}".toString() == "v = NULL");
     }
 
     test("SqlFloat64 Infinity renders as NULL") {
-      let inf = 1.0 / 0.0;
+      let inf = Infinity;
       assert(sql"v = ${inf}".toString() == "v = NULL");
     }
 
     test("SqlFloat64 negative Infinity renders as NULL") {
-      let ninf = -1.0 / 0.0;
+      let ninf = -Infinity;
       assert(sql"v = ${ninf}".toString() == "v = NULL");
     }
 
