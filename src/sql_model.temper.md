@@ -26,6 +26,41 @@ then can be escaped differently for different dbs. And while called a
         builder.toString()
       }
 
+      // toParameterized: the SQL text with a numbered placeholder ($1, $2,
+      // ...) where each value goes, and the values, in order, as text
+      public toParameterized(): ParameterizedSql {
+        let text = new StringBuilder();
+        let params = new ListBuilder<String>();
+        for (var i = 0; i < parts.length; ++i) {
+          parts[i].formatParameterized(text, params);
+        }
+        new ParameterizedSql(text.toString(), params.toList())
+      }
+
+    }
+
+## ParameterizedSql
+
+`toString` puts each value into the SQL as an escaped literal. A driver that
+can bind parameters would rather have the values kept apart, so that no
+escaping is involved at all: `toParameterized` gives the text with `$1`,
+`$2`, ... in place of the values, and the values as strings in the same
+order. Postgres takes that as is, with each parameter in text format; SQLite
+reads `$1` as a named parameter and numbers them in the same order.
+
+Only data goes into `params`. What Alloy already knows is safe (identifiers,
+keywords, booleans, `DEFAULT`, and `NULL` for a float that has no SQL
+literal) stays in the text, as `toString` writes it.
+
+    export class ParameterizedSql(
+      public text: String,
+      public params: List<String>,
+    ) {}
+
+    let placeholder(text: StringBuilder, params: ListBuilder<String>, value: String): Void {
+      params.add(value);
+      text.append("$");
+      text.append(params.length.toString());
     }
 
 ## SqlPart
@@ -37,6 +72,10 @@ needing escaped and/or represented properly for a particular DB dialect.
 
       // formatTo: enables using a single StringBuilder across multiple parts
       public formatTo(builder: StringBuilder): Void;
+
+      // formatParameterized: data as a placeholder plus a parameter, the
+      // rest as text
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void;
 
     }
 
@@ -51,6 +90,11 @@ needing escaped and/or represented properly for a particular DB dialect.
         builder.append(source);
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        text.append(source);
+      }
     }
 
 ## SqlBoolean
@@ -62,6 +106,11 @@ needing escaped and/or represented properly for a particular DB dialect.
         builder.append(if (value) { "TRUE" } else { "FALSE" });
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        formatTo(text);
+      }
     }
 
 ## SqlDate
@@ -81,6 +130,11 @@ needing escaped and/or represented properly for a particular DB dialect.
         builder.append("'");
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        placeholder(text, params, value.toString());
+      }
     }
 
 ## SqlFloat64
@@ -97,6 +151,16 @@ needing escaped and/or represented properly for a particular DB dialect.
         }
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        let s = value.toString();
+        if (s == "NaN" || s == "Infinity" || s == "-Infinity") {
+          text.append("NULL");
+        } else {
+          placeholder(text, params, s);
+        }
+      }
     }
 
 ## SqlInt32
@@ -108,6 +172,11 @@ needing escaped and/or represented properly for a particular DB dialect.
         builder.append(value.toString());
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        placeholder(text, params, value.toString());
+      }
     }
 
 ## SqlInt64
@@ -119,6 +188,11 @@ needing escaped and/or represented properly for a particular DB dialect.
         builder.append(value.toString());
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        placeholder(text, params, value.toString());
+      }
     }
 
 ## SqlDefault
@@ -133,6 +207,11 @@ with server-side default values (e.g., `NOW()` for timestamps).
         builder.append("DEFAULT");
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        formatTo(text);
+      }
     }
 
 ## SqlString
@@ -154,4 +233,9 @@ with server-side default values (e.g., `NOW()` for timestamps).
         builder.append("'");
       }
 
+
+      // formatParameterized
+      public formatParameterized(text: StringBuilder, params: ListBuilder<String>): Void {
+        placeholder(text, params, value);
+      }
     }
