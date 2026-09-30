@@ -176,3 +176,51 @@ We can also append individual parts.
     test("SqlString with backslash") {
       assert(sql"v = ${"a\\b"}".toString() == "v = 'a\\b'") { "backslash passthrough" };
     }
+
+## Parameterized
+
+`toParameterized` keeps each value out of the text: a placeholder goes where
+it was, and the value goes into `params`, unescaped, because a driver that
+binds it never parses it as SQL.
+
+    test("toParameterized numbers the values and keeps them out of the text") {
+      let name = "O'Brien; drop table people";
+      let p = sql"select * from people where name = ${name} and age > ${30} and height < ${1.5}".toParameterized();
+      assert(p.text == "select * from people where name = $1 and age > $2 and height < $3") { p.text };
+      assert(p.params.length == 3) { "three params" };
+      assert(p.params[0] == "O'Brien; drop table people") { p.params[0] };
+      assert(p.params[1] == "30") { p.params[1] };
+      assert(p.params[2] == "1.5") { p.params[2] };
+    }
+
+    test("toParameterized leaves what is not data in the text") {
+      let b = new SqlBuilder();
+      b.appendSafe("insert into t (a, b, c, d) values (");
+      b.appendBoolean(true);
+      b.appendSafe(", ");
+      b.appendPart(new SqlDefault());
+      b.appendSafe(", ");
+      b.appendFloat64(NaN);
+      b.appendSafe(", ");
+      b.appendInt64(-7i64);
+      b.appendSafe(")");
+      let p = b.accumulated.toParameterized();
+      assert(p.text == "insert into t (a, b, c, d) values (TRUE, DEFAULT, NULL, $1)") { p.text };
+      assert(p.params.length == 1 && p.params[0] == "-7") { "one param" };
+    }
+
+    test("toParameterized works on a whole query") {
+      let p = from(safeIdentifier("users") orelse panic())
+        .where(sql"email = ${"a@b.c"}")
+        .orWhere(sql"id = ${7}")
+        .toSql()
+        .toParameterized();
+      assert(p.text == "SELECT * FROM users WHERE email = $1 OR id = $2") { p.text };
+      assert(p.params[0] == "a@b.c" && p.params[1] == "7") { "params in order" };
+    }
+
+    test("toParameterized with no values is the same text as toString") {
+      let f = sql"select 1";
+      assert(f.toParameterized().text == f.toString());
+      assert(f.toParameterized().params.length == 0);
+    }
